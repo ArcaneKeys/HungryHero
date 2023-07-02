@@ -10,7 +10,8 @@
         android:id="@+id/loginLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <!-- Pole tekstowe dla adresu e-mail -->
         <EditText
@@ -49,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <!-- Pole tekstowe dla adresu e-mail -->
         <EditText
@@ -66,9 +67,19 @@
             android:hint="Hasło"
             android:inputType="textPassword" />
 
+        <!-- Informacje o wymaganiach hasła -->
+        <TextView
+            android:id="@+id/passwordRequirementsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Wymagania hasła: minimum 6 znaków, co najmniej jedna duża litera i cyfra"
+            android:textColor="#999999"
+            android:textSize="12sp" />
+
         <!-- Pole tekstowe dla powtórzenia hasła -->
         <EditText
-            android:id="@+id/confirmRegisterPasswordEditText"
+            android:id="@+id/repeatRegisterPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Potwierdź hasło"

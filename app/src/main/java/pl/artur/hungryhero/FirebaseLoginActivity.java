@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -23,12 +26,13 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-
-    Button loginButton;
-    EditText email;
-    EditText password;
-    EditText passwordR;
-    EditText emailR;
+    private Button loginButton;
+    private Button registerButton;
+    private EditText loginEmail;
+    private EditText loginPassword;
+    private EditText registerPassword;
+    private EditText registerRepeatPassword;
+    private EditText registerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +47,17 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_firebase_login);
 
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        initVariables();
 
-        loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(v -> {
+            String emailText = getString(loginEmail);
+            String passwordText = getString(loginPassword);
 
-        email = findViewById(R.id.loginEmailEditText);
-        password = findViewById(R.id.loginPasswordEditText);
-
-        emailR = findViewById(R.id.registerEmailEditText);
-        passwordR = findViewById(R.id.registerPasswordEditText);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String emailText = email.getText().toString();
-                String passwordText = password.getText().toString();
-
+            if (emailText.isEmpty() || passwordText.isEmpty()){
+                Toast.makeText(FirebaseLoginActivity.this, "Pola nie mogą być puste!", Toast.LENGTH_SHORT).show();
+            } else if(!ValidationUtils.isValidEmail(emailText)){
+                Toast.makeText(FirebaseLoginActivity.this, "Nieprawidłowy format emaila!", Toast.LENGTH_SHORT).show();
+            } else{
                 mAuth.signInWithEmailAndPassword(emailText, passwordText)
                         .addOnCompleteListener(FirebaseLoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -71,21 +69,27 @@ public class FirebaseLoginActivity extends AppCompatActivity {
                                     startActivity(new Intent(FirebaseLoginActivity.this, MainActivity.class));
                                 } else {
                                     // Wystąpił błąd logowania
-                                    Toast.makeText(FirebaseLoginActivity.this, "Logowanie nieudane.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FirebaseLoginActivity.this, "Logowanie nieudane.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }
         });
 
-        Button registerButton = findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String emailText = emailR.getText().toString();
-                String passwordText = passwordR.getText().toString();
+        registerButton.setOnClickListener(v -> {
+            String emailText =  getString(registerEmail);
+            String passwordText =  getString(registerPassword);
+            String repeatPasswordText =  getString(registerRepeatPassword);
 
+            if (emailText.isEmpty() || passwordText.isEmpty() || repeatPasswordText.isEmpty()){
+                Toast.makeText(FirebaseLoginActivity.this, "Pola nie mogą być puste!", Toast.LENGTH_SHORT).show();
+            } else if (!ValidationUtils.isValidEmail(emailText)){
+                Toast.makeText(FirebaseLoginActivity.this, "Nieprawidłowy format emaila!", Toast.LENGTH_SHORT).show();
+            } else if (!ValidationUtils.isValidPassword(passwordText)) {
+                Toast.makeText(FirebaseLoginActivity.this, "Hasło musi zawierać minimum 6 znaków, dużą literę oraz cyfrę!", Toast.LENGTH_LONG).show();
+            } else if (!ValidationUtils.arePasswordsMatching(passwordText, repeatPasswordText)) {
+                Toast.makeText(FirebaseLoginActivity.this, "Hasła nie pasują do siebie!", Toast.LENGTH_SHORT).show();
+            } else{
                 mAuth.createUserWithEmailAndPassword(emailText, passwordText)
                         .addOnCompleteListener(FirebaseLoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -120,5 +124,24 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
         loginLayout.setVisibility(View.VISIBLE);
         registrationLayout.setVisibility(View.GONE);
+    }
+
+    public void initVariables(){
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
+
+        loginEmail = findViewById(R.id.loginEmailEditText);
+        loginPassword = findViewById(R.id.loginPasswordEditText);
+
+        registerEmail = findViewById(R.id.registerEmailEditText);
+        registerPassword = findViewById(R.id.registerPasswordEditText);
+        registerRepeatPassword = findViewById(R.id.repeatRegisterPasswordEditText);
+    }
+
+    public String getString(EditText edt){
+        return edt.getText().toString().trim();
     }
 }
