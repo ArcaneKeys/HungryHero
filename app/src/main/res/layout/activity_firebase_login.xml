@@ -6,101 +6,158 @@
     android:layout_height="match_parent"
     tools:context=".FirebaseLoginActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Pole tekstowe dla adresu e-mail -->
+
         <EditText
             android:id="@+id/loginEmailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Adres e-mail" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Adres e-mail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Pole tekstowe dla hasła -->
         <EditText
             android:id="@+id/loginPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:hint="Hasło"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginEmailEditText" />
 
-        <!-- Przycisk logowania -->
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="login"
             android:text="Zaloguj się"
-            android:onClick="login" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginPasswordEditText" />
 
         <TextView
             android:id="@+id/switchToRegistration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nie masz konta? Zarejestruj się"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:onClick="switchToRegistration" />
-    </LinearLayout>
+            android:onClick="switchToRegistration"
+            android:text="Nie masz konta? Zarejestruj się"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
-    <LinearLayout
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/registrationLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Pole tekstowe dla adresu e-mail -->
         <EditText
             android:id="@+id/registerEmailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Adres e-mail" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Adres e-mail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Pole tekstowe dla hasła -->
         <EditText
             android:id="@+id/registerPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:hint="Hasło"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerEmailEditText" />
 
-        <!-- Informacje o wymaganiach hasła -->
         <TextView
             android:id="@+id/passwordRequirementsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:text="Wymagania hasła: minimum 6 znaków, co najmniej jedna duża litera i cyfra"
             android:textColor="#999999"
-            android:textSize="12sp" />
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerPasswordEditText" />
 
-        <!-- Pole tekstowe dla powtórzenia hasła -->
         <EditText
             android:id="@+id/repeatRegisterPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:hint="Potwierdź hasło"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordRequirementsTextView" />
 
-        <!-- Przycisk rejestracji -->
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="register"
             android:text="Zarejestruj się"
-            android:onClick="register" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/repeatRegisterPasswordEditText" />
 
         <TextView
             android:id="@+id/switchToLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Masz już konto? Zaloguj się"
+            android:layout_marginTop="24dp"
             android:clickable="true"
-            android:onClick="switchToLogin" />
-    </LinearLayout>
+            android:onClick="switchToLogin"
+            android:text="Masz już konto? Zaloguj się"
+            app:layout_constraintEnd_toEndOf="@+id/registerButton"
+            app:layout_constraintStart_toStartOf="@+id/registerButton"
+            app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

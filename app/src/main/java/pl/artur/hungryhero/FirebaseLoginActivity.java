@@ -2,15 +2,13 @@ package pl.artur.hungryhero;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -111,16 +109,16 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     }
 
     public void switchToRegistration(View view) {
-        LinearLayout loginLayout = findViewById(R.id.loginLayout);
-        LinearLayout registrationLayout = findViewById(R.id.registrationLayout);
+        ConstraintLayout loginLayout = findViewById(R.id.loginLayout);
+        ConstraintLayout registrationLayout = findViewById(R.id.registrationLayout);
 
         loginLayout.setVisibility(View.GONE);
         registrationLayout.setVisibility(View.VISIBLE);
     }
 
     public void switchToLogin(View view) {
-        LinearLayout loginLayout = findViewById(R.id.loginLayout);
-        LinearLayout registrationLayout = findViewById(R.id.registrationLayout);
+        ConstraintLayout loginLayout = findViewById(R.id.loginLayout);
+        ConstraintLayout registrationLayout = findViewById(R.id.registrationLayout);
 
         loginLayout.setVisibility(View.VISIBLE);
         registrationLayout.setVisibility(View.GONE);
