@@ -32,6 +32,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private FirebaseUser currentUser;
     private Button loginButton;
     private Button registerButton;
     private EditText loginEmail;
@@ -40,13 +41,13 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     private EditText registerRepeatPassword;
     private EditText registerEmail;
     private Spinner accountTypeSpinner;
-    private String[] accountTypes = {"Użytkownik", "Restauracja"};
+    private final String[] accountTypes = {"Użytkownik", "Restauracja"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser =  FirebaseManager.getCurrentUser();
         if (currentUser != null) {
             // Użytkownik jest zalogowany, przekieruj do MainActivity
             startActivity(new Intent(this, MainActivity.class));
@@ -66,26 +67,8 @@ public class FirebaseLoginActivity extends AppCompatActivity {
             String emailText = getString(loginEmail);
             String passwordText = getString(loginPassword);
 
-            if (emailText.isEmpty() || passwordText.isEmpty()){
-                Toast.makeText(FirebaseLoginActivity.this, "Pola nie mogą być puste!", Toast.LENGTH_SHORT).show();
-            } else if(!ValidationUtils.isValidEmail(emailText)){
-                Toast.makeText(FirebaseLoginActivity.this, "Nieprawidłowy format emaila!", Toast.LENGTH_SHORT).show();
-            } else{
-                mAuth.signInWithEmailAndPassword(emailText, passwordText)
-                        .addOnCompleteListener(FirebaseLoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    // Użytkownik został pomyślnie zalogowany
-                                    // Przejdź do kolejnej aktywności lub wykonaj inne operacje
-                                    startActivity(new Intent(FirebaseLoginActivity.this, MainActivity.class));
-                                } else {
-                                    // Wystąpił błąd logowania
-                                    Toast.makeText(FirebaseLoginActivity.this, "Logowanie nieudane.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+            if (validateEmailAndPassword(emailText, passwordText)) {
+                signInUser(emailText, passwordText);
             }
         });
 
@@ -94,54 +77,75 @@ public class FirebaseLoginActivity extends AppCompatActivity {
             String passwordText =  getString(registerPassword);
             String repeatPasswordText =  getString(registerRepeatPassword);
 
-            if (emailText.isEmpty() || passwordText.isEmpty() || repeatPasswordText.isEmpty()){
-                Toast.makeText(FirebaseLoginActivity.this, "Pola nie mogą być puste!", Toast.LENGTH_SHORT).show();
-            } else if (!ValidationUtils.isValidEmail(emailText)){
-                Toast.makeText(FirebaseLoginActivity.this, "Nieprawidłowy format emaila!", Toast.LENGTH_SHORT).show();
-            } else if (!ValidationUtils.isValidPassword(passwordText)) {
-                Toast.makeText(FirebaseLoginActivity.this, "Hasło musi zawierać minimum 6 znaków, dużą literę oraz cyfrę!", Toast.LENGTH_LONG).show();
-            } else if (!ValidationUtils.arePasswordsMatching(passwordText, repeatPasswordText)) {
-                Toast.makeText(FirebaseLoginActivity.this, "Hasła nie pasują do siebie!", Toast.LENGTH_SHORT).show();
-            } else{
-                mAuth.createUserWithEmailAndPassword(emailText, passwordText)
-                        .addOnCompleteListener(FirebaseLoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    String userId = user.getUid();
-                                    String email = user.getEmail();
-                                    String selectedAccountType = accountTypeSpinner.getSelectedItem().toString();
-
-                                    Map<String, Object> putUser = new HashMap<>();
-                                    putUser.put("uid", userId);
-                                    putUser.put("accountType", selectedAccountType);
-                                    putUser.put("email", email);
-
-                                    db.collection("Users").document(userId).set(putUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-
-                                        }
-                                    });
-
-                                    // Nowy użytkownik został pomyślnie zarejestrowany
-                                    // Przejdź do kolejnej aktywności
-                                    startActivity(new Intent(FirebaseLoginActivity.this, MainActivity.class));
-                                } else {
-                                    // Wystąpił błąd rejestracji
-                                    Toast.makeText(FirebaseLoginActivity.this, "Rejestracja nieudana.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+            if (validateRegistrationData(emailText, passwordText, repeatPasswordText)) {
+                createUserAndRegister(emailText, passwordText);
             }
         });
+    }
+
+    private boolean validateEmailAndPassword(String email, String password) {
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Pola nie mogą być puste!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!ValidationUtils.isValidEmail(email)) {
+            Toast.makeText(this, "Nieprawidłowy format emaila!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void signInUser(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        startActivity(new Intent(FirebaseLoginActivity.this, MainActivity.class));
+                    } else {
+                        Toast.makeText(this, "Logowanie nieudane.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private boolean validateRegistrationData(String email, String password, String repeatPassword) {
+        if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()) {
+            Toast.makeText(this, "Pola nie mogą być puste!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!ValidationUtils.isValidEmail(email)) {
+            Toast.makeText(this, "Nieprawidłowy format emaila!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!ValidationUtils.isValidPassword(password)) {
+            Toast.makeText(this, "Hasło musi zawierać minimum 6 znaków, dużą literę oraz cyfrę!", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!ValidationUtils.arePasswordsMatching(password, repeatPassword)) {
+            Toast.makeText(this, "Hasła nie pasują do siebie!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void createUserAndRegister(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String userId = user.getUid();
+                        String selectedAccountType = accountTypeSpinner.getSelectedItem().toString();
+
+                        Map<String, Object> putUser = new HashMap<>();
+                        putUser.put("uid", userId);
+                        putUser.put("accountType", selectedAccountType);
+                        putUser.put("email", email);
+
+                        db.collection("Users").document(userId).set(putUser)
+                                .addOnSuccessListener(unused -> {
+                                    startActivity(new Intent(FirebaseLoginActivity.this, MainActivity.class));
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Błąd rejestracji.", Toast.LENGTH_SHORT).show();
+                                });
+                    } else {
+                        Toast.makeText(this, "Rejestracja nieudana.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     public void switchToRegistration(View view) {
@@ -161,8 +165,8 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     }
 
     public void initVariables(){
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseManager.getAuthInstance();
+        db = FirebaseManager.getFirestoreInstance();
 
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
