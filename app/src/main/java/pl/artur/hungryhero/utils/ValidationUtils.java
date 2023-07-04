@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
