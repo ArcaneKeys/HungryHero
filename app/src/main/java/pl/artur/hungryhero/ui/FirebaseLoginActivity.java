@@ -1,5 +1,8 @@
 package pl.artur.hungryhero.ui;
 
+import static pl.artur.hungryhero.utils.UsernameGenerator.generateUsername;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -12,8 +15,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -125,6 +131,15 @@ public class FirebaseLoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         String userId = user.getUid();
                         String selectedAccountType = accountTypeSpinner.getSelectedItem().toString();
+
+                        String displayName = generateUsername();
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(displayName)
+                                .build();
+
+                        user.updateProfile(profileUpdates).addOnCompleteListener(task1 -> {
+
+                        });
 
                         User putUser = new User(selectedAccountType, email, userId);
 
