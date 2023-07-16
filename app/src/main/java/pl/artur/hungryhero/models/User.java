@@ -16,14 +16,17 @@ public class User {
         this.uid = uid;
     }
 
+    @PropertyName("accountType")
     public String getType() {
         return accountType;
     }
 
+    @PropertyName("email")
     public String getEmail() {
         return email;
     }
 
+    @PropertyName("uid")
     public String getUid() {
         return uid;
     }
