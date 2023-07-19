@@ -24,6 +24,8 @@ public class MenuItem {
         this.photoUrl = photoUrl;
     }
 
+    public MenuItem() {}
+
     @PropertyName("name")
     public String getName() {
         return name;

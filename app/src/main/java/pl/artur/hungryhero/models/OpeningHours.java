@@ -28,6 +28,8 @@ public class OpeningHours {
         this.sunday = sunday;
     }
 
+    public OpeningHours() {}
+
     @PropertyName("monday")
     public String getMonday() {
         return monday;

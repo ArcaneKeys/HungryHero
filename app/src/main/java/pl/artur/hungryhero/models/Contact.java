@@ -25,6 +25,8 @@ public class Contact {
         this.webMenu = webMenu;
     }
 
+    public Contact(){}
+
     @PropertyName("phone")
     public String getPhone() {
         return phone;

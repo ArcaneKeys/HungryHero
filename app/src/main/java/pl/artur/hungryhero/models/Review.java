@@ -19,6 +19,8 @@ public class Review {
         this.author = author;
     }
 
+    public Review() {}
+
     @PropertyName("userId")
     public String getUserId() {
         return userId;

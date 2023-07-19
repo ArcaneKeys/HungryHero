@@ -35,6 +35,8 @@ public class Restaurant {
         this.reviews = reviews;
     }
 
+    public Restaurant() {}
+
     @PropertyName("name")
     public String getName() {
         return name;

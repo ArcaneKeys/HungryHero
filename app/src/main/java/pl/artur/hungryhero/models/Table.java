@@ -16,6 +16,8 @@ public class Table {
         this.isOccupied = isOccupied;
     }
 
+    public Table() {}
+
     @PropertyName("number")
     public int getNumber() {
         return number;

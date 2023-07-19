@@ -27,6 +27,8 @@ public class Reservation {
         this.createdAt = createdAt;
     }
 
+    public Reservation() {}
+
     @PropertyName("userId")
     public String getUserId() {
         return userId;

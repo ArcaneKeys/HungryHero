@@ -15,6 +15,8 @@ public class Menu {
         this.items = items;
     }
 
+    public Menu() {}
+
     @PropertyName("name")
     public String getName() {
         return name;
