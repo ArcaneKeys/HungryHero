@@ -141,7 +141,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
                         });
 
-                        User putUser = new User(selectedAccountType, email, userId);
+                        User putUser = new User(selectedAccountType, displayName, email, "", userId);
 
                         db.collection("Users").document(userId).set(putUser)
                                 .addOnSuccessListener(unused -> {
