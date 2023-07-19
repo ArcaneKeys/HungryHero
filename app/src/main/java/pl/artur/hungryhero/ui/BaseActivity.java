@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -9,9 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.utils.FirebaseManager;
@@ -39,14 +44,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         userEmail = headerView.findViewById(R.id.user_email);
         userName = headerView.findViewById(R.id.user_name);
 
+        // Dodaj obsługę kliknięcia dla ShapeableImageView
+        ShapeableImageView userIcon = headerView.findViewById(R.id.user_icon);
+        userIcon.setOnClickListener(v -> {
+            // Przekierowanie do Layoutu zmiany danych użytkownika
+            Intent intent = new Intent(BaseActivity.this, ChangeUserDataActivity.class);
+            startActivity(intent);
+        });
+
         mAuth = FirebaseManager.getAuthInstance();
 
         mUser = mAuth.getCurrentUser();
-        String useremail =  mUser.getEmail();
-        String username =  mUser.getDisplayName();
+        String userUid = mUser.getUid();
 
-        userEmail.setText(useremail);
-        userName.setText(username);
+        fetchUserDataFromFirestore(userUid);
 
         drawerManager = new DrawerManager(navButton, drawerLayout, navigationView, mAuth, this);
     }
@@ -54,5 +65,50 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void setupFirestoreListener(String userUid) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection("Users").document(userUid);
+
+        userRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                // Obsłuż błąd nasłuchiwania zmian
+                return;
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                // Pobierz zaktualizowane dane z dokumentu Firestore i zaktualizuj widok
+                String useremail = snapshot.getString("email");
+                String username = snapshot.getString("userName");
+
+                userEmail.setText(useremail);
+                userName.setText(username);
+            }
+        });
+    }
+
+    private void fetchUserDataFromFirestore(String userUid) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection("Users").document(userUid);
+
+        userRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    // Pobierz dane z dokumentu Firestore i zaktualizuj widok
+                    String useremail = document.getString("email");
+                    String username = document.getString("userName");
+
+                    userEmail.setText(useremail);
+                    userName.setText(username);
+
+                    // Ustaw nasłuchiwanie zmian w dokumencie Firestore
+                    setupFirestoreListener(userUid);
+                }
+            } else {
+                // Obsłuż błąd pobierania danych
+            }
+        });
     }
 }
