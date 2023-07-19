@@ -1,24 +1,20 @@
 package pl.artur.hungryhero.models;
 
 import com.google.firebase.database.PropertyName;
+import com.google.firebase.firestore.GeoPoint;
 
 public class Location {
-    @PropertyName("latitude")
-    private double latitude;
-    @PropertyName("longitude")
-    private double longitude;
     @PropertyName("city")
     private String city;
-    @PropertyName("postal_code")
+    @PropertyName("postalCode")
     private String postalCode;
     @PropertyName("street")
     private String street;
-    @PropertyName("house_number")
+    @PropertyName("houseNumber")
     private String houseNumber;
-
-    public Location(double latitude, double longitude, String city, String postalCode, String street, String houseNumber) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    @PropertyName("coordinates")
+    private GeoPoint coordinates;
+    public Location(String city, String postalCode, String street, String houseNumber, GeoPoint coordinates) {
         this.city = city;
         this.postalCode = postalCode;
         this.street = street;
@@ -26,16 +22,6 @@ public class Location {
     }
 
     public Location() {}
-
-    @PropertyName("latitude")
-    public double getLatitude() {
-        return latitude;
-    }
-
-    @PropertyName("longitude")
-    public double getLongitude() {
-        return longitude;
-    }
 
     @PropertyName("city")
     public String getCity() {
@@ -55,5 +41,10 @@ public class Location {
     @PropertyName("house_number")
     public String getHouseNumber() {
         return houseNumber;
+    }
+
+    @PropertyName("coordinates")
+    public GeoPoint getCoordinates() {
+        return coordinates;
     }
 }
