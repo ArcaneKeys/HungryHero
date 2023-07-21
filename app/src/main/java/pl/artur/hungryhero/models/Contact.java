@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.models;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 public class Contact {

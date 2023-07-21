@@ -3,7 +3,7 @@ package pl.artur.hungryhero.models;
 import com.google.firebase.database.PropertyName;
 import com.google.firebase.firestore.GeoPoint;
 
-public class Location {
+public class Localization {
     @PropertyName("city")
     private String city;
     @PropertyName("postalCode")
@@ -14,14 +14,14 @@ public class Location {
     private String houseNumber;
     @PropertyName("coordinates")
     private GeoPoint coordinates;
-    public Location(String city, String postalCode, String street, String houseNumber, GeoPoint coordinates) {
+    public Localization(String city, String postalCode, String street, String houseNumber, GeoPoint coordinates) {
         this.city = city;
         this.postalCode = postalCode;
         this.street = street;
         this.houseNumber = houseNumber;
     }
 
-    public Location() {}
+    public Localization() {}
 
     @PropertyName("city")
     public String getCity() {

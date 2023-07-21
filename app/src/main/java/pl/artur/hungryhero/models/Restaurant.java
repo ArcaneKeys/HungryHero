@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.models;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 import java.util.List;
 
@@ -8,25 +9,35 @@ public class Restaurant {
     private String name;
     @PropertyName("description")
     private String description;
-    @PropertyName("location")
-    private Location location;
+    @PropertyName("localization")
+    private Localization localization;
     @PropertyName("openingHours")
     private OpeningHours openingHours;
     @PropertyName("contact")
     private Contact contact;
-    @PropertyName("menus")
+    @PropertyName("menu")
     private List<Menu> menus;
     @PropertyName("tables")
     private List<Table> tables;
-    @PropertyName("reservations")
+    @PropertyName("reservation")
     private List<Reservation> reservations;
     @PropertyName("reviews")
-    private List<Review> reviews;
+    private List<Reviews> reviews;
+    private String restaurantId;
 
-    public Restaurant(String name, String description, Location location, OpeningHours openingHours, Contact contact, List<Menu> menus, List<Table> tables, List<Reservation> reservations, List<Review> reviews) {
+    @Exclude
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public Restaurant(String name, String description, Localization localization, OpeningHours openingHours, Contact contact, List<Menu> menus, List<Table> tables, List<Reservation> reservations, List<Reviews> reviews) {
         this.name = name;
         this.description = description;
-        this.location = location;
+        this.localization = localization;
         this.openingHours = openingHours;
         this.contact = contact;
         this.menus = menus;
@@ -47,9 +58,9 @@ public class Restaurant {
         return description;
     }
 
-    @PropertyName("location")
-    public Location getLocation() {
-        return location;
+    @PropertyName("localization")
+    public Localization getLocalization() {
+        return localization;
     }
 
     @PropertyName("openingHours")
@@ -62,7 +73,7 @@ public class Restaurant {
         return contact;
     }
 
-    @PropertyName("menus")
+    @PropertyName("menu")
     public List<Menu> getMenus() {
         return menus;
     }
@@ -72,13 +83,17 @@ public class Restaurant {
         return tables;
     }
 
-    @PropertyName("reservations")
+    @PropertyName("reservation")
     public List<Reservation> getReservations() {
         return reservations;
     }
 
     @PropertyName("reviews")
-    public List<Review> getReviews() {
+    public List<Reviews> getReviews() {
         return reviews;
+    }
+
+    public void setTables(List<Table> tables) {
+        this.tables = tables;
     }
 }

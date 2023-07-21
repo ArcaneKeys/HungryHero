@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Zdjęcie restauracji -->
+        <ImageView
+            android:id="@+id/image_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="64dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_salad_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Nazwa restauracji -->
+        <TextView
+            android:id="@+id/text_restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="Restaurant Name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_restaurant" />
+
+        <!-- Godziny otwarcia -->
+        <TextView
+            android:id="@+id/text_opening_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opening Hours: 11:00 - 19:00"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_restaurant_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_restaurant_name"
+            app:layout_constraintTop_toTopOf="@+id/text_restaurant_name" />
+
+        <!-- Ilość osób -->
+        <TextView
+            android:id="@+id/text_capacity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Capacity: 50"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_restaurant_name"
+            app:layout_constraintStart_toStartOf="@+id/text_restaurant_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_restaurant_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

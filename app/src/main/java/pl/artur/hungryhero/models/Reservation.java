@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.models;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 import java.time.LocalDateTime;
@@ -10,20 +11,34 @@ public class Reservation {
     @PropertyName("tableId")
     private String tableId;
     @PropertyName("startTime")
-    private LocalDateTime startTime;
+    private String startTime;
     @PropertyName("endTime")
-    private LocalDateTime endTime;
+    private String endTime;
     @PropertyName("isActive")
     private boolean isActive;
+    @PropertyName("date")
+    private String date;
     @PropertyName("createdAt")
-    private LocalDateTime createdAt;
+    private String createdAt;
 
-    public Reservation(String userId, String tableId, LocalDateTime startTime, LocalDateTime endTime, boolean isActive, LocalDateTime createdAt) {
+    private String reservationId;
+
+    @Exclude
+    public String getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(String reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public Reservation(String userId, String tableId, String startTime, String endTime, boolean isActive, String date, String createdAt) {
         this.userId = userId;
         this.tableId = tableId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isActive = isActive;
+        this.date = date;
         this.createdAt = createdAt;
     }
 
@@ -40,12 +55,12 @@ public class Reservation {
     }
 
     @PropertyName("startTime")
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
     @PropertyName("endTime")
-    public LocalDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
@@ -54,8 +69,11 @@ public class Reservation {
         return isActive;
     }
 
+    @PropertyName("date")
+    public String getDate() { return date;}
+
     @PropertyName("createdAt")
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 }

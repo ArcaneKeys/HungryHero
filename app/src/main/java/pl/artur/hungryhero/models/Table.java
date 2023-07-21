@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.models;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 public class Table {
@@ -9,6 +10,17 @@ public class Table {
     private int capacity;
     @PropertyName("isOccupied")
     private boolean isOccupied;
+
+    private String tableId;
+
+    @Exclude
+    public String getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(String tableId) {
+        this.tableId = tableId;
+    }
 
     public Table(int number, int capacity, boolean isOccupied) {
         this.number = number;

@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.models;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 public class User {
@@ -11,15 +12,23 @@ public class User {
     private String email;
     @PropertyName("phone")
     private String phone;
-    @PropertyName("uid")
-    private String uid;
 
-    public User(String accountType, String userName, String email, String phone, String uid) {
+    private String userId;
+
+    @Exclude
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public User(String accountType, String userName, String email, String phone) {
         this.accountType = accountType;
         this.userName = userName;
         this.email = email;
         this.phone = phone;
-        this.uid = uid;
     }
 
     public User() {}
@@ -44,9 +53,5 @@ public class User {
         return phone;
     }
 
-    @PropertyName("uid")
-    public String getUid() {
-        return uid;
-    }
 }
 

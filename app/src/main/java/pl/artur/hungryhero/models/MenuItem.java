@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.models;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 import java.util.List;
@@ -15,6 +16,17 @@ public class MenuItem {
     private double price;
     @PropertyName("photoUrl")
     private String photoUrl;
+
+    private String itemId;
+
+    @Exclude
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
 
     public MenuItem(String name, String description, List<String> ingredients, double price, String photoUrl) {
         this.name = name;

@@ -67,6 +67,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setupFirestoreListener(mUser.getUid());
+    }
+
     private void setupFirestoreListener(String userUid) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("Users").document(userUid);
