@@ -1,10 +1,15 @@
 package pl.artur.hungryhero.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 import java.util.List;
 
-public class Restaurant {
+public class Restaurant implements Parcelable {
     @PropertyName("name")
     private String name;
     @PropertyName("description")
@@ -96,4 +101,50 @@ public class Restaurant {
     public void setTables(List<Table> tables) {
         this.tables = tables;
     }
+
+    // Parcelable constructor
+    protected Restaurant(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        localization = in.readParcelable(Localization.class.getClassLoader());
+        openingHours = in.readParcelable(OpeningHours.class.getClassLoader());
+        contact = in.readParcelable(Contact.class.getClassLoader());
+        menus = in.createTypedArrayList(Menu.CREATOR);
+        tables = in.createTypedArrayList(Table.CREATOR);
+        reservations = in.createTypedArrayList(Reservation.CREATOR);
+        reviews = in.createTypedArrayList(Reviews.CREATOR);
+        restaurantId = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeParcelable(localization, i);
+        parcel.writeParcelable(openingHours, i);
+        parcel.writeParcelable(contact, i);
+        parcel.writeTypedList(menus);
+        parcel.writeTypedList(tables);
+        parcel.writeTypedList(reservations);
+        parcel.writeTypedList(reviews);
+        parcel.writeString(restaurantId);
+    }
+
+    // Create a Parcelable.Creator for the Restaurant class
+    public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 }

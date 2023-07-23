@@ -1,6 +1,7 @@
 package pl.artur.hungryhero;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.List;
 import pl.artur.hungryhero.models.OpeningHours;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
+import pl.artur.hungryhero.ui.RestaurantDetailsActivity;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
 
@@ -53,10 +55,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         int maxCapacity = getMaxCapacity(tables);
 
         // Ustawiamy dane dla poszczególnych elementów layoutu
-        holder.imageRestaurant.setImageResource(R.drawable.ic_salad_background);
+        holder.imageRestaurant.setImageResource(R.mipmap.ic_salad_foreground);
         holder.textRestaurantName.setText(restaurant.getName());
         holder.textOpeningHours.setText("Opening Hours: " + openingHoursForCurrentDay);
         holder.textCapacity.setText("Capacity: " + maxCapacity);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, RestaurantDetailsActivity.class);
+            intent.putExtra("restaurant", restaurant);
+            context.startActivity(intent);
+        });
     }
 
     @Override

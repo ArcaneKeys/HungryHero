@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;

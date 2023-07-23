@@ -1,9 +1,12 @@
 package pl.artur.hungryhero.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
-public class Reviews {
+public class Reviews implements Parcelable {
     @PropertyName("userId")
     private String userId;
     @PropertyName("rating")
@@ -52,4 +55,38 @@ public class Reviews {
     public String getAuthor() {
         return author;
     }
+
+    // Parcelable constructor
+    protected Reviews(Parcel in) {
+        userId = in.readString();
+        rating = in.readDouble();
+        comment = in.readString();
+        author = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(userId);
+        parcel.writeDouble(rating);
+        parcel.writeString(comment);
+        parcel.writeString(author);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // Create a Parcelable.Creator for the Reviews class
+    public static final Parcelable.Creator<Reviews> CREATOR = new Parcelable.Creator<Reviews>() {
+        @Override
+        public Reviews createFromParcel(Parcel in) {
+            return new Reviews(in);
+        }
+
+        @Override
+        public Reviews[] newArray(int size) {
+            return new Reviews[size];
+        }
+    };
 }

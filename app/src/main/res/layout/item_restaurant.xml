@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:elevation="4dp"
     android:padding="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +17,7 @@
             android:layout_height="250dp"
             android:layout_marginBottom="64dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_salad_background"
+            android:src="@mipmap/ic_salad_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +60,6 @@
             app:layout_constraintEnd_toEndOf="@+id/text_restaurant_name"
             app:layout_constraintStart_toStartOf="@+id/text_restaurant_name"
             app:layout_constraintTop_toBottomOf="@+id/text_restaurant_name" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

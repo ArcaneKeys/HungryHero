@@ -1,11 +1,14 @@
 package pl.artur.hungryhero.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 import java.time.LocalDateTime;
 
-public class Reservation {
+public class Reservation implements Parcelable {
     @PropertyName("userId")
     private String userId;
     @PropertyName("tableId")
@@ -76,4 +79,44 @@ public class Reservation {
     public String getCreatedAt() {
         return createdAt;
     }
+
+    // Parcelable constructor
+    protected Reservation(Parcel in) {
+        userId = in.readString();
+        tableId = in.readString();
+        startTime = in.readString();
+        endTime = in.readString();
+        isActive = in.readByte() != 0;
+        date = in.readString();
+        createdAt = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(userId);
+        parcel.writeString(tableId);
+        parcel.writeString(startTime);
+        parcel.writeString(endTime);
+        parcel.writeByte((byte) (isActive ? 1 : 0));
+        parcel.writeString(date);
+        parcel.writeString(createdAt);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // Create a Parcelable.Creator for the Reservation class
+    public static final Parcelable.Creator<Reservation> CREATOR = new Parcelable.Creator<Reservation>() {
+        @Override
+        public Reservation createFromParcel(Parcel in) {
+            return new Reservation(in);
+        }
+
+        @Override
+        public Reservation[] newArray(int size) {
+            return new Reservation[size];
+        }
+    };
 }

@@ -1,11 +1,14 @@
 package pl.artur.hungryhero.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 import java.util.List;
 
-public class MenuItem {
+public class MenuItem implements Parcelable {
     @PropertyName("name")
     private String name;
     @PropertyName("description")
@@ -62,4 +65,40 @@ public class MenuItem {
     public String getPhotoUrl() {
         return photoUrl;
     }
+
+    // Parcelable constructor
+    protected MenuItem(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        ingredients = in.createStringArrayList();
+        price = in.readDouble();
+        photoUrl = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeStringList(ingredients);
+        parcel.writeDouble(price);
+        parcel.writeString(photoUrl);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // Create a Parcelable.Creator for the MenuItem class
+    public static final Parcelable.Creator<MenuItem> CREATOR = new Parcelable.Creator<MenuItem>() {
+        @Override
+        public MenuItem createFromParcel(Parcel in) {
+            return new MenuItem(in);
+        }
+
+        @Override
+        public MenuItem[] newArray(int size) {
+            return new MenuItem[size];
+        }
+    };
 }
