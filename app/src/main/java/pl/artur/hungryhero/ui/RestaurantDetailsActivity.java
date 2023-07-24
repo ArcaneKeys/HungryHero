@@ -9,14 +9,14 @@ import android.widget.TextView;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Restaurant;
 
-public class RestaurantDetailsActivity extends BaseActivity {
+public class RestaurantDetailsActivity extends AppCompatActivity {
 
     private TextView test_text_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseLayout(R.layout.activity_restaurant_details);
+        setContentView(R.layout.activity_restaurant_details);
 
         test_text_view = findViewById(R.id.test_text_view);
 

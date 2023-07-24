@@ -1,6 +1,7 @@
 package pl.artur.hungryhero.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.User;
 
-public class ChangeUserDataActivity extends BaseActivity {
+public class ChangeUserDataActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText emailEditText;
@@ -37,7 +38,7 @@ public class ChangeUserDataActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseLayout(R.layout.activity_change_user_data);
+        setContentView(R.layout.activity_change_user_data);
 
         usernameEditText = findViewById(R.id.username_edit_text);
         emailEditText = findViewById(R.id.email_edit_text);
