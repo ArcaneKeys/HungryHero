@@ -30,6 +30,7 @@ import pl.artur.hungryhero.ui.ChangeUserDataActivity;
 import pl.artur.hungryhero.ui.DrawerManager;
 import pl.artur.hungryhero.ui.RestaurantDetailsActivity;
 import pl.artur.hungryhero.utils.FirebaseManager;
+import pl.artur.hungryhero.utils.Utils;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
 
@@ -57,13 +58,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         // Pobierz odpowiednie godziny otwarcia na podstawie numeru dnia tygodnia
-        String openingHoursForCurrentDay = getOpeningHoursForDayOfWeek(restaurant.getOpeningHours(), dayOfWeek);
+        String openingHoursForCurrentDay = Utils.getOpeningHoursForDayOfWeek(restaurant.getOpeningHours(), dayOfWeek);
 
         // Otrzymujemy listę wszystkich stolików z danej restauracji
         List<Table> tables = restaurant.getTables();
 
         // Pobieramy maksymalną pojemność ze stolików
-        int maxCapacity = getMaxCapacity(tables);
+        int maxCapacity = Utils.getMaxCapacity(tables);
 
         // Ustawiamy dane dla poszczególnych elementów layoutu
         holder.imageRestaurant.setImageResource(R.mipmap.ic_salad_foreground);
@@ -86,47 +87,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public void setRestaurantList(List<Restaurant> restaurantList) {
         this.restaurantList = restaurantList;
     }
-
-    private String getOpeningHoursForDayOfWeek(OpeningHours openingHours, int dayOfWeek) {
-        if (openingHours == null) {
-            return "N/A"; // Jeśli brak danych o godzinach otwarcia, zwróć "N/A" (Not Available)
-        }
-
-            switch (dayOfWeek) {
-            case Calendar.MONDAY:
-                return openingHours.getMonday();
-            case Calendar.TUESDAY:
-                return openingHours.getTuesday();
-            case Calendar.WEDNESDAY:
-                return openingHours.getWednesday();
-            case Calendar.THURSDAY:
-                return openingHours.getThursday();
-            case Calendar.FRIDAY:
-                return openingHours.getFriday();
-            case Calendar.SATURDAY:
-                return openingHours.getSaturday();
-            case Calendar.SUNDAY:
-                return openingHours.getSunday();
-            default:
-                return "Closed"; // Domyślna wartość w przypadku braku danych dla danego dnia tygodnia
-        }
-    }
-
-    private int getMaxCapacity(List<Table> tables) {
-        int maxCapacity = 0;
-
-        if (tables != null) {
-            for (Table table : tables) {
-                int capacity = table.getCapacity();
-                if (capacity > maxCapacity) {
-                    maxCapacity = capacity;
-                }
-            }
-        }
-
-        return maxCapacity;
-    }
-
 
     static class RestaurantViewHolder extends RecyclerView.ViewHolder {
 
