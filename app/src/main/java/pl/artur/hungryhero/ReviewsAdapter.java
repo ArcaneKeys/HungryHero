@@ -36,7 +36,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         Reviews review = reviewsList.get(position);
         holder.textAuthor.setText(review.getAuthor());
         holder.textRating.setRating((float) review.getRating());
-        holder.textReview.setText(review.getComment());
+        holder.textReview.setText(review.getComment().trim());
     }
 
     @Override
