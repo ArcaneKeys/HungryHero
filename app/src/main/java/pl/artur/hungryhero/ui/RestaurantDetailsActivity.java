@@ -1,6 +1,7 @@
 package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -112,6 +113,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
             }
         }
+        // Ustaw tytuł na pasku narzędziowym
+        Toolbar toolbar = findViewById(R.id.toolbar_restaurant);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Reviews");
     }
 
     protected void init(){
