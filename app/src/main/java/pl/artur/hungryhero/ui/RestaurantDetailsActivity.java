@@ -111,13 +111,13 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 textCapacity.setText(capacityText);
                 textDescription.setText(restaurant.getDescription() + contactText);
 
+                // Ustaw tytuł na pasku narzędziowym
+                Toolbar toolbar = findViewById(R.id.toolbar_restaurant);
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setTitle(restaurant.getName());
             }
         }
-        // Ustaw tytuł na pasku narzędziowym
-        Toolbar toolbar = findViewById(R.id.toolbar_restaurant);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Reviews");
     }
 
     protected void init(){
