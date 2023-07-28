@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +15,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import pl.artur.hungryhero.R;
-import pl.artur.hungryhero.models.OpeningHours;
+import pl.artur.hungryhero.models.Contact;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.utils.Utils;
@@ -24,10 +26,13 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     private TextView textRestaurantName;
     private TextView textCapacity;
     private Button buttonReserve;
+    private Button buttonFacebook;
+    private Button buttonInstagram;
+    private Button buttonWebsite;
+    private Button buttonWebMenu;
     private TextView textDescription;
     private RecyclerView recyclerViewRestaurantDetails;
     private Button buttonMenus;
-    private Button buttonShowOnMap;
     private Button buttonReviews;
 
     @Override
@@ -59,9 +64,52 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 int maxCapacity = Utils.getMaxCapacity(tables);
 
                 String capacityText = "Liczba gości w przedziale od 1 do " + maxCapacity;
+                String contactText = "";
+
+                if (restaurant.getContact() != null) {
+                    Contact contact = restaurant.getContact();
+                    contactText = "\nTelefon: " + contact.getPhone() + "\nE-mail: " + contact.getEmail();
+
+                    if (contact.getFacebook() != null && !contact.getFacebook().isEmpty()) {
+                        buttonFacebook.setVisibility(View.VISIBLE);
+                        buttonFacebook.setOnClickListener(v -> openLink(contact.getFacebook()));
+                    } else {
+                        buttonFacebook.setVisibility(View.GONE);
+                    }
+
+                    if (contact.getInstagram() != null && !contact.getInstagram().isEmpty()) {
+                        buttonInstagram.setVisibility(View.VISIBLE);
+                        buttonInstagram.setOnClickListener(v -> openLink(contact.getInstagram()));
+                    } else {
+                        buttonInstagram.setVisibility(View.GONE);
+                    }
+
+                    if (contact.getWebsite() != null && !contact.getWebsite().isEmpty()) {
+                        buttonWebsite.setVisibility(View.VISIBLE);
+                        buttonWebsite.setOnClickListener(v -> openLink(contact.getWebsite()));
+                    } else {
+                        buttonWebsite.setVisibility(View.GONE);
+                    }
+
+                    if (contact.getWebMenu() != null && !contact.getWebMenu().isEmpty()) {
+                        buttonWebMenu.setVisibility(View.VISIBLE);
+                        buttonWebMenu.setOnClickListener(v -> openLink(contact.getWebMenu()));
+                    } else {
+                        buttonWebMenu.setVisibility(View.GONE);
+                    }
+
+                }
+                // Only Reviews
+                buttonReviews.setOnClickListener(v -> {
+                    Intent intentReviews = new Intent(RestaurantDetailsActivity.this, ReviewsActivity.class);
+                    intentReviews.putExtra("restaurantId", restaurant.getRestaurantId());
+                    startActivity(intentReviews);
+                });
 
                 textRestaurantName.setText(textRestaurantNameOpeningHour);
                 textCapacity.setText(capacityText);
+                textDescription.setText(restaurant.getDescription() + contactText);
+
             }
         }
     }
@@ -72,9 +120,19 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         textCapacity = findViewById(R.id.textCapacity);
         buttonReserve = findViewById(R.id.buttonReserve);
         textDescription = findViewById(R.id.textDescription);
-        recyclerViewRestaurantDetails = findViewById(R.id.recyclerViewRestaurantDetails);
         buttonMenus = findViewById(R.id.buttonMenus);
-        buttonShowOnMap = findViewById(R.id.buttonShowOnMap);
         buttonReviews = findViewById(R.id.buttonReviews);
+
+        buttonFacebook = findViewById(R.id.buttonFacebook);
+        buttonInstagram = findViewById(R.id.buttonInstagram);
+        buttonWebsite = findViewById(R.id.buttonWebsite);
+        buttonWebMenu = findViewById(R.id.buttonWebMenu);
+    }
+
+    private void openLink(String url) {
+        if (url != null && !url.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        }
     }
 }

@@ -100,30 +100,46 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerViewRestaurantDetails" />
+                app:layout_constraintTop_toBottomOf="@+id/contactLinearlayout" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewRestaurantDetails"
+            <LinearLayout
+                android:id="@+id/contactLinearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:padding="16dp"
                 android:layout_marginEnd="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/textDescription">
 
-            <Button
-                android:id="@+id/buttonShowOnMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:padding="8dp"
-                android:text="Show on Map"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <Button
+                    android:id="@+id/buttonFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Facebook" />
+
+                <Button
+                    android:id="@+id/buttonInstagram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Instagram" />
+
+                <Button
+                    android:id="@+id/buttonWebsite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Website" />
+
+                <Button
+                    android:id="@+id/buttonWebMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="WebMenu" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/buttonReviews"
