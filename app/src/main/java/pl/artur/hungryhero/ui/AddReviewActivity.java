@@ -1,8 +1,10 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import pl.artur.hungryhero.R;
 
 public class AddReviewActivity extends AppCompatActivity {
 

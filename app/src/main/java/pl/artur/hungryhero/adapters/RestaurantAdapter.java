@@ -1,35 +1,24 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import pl.artur.hungryhero.models.OpeningHours;
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
-import pl.artur.hungryhero.ui.ChangeUserDataActivity;
-import pl.artur.hungryhero.ui.DrawerManager;
 import pl.artur.hungryhero.ui.RestaurantDetailsActivity;
-import pl.artur.hungryhero.utils.FirebaseManager;
 import pl.artur.hungryhero.utils.Utils;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {

@@ -100,11 +100,16 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                     }
 
                 }
-                // Only Reviews
                 buttonReviews.setOnClickListener(v -> {
                     Intent intentReviews = new Intent(RestaurantDetailsActivity.this, ReviewsActivity.class);
                     intentReviews.putExtra("restaurantId", restaurant.getRestaurantId());
                     startActivity(intentReviews);
+                });
+
+                buttonMenus.setOnClickListener(v -> {
+                    Intent intentMenus = new Intent(RestaurantDetailsActivity.this, MenusActivity.class);
+                    intentMenus.putExtra("restaurantId", restaurant.getRestaurantId());
+                    startActivity(intentMenus);
                 });
 
                 textRestaurantName.setText(textRestaurantNameOpeningHour);

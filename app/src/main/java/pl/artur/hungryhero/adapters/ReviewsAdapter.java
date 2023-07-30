@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Reviews;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
