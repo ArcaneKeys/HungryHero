@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HungryHero</string>
+    <string name="app_welcome">Witaj w HungryHero!</string>
+    <string name="app_welcome_restaurant_text">Gratulujemy pomyślnej rejestracji Twojej restauracji! Jesteśmy podekscytowani, że dołączyłeś do naszej społeczności.</string>
+    <string name="app_add_info">Uzupełnij informacje o restauracji!</string>
+    <string name="app_add_info_text">Uzupełnienie informacji o Twojej restauracji jest ważne, aby klienci mogli Cię łatwo znaleźć i dowiedzieć się więcej o Twojej ofercie.</string>
+    <string name="app_add_menu">Dodaj menu</string>
+    <string name="app_add_menu_text">Dodanie menu jest niezwykle ważne, ponieważ pozwala klientom zapoznać się z Twoją ofertą i dokonywać świadomych wyborów, co poprawia ich ogólne doświadczenie.</string>
+    <string name="app_add_photos">Dodaj zdjęcia</string>
+    <string name="app_add_photos_text">Dodawanie zdjęć jest kluczowe, ponieważ daje klientom wizualny wgląd w atmosferę Twojej restauracji i serwowane potrawy, czyniąc Twoją placówkę bardziej atrakcyjną i zachęcającą.</string>
+    <string name="app_ready">Jesteś gotowy!</string>
+    <string name="app_ready_text">Teraz możesz przejść do zarządzania Twoją restauracją w aplikacji.</string>
+
+    <string name="wish_text_1">Niech Twój dzień będzie tak słodki jak Twoje ulubione ciasto!</string>
+    <string name="wish_text_2">Dziś jest idealny dzień na filiżankę świeżo parzonej kawy.</string>
+    <string name="wish_text_3">Nie ma nic lepszego niż kromka ciepłego chleba z masłem. Smacznego!</string>
+    <string name="wish_text_4">Dziś wydaje się być świetnym dniem na pyszne makarony. Smacznego!</string>
+    <string name="wish_text_5">Może dzisiaj zafundujesz sobie pyszne ciastko?</string>
+    <string name="wish_text_6">Świeża sałatka może być tym, czego potrzebujesz dzisiaj.</string>
+    <string name="wish_text_7">Niech każdy kęs, który zjesz dzisiaj, przynosi Ci radość i satysfakcję!</string>
+    <string name="wish_text_8">Może dzisiaj spróbujesz świeżego sushi? Zawsze to dobry wybór!</string>
+    <string name="wish_text_9">Dziś jest idealny dzień na kawałek pizzy. Smacznego!</string>
+    <string name="wish_text_10">Domowy burger może być tym, czego potrzebujesz dzisiaj.</string>
+    <string name="wish_text_11">Może dzisiaj pozwolisz sobie na kremowe lody?</string>
+    <string name="wish_text_12">Świeży sok może być idealnym początkiem Twojego dnia.</string>
+    <string name="wish_text_13">Dziś wydaje się być świetnym dniem na solidną kanapkę.</string>
+    <string name="wish_text_14">Może orzeźwiający smoothie, aby zacząć dzień z energią?</string>
+    <string name="wish_text_15">Kawałek ciasta czekoladowego zawsze jest dobrym pomysłem. Smacznego!</string>
+
+</resources>

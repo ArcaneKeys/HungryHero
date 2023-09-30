@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">HungryHero</string>
+    <string name="app_welcome">Welcome to HungryHero!</string>
+    <string name="app_welcome_restaurant_text">Congratulations on successfully registering your restaurant! We are excited that you have joined our community.!</string>
+    <string name="app_add_info">Complete the information about your restaurant!</string>
+    <string name="app_add_info_text">Filling out the details of your restaurant is important so that customers can easily find you and learn more about what you offer.</string>
+    <string name="app_add_menu">Add a menu</string>
+    <string name="app_add_menu_text">Adding a menu is crucial as it allows customers to explore your offerings and make informed dining choices, enhancing their overall experience.</string>
+    <string name="app_add_photos">Add photos</string>
+    <string name="app_add_photos_text">Uploading photos is essential as it gives customers a visual insight into your restaurant\'s ambiance and dishes, making your establishment more appealing and inviting.</string>
+    <string name="app_ready">You\'re all set!</string>
+    <string name="app_ready_text">Now you can proceed to manage your restaurant within the app.</string>
+
+    <string name="wish_text_1">May your day be as sweet as your favorite dessert!</string>
+    <string name="wish_text_2">Today is a perfect day for a cup of freshly brewed coffee.</string>
+    <string name="wish_text_3">There\'s nothing better than a slice of warm bread with butter. Enjoy!</string>
+    <string name="wish_text_4">Today seems like a great day for some delicious pasta. Bon appétit!</string>
+    <string name="wish_text_5">Why not treat yourself to a delightful pastry today?</string>
+    <string name="wish_text_6">A fresh salad might just be the refreshing meal you need today.</string>
+    <string name="wish_text_7">May every bite you take today bring you joy and satisfaction!</string>
+    <string name="wish_text_8">How about some fresh sushi today? It\'s always a good choice!</string>
+    <string name="wish_text_9">Today is a perfect day for a slice of pizza. Enjoy!</string>
+    <string name="wish_text_10">A homemade burger might just be the treat you need today.</string>
+    <string name="wish_text_11">Why not indulge in some creamy ice cream today?</string>
+    <string name="wish_text_12">A fresh juice can be the perfect start to your day.</string>
+    <string name="wish_text_13">Today seems like a great day for a hearty sandwich.</string>
+    <string name="wish_text_14">How about a refreshing smoothie to kickstart your day?</string>
+    <string name="wish_text_15">A piece of chocolate cake is always a good idea. Enjoy!</string>
+
+
 </resources>
