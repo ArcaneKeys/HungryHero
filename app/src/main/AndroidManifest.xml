@@ -21,9 +21,6 @@
             android:name=".ui.MenusActivity"
             android:exported="false" />
         <activity
-            android:name=".AddReviweActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ReviewsActivity"
             android:exported="false" />
         <activity
