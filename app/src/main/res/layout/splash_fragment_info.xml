@@ -11,13 +11,25 @@
         android:layout_height="wrap_content"
         android:text="@string/app_add_info"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/darkerColor"
+        android:shadowColor="@color/shadowColor"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:elevation="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_add_info_text"
         android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:textColor="@color/darkerColor"
+        android:shadowColor="@color/shadowColor"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:elevation="10dp"/>
 
 </LinearLayout>

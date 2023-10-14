@@ -10,22 +10,25 @@
     <string name="app_add_photos_text">Uploading photos is essential as it gives customers a visual insight into your restaurant\'s ambiance and dishes, making your establishment more appealing and inviting.</string>
     <string name="app_ready">You\'re all set!</string>
     <string name="app_ready_text">Now you can proceed to manage your restaurant within the app.</string>
+    <string name="app_next">Next</string>
+    <string name="start">Start</string>
 
-    <string name="wish_text_1">May your day be as sweet as your favorite dessert!</string>
-    <string name="wish_text_2">Today is a perfect day for a cup of freshly brewed coffee.</string>
-    <string name="wish_text_3">There\'s nothing better than a slice of warm bread with butter. Enjoy!</string>
-    <string name="wish_text_4">Today seems like a great day for some delicious pasta. Bon appétit!</string>
-    <string name="wish_text_5">Why not treat yourself to a delightful pastry today?</string>
-    <string name="wish_text_6">A fresh salad might just be the refreshing meal you need today.</string>
-    <string name="wish_text_7">May every bite you take today bring you joy and satisfaction!</string>
-    <string name="wish_text_8">How about some fresh sushi today? It\'s always a good choice!</string>
-    <string name="wish_text_9">Today is a perfect day for a slice of pizza. Enjoy!</string>
-    <string name="wish_text_10">A homemade burger might just be the treat you need today.</string>
-    <string name="wish_text_11">Why not indulge in some creamy ice cream today?</string>
-    <string name="wish_text_12">A fresh juice can be the perfect start to your day.</string>
-    <string name="wish_text_13">Today seems like a great day for a hearty sandwich.</string>
-    <string name="wish_text_14">How about a refreshing smoothie to kickstart your day?</string>
-    <string name="wish_text_15">A piece of chocolate cake is always a good idea. Enjoy!</string>
-
+    <string-array name="wishes">
+        <item>May your day be as sweet as your favorite dessert!|default_background.jfif</item>
+        <item>Today is a perfect day for a cup of freshly brewed coffee.|default_background.jfif</item>
+        <item>There\'s nothing better than a slice of warm bread with butter. Enjoy!|default_background.jfif</item>
+        <item>Today seems like a great day for some delicious pasta. Bon appétit!|default_background.jfif</item>
+        <item>Why not treat yourself to a delightful pastry today?|default_background.jfif</item>
+        <item>A fresh salad might just be the refreshing meal you need today.|default_background.jfif</item>
+        <item>May every bite you take today bring you joy and satisfaction!|default_background.jfif</item>
+        <item>How about some fresh sushi today? It\'s always a good choice!|default_background.jfif</item>
+        <item>Today is a perfect day for a slice of pizza. Enjoy!|default_background.jfif</item>
+        <item>A homemade burger might just be the treat you need today.|default_background.jfif</item>
+        <item>Why not indulge in some creamy ice cream today?|default_background.jfif</item>
+        <item>A fresh juice can be the perfect start to your day.|default_background.jfif</item>
+        <item>Today seems like a great day for a hearty sandwich.|default_background.jfif</item>
+        <item>How about a refreshing smoothie to kickstart your day?|default_background.jfif</item>
+        <item>A piece of chocolate cake is always a good idea. Enjoy!|default_background.jfif</item>
+    </string-array>
 
 </resources>

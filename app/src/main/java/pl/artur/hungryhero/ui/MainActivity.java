@@ -33,6 +33,7 @@ import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.utils.FirebaseManager;
 
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RestaurantAdapter restaurantAdapter;

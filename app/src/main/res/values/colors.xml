@@ -6,4 +6,10 @@
     <color name="my_dark_primary">#4527A0</color>
     <color name="my_light_primary">#B39DDB</color>
 
+    <color name="colorInactiveDot">#4F000000</color>
+    <color name="colorActiveDot">#FF000000</color>
+
+    <color name="darkerColor">#FF000000</color>
+    <color name="shadowColor">#80000000</color>
+
 </resources>

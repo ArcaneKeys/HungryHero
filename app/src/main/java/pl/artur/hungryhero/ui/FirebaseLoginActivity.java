@@ -51,8 +51,8 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
         currentUser =  FirebaseManager.getCurrentUser();
         if (currentUser != null) {
-            // Użytkownik jest zalogowany, przekieruj do MainActivity
-            startActivity(new Intent(this, MainActivity.class));
+            // Użytkownik jest zalogowany, przekieruj do Splash
+            startActivity(new Intent(this, SplashActivity.class));
             finish(); // Zakończ FirebaseLoginActivity
         }
 
@@ -100,7 +100,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        startActivity(new Intent(FirebaseLoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(FirebaseLoginActivity.this, SplashActivity.class));
                     } else {
                         Toast.makeText(this, "Logowanie nieudane.", Toast.LENGTH_SHORT).show();
                     }
@@ -145,7 +145,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
                         db.collection("Users").document(userId).set(putUser)
                                 .addOnSuccessListener(unused -> {
-                                    startActivity(new Intent(FirebaseLoginActivity.this, MainActivity.class));
+                                    startActivity(new Intent(FirebaseLoginActivity.this, SplashActivity.class));
                                 })
                                 .addOnFailureListener(e -> {
                                     Toast.makeText(this, "Błąd rejestracji.", Toast.LENGTH_SHORT).show();

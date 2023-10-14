@@ -11,21 +11,25 @@
     <string name="app_add_photos_text">Dodawanie zdjęć jest kluczowe, ponieważ daje klientom wizualny wgląd w atmosferę Twojej restauracji i serwowane potrawy, czyniąc Twoją placówkę bardziej atrakcyjną i zachęcającą.</string>
     <string name="app_ready">Jesteś gotowy!</string>
     <string name="app_ready_text">Teraz możesz przejść do zarządzania Twoją restauracją w aplikacji.</string>
+    <string name="app_next">Dalej</string>
+    <string name="start">Start</string>
 
-    <string name="wish_text_1">Niech Twój dzień będzie tak słodki jak Twoje ulubione ciasto!</string>
-    <string name="wish_text_2">Dziś jest idealny dzień na filiżankę świeżo parzonej kawy.</string>
-    <string name="wish_text_3">Nie ma nic lepszego niż kromka ciepłego chleba z masłem. Smacznego!</string>
-    <string name="wish_text_4">Dziś wydaje się być świetnym dniem na pyszne makarony. Smacznego!</string>
-    <string name="wish_text_5">Może dzisiaj zafundujesz sobie pyszne ciastko?</string>
-    <string name="wish_text_6">Świeża sałatka może być tym, czego potrzebujesz dzisiaj.</string>
-    <string name="wish_text_7">Niech każdy kęs, który zjesz dzisiaj, przynosi Ci radość i satysfakcję!</string>
-    <string name="wish_text_8">Może dzisiaj spróbujesz świeżego sushi? Zawsze to dobry wybór!</string>
-    <string name="wish_text_9">Dziś jest idealny dzień na kawałek pizzy. Smacznego!</string>
-    <string name="wish_text_10">Domowy burger może być tym, czego potrzebujesz dzisiaj.</string>
-    <string name="wish_text_11">Może dzisiaj pozwolisz sobie na kremowe lody?</string>
-    <string name="wish_text_12">Świeży sok może być idealnym początkiem Twojego dnia.</string>
-    <string name="wish_text_13">Dziś wydaje się być świetnym dniem na solidną kanapkę.</string>
-    <string name="wish_text_14">Może orzeźwiający smoothie, aby zacząć dzień z energią?</string>
-    <string name="wish_text_15">Kawałek ciasta czekoladowego zawsze jest dobrym pomysłem. Smacznego!</string>
+    <string-array name="wishes">
+        <item>Niech Twój dzień będzie tak słodki jak Twoje ulubione ciasto!|default_background.jfif</item>
+        <item>Dziś jest idealny dzień na filiżankę świeżo parzonej kawy.|default_background.jfif</item>
+        <item>Nie ma nic lepszego niż kromka ciepłego chleba z masłem. Smacznego!|default_background.jfif</item>
+        <item>Dziś wydaje się być świetnym dniem na pyszne makarony. Smacznego!|default_background.jfif</item>
+        <item>Może dzisiaj zafundujesz sobie pyszne ciastko?|default_background.jfif</item>
+        <item>Świeża sałatka może być tym, czego potrzebujesz dzisiaj.|default_background.jfif</item>
+        <item>Niech każdy kęs, który zjesz dzisiaj, przynosi Ci radość i satysfakcję!|default_background.jfif</item>
+        <item>Może dzisiaj spróbujesz świeżego sushi? Zawsze to dobry wybór!|default_background.jfif</item>
+        <item>Dziś jest idealny dzień na kawałek pizzy. Smacznego!|default_background.jfif</item>
+        <item>Domowy burger może być tym, czego potrzebujesz dzisiaj.|default_background.jfif</item>
+        <item>Może dzisiaj pozwolisz sobie na kremowe lody?|default_background.jfif</item>
+        <item>Świeży sok może być idealnym początkiem Twojego dnia.|default_background.jfif</item>
+        <item>Dziś wydaje się być świetnym dniem na solidną kanapkę.|default_background.jfif</item>
+        <item>Może orzeźwiający smoothie, aby zacząć dzień z energią?|default_background.jfif</item>
+        <item>Kawałek ciasta czekoladowego zawsze jest dobrym pomysłem. Smacznego!|default_background.jfif</item>
+    </string-array>
 
 </resources>
