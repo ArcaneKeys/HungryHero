@@ -25,16 +25,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.User;
+import pl.artur.hungryhero.module.helper.FirebaseHelper;
 import pl.artur.hungryhero.utils.FirebaseManager;
 import pl.artur.hungryhero.utils.ValidationUtils;
 
+@AndroidEntryPoint
 public class FirebaseLoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
-    private FirebaseUser currentUser;
+    @Inject
+    FirebaseHelper firebaseHelper;
+
     private Button loginButton;
     private Button registerButton;
     private EditText loginEmail;
@@ -49,11 +54,10 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        currentUser =  FirebaseManager.getCurrentUser();
+        FirebaseUser currentUser = firebaseHelper.getCurrentUser();
         if (currentUser != null) {
-            // Użytkownik jest zalogowany, przekieruj do Splash
             startActivity(new Intent(this, SplashActivity.class));
-            finish(); // Zakończ FirebaseLoginActivity
+            finish();
         }
 
         setContentView(R.layout.activity_firebase_login);
@@ -97,7 +101,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     }
 
     private void signInUser(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password)
+        firebaseHelper.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         startActivity(new Intent(FirebaseLoginActivity.this, SplashActivity.class));
@@ -125,26 +129,27 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     }
 
     private void createUserAndRegister(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
+        firebaseHelper.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        String userId = user.getUid();
+                        String userId = firebaseHelper.getCurrentUid();
                         String selectedAccountType = accountTypeSpinner.getSelectedItem().toString();
 
                         String displayName = generateUsername();
-                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(displayName)
-                                .build();
+                        UserProfileChangeRequest profileUpdates = firebaseHelper.createProfileUpdateWithDisplayName(displayName);
 
-                        user.updateProfile(profileUpdates).addOnCompleteListener(task1 -> {
+                        firebaseHelper.updateUserProfile(profileUpdates).addOnCompleteListener(task1 -> {
 
                         });
 
                         User putUser = new User(selectedAccountType, displayName, email, "");
 
-                        db.collection("Users").document(userId).set(putUser)
+                        firebaseHelper.setUserDocument(userId, putUser)
                                 .addOnSuccessListener(unused -> {
+                                    if ("Restauracja".equals(selectedAccountType)) {
+                                        firebaseHelper.createEmptyRestaurantDocument(userId);
+                                    }
+
                                     startActivity(new Intent(FirebaseLoginActivity.this, SplashActivity.class));
                                 })
                                 .addOnFailureListener(e -> {
@@ -173,9 +178,6 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     }
 
     public void initVariables(){
-        mAuth = FirebaseManager.getAuthInstance();
-        db = FirebaseManager.getFirestoreInstance();
-
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
 

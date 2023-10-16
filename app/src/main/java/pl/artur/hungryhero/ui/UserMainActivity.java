@@ -34,7 +34,7 @@ import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.utils.FirebaseManager;
 
 
-public class MainActivity extends AppCompatActivity {
+public class UserMainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RestaurantAdapter restaurantAdapter;
     private List<Restaurant> allRestaurants = new ArrayList<>();
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_main);
 
         // Inicjalizacja zmiennych
         navButton = findViewById(R.id.nav_button);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         ShapeableImageView userIcon = headerView.findViewById(R.id.user_icon);
         userIcon.setOnClickListener(v -> {
             // Przekierowanie do Layoutu zmiany danych użytkownika
-            Intent intent = new Intent(MainActivity.this, ChangeUserDataActivity.class);
+            Intent intent = new Intent(UserMainActivity.this, ChangeUserDataActivity.class);
             startActivity(intent);
         });
 

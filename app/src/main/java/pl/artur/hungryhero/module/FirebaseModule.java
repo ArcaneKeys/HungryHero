@@ -1,5 +1,7 @@
 package pl.artur.hungryhero.module;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -25,4 +27,17 @@ public class FirebaseModule {
     public StorageReference provideStorageReference(FirebaseStorage firebaseStorage) {
         return firebaseStorage.getReference();
     }
+
+    @Provides
+    @Singleton
+    public FirebaseAuth provideFirebaseAuth() {
+        return FirebaseAuth.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    public FirebaseFirestore provideFirebaseFirestore() {
+        return FirebaseFirestore.getInstance();
+    }
+
 }

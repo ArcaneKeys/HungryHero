@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.module.helper.FirebaseHelper;
 import pl.artur.hungryhero.module.helper.PreferencesHelper;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.ui.splashFragment.FinalFragment;
@@ -29,6 +32,9 @@ import pl.artur.hungryhero.ui.splashFragment.WelcomeFragment;
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 public class SplashActivity extends AppCompatActivity {
+
+    @Inject
+    FirebaseHelper firebaseHelper;
 
     private ViewPager2 viewPager;
     private Button nextButton;
@@ -48,6 +54,17 @@ public class SplashActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         nextButton = findViewById(R.id.nextButton);
         dotsLayout = findViewById(R.id.dotsLayout);
+
+        firebaseHelper.getUserDocument().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    if (firebaseHelper.isUser(document)) {
+                        preferencesHelper.setSeenSplash(true);
+                    }
+                }
+            }
+        });
 
         if (preferencesHelper.hasSeenSplash()) {
             showOnlyWelcomeScreen = true;
@@ -104,11 +121,22 @@ public class SplashActivity extends AppCompatActivity {
             if (currentItem < getTotalSteps() - 1) {
                 viewPager.setCurrentItem(currentItem + 1);
             } else {
-
-
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                firebaseHelper.getUserDocument().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            if (firebaseHelper.isRestaurant(document)) {
+                                Intent intent = new Intent(SplashActivity.this, RestaurantMainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else if (firebaseHelper.isUser(document)) {
+                                Intent intent = new Intent(SplashActivity.this, UserMainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+                });
             }
         });
     }
