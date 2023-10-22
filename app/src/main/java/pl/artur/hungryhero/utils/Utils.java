@@ -29,7 +29,7 @@ public class Utils {
             case Calendar.SUNDAY:
                 return openingHours.getSunday();
             default:
-                return "Closed"; // Domyślna wartość w przypadku braku danych dla danego dnia tygodnia
+                return "Zamknięte"; // Domyślna wartość w przypadku braku danych dla danego dnia tygodnia
         }
     }
 

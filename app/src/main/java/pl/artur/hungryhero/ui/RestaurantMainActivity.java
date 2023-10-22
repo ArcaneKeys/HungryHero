@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.AddOrEditInfoActivity;
 import pl.artur.hungryhero.AddOrEditLocalizationActivity;
+import pl.artur.hungryhero.AddOrEditOpeningHoursActivity;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
@@ -118,7 +119,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         });
 
         btnAddOrEditOpeningHours.setOnClickListener(v -> {
-            // intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, AddOrEditOpeningHoursActivity.class);
+            startActivity(intent);
         });
 
         btnAddOrEditTables.setOnClickListener(v -> {

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 import pl.artur.hungryhero.models.Localization;
+import pl.artur.hungryhero.models.OpeningHours;
 import pl.artur.hungryhero.models.User;
 
 public class FirebaseHelper {
@@ -128,6 +129,16 @@ public class FirebaseHelper {
         if (currentUser != null) {
             DocumentReference localizationRef = db.collection("Restaurant").document(currentUser.getUid());
             return localizationRef.update("localization", localization.toMap());
+        } else {
+            return null;
+        }
+    }
+
+    public Task<Void> updateOpeningHoursData(OpeningHours openingHours) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference localizationRef = db.collection("Restaurant").document(currentUser.getUid());
+            return localizationRef.update("openingHours", openingHours.toMap());
         } else {
             return null;
         }

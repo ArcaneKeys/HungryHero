@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.PropertyName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OpeningHours implements Parcelable {
     @PropertyName("monday")
     private String monday;
@@ -107,4 +110,16 @@ public class OpeningHours implements Parcelable {
             return new OpeningHours[size];
         }
     };
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("monday", monday);
+        map.put("tuesday", tuesday);
+        map.put("wednesday", wednesday);
+        map.put("thursday", thursday);
+        map.put("friday", friday);
+        map.put("saturday", saturday);
+        map.put("sunday", sunday);
+        return map;
+    }
 }

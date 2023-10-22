@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddOrEditOpeningHoursActivity">
+
+    <TextView
+        android:id="@+id/labelStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Godzina otwarcia"
+        app:layout_constraintEnd_toEndOf="@id/startTimePicker"
+        app:layout_constraintStart_toStartOf="@id/startTimePicker"
+        app:layout_constraintTop_toTopOf="@+id/startTimePicker" />
+
+    <TimePicker
+        android:id="@+id/startTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Godzina zamknięcia"
+        app:layout_constraintEnd_toEndOf="@id/endTimePicker"
+        app:layout_constraintStart_toStartOf="@id/endTimePicker"
+        app:layout_constraintTop_toTopOf="@id/endTimePicker" />
+
+    <TimePicker
+        android:id="@+id/endTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startTimePicker" />
+
+    <Button
+        android:id="@+id/closedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Zamknięte"
+        app:layout_constraintEnd_toEndOf="@+id/endTimePicker"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/endTimePicker"
+        app:layout_constraintTop_toBottomOf="@+id/endTimePicker" />
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Potwierdź"
+        app:layout_constraintEnd_toEndOf="@+id/closedButton"
+        app:layout_constraintStart_toStartOf="@+id/closedButton"
+        app:layout_constraintTop_toBottomOf="@+id/closedButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
