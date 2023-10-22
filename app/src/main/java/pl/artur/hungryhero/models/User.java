@@ -13,17 +13,6 @@ public class User {
     @PropertyName("phone")
     private String phone;
 
-    private String userId;
-
-    @Exclude
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public User(String accountType, String userName, String email, String phone) {
         this.accountType = accountType;
         this.userName = userName;

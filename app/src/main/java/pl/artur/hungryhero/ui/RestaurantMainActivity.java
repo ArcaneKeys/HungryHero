@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.AddOrEditInfoActivity;
+import pl.artur.hungryhero.AddOrEditLocalizationActivity;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
@@ -32,7 +35,6 @@ public class RestaurantMainActivity extends AppCompatActivity {
     private Button btnAddOrEditContact, btnAddOrEditLocalization, btnAddOrEditInfo,
             btnAddOrEditOpeningHours, btnAddOrEditTables, btnAddOrEditMenu;
     private Button btnShowReview, btnShowReservation, btnShowRestaurant;
-    private Intent intent = null;
 
     private TextView restaurant_name;
     private TextView restaurant_email;
@@ -62,8 +64,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         restaurant_email = headerView.findViewById(R.id.restaurant_email);
         restaurant_name = headerView.findViewById(R.id.restaurant_name);
 
-        ShapeableImageView userIcon = headerView.findViewById(R.id.user_icon);
-        userIcon.setOnClickListener(v -> {
+        ShapeableImageView restaurantIcon = headerView.findViewById(R.id.restaurant_icon);
+        restaurantIcon.setOnClickListener(v -> {
             // Przekierowanie do Layoutu zmiany danych użytkownika
             Intent intent = new Intent(RestaurantMainActivity.this, ChangeRestaurantDataActivity.class);
             startActivity(intent);
@@ -106,11 +108,13 @@ public class RestaurantMainActivity extends AppCompatActivity {
         });
 
         btnAddOrEditLocalization.setOnClickListener(v -> {
-            // intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, AddOrEditLocalizationActivity.class);
+            startActivity(intent);
         });
 
         btnAddOrEditInfo.setOnClickListener(v -> {
-            // intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, AddOrEditInfoActivity.class);
+            startActivity(intent);
         });
 
         btnAddOrEditOpeningHours.setOnClickListener(v -> {
@@ -137,10 +141,6 @@ public class RestaurantMainActivity extends AppCompatActivity {
 //            intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
         });
 
-        if (intent != null){
-            startActivity(intent);
-            finish();
-        }
     }
 
     private void init(){

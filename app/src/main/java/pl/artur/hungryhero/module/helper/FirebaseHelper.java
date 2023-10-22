@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import pl.artur.hungryhero.models.Localization;
 import pl.artur.hungryhero.models.User;
 
 public class FirebaseHelper {
@@ -54,12 +55,13 @@ public class FirebaseHelper {
         }
     }
 
-    public Task<Void> setUserDocument(String userId, User user) {
-        return db.collection("Users").document(userId).set(user);
-    }
-
-    public Task<Void> createEmptyRestaurantDocument(String userId) {
-        return db.collection("restaurants").document(userId).set(new HashMap<>());
+    public Task<Void> setUserDocument(User user) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            return db.collection("Users").document(currentUser.getUid()).set(user);
+        } else {
+            return null;
+        }
     }
 
     public Task<DocumentSnapshot> getUserDocument() {
@@ -94,5 +96,41 @@ public class FirebaseHelper {
                 .build();
     }
 
+    public void createEmptyRestaurantDocument() {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            db.collection("Restaurant").document(currentUser.getUid()).set(new HashMap<>());
+        }
+    }
+
+    public Task<DocumentSnapshot> getRestaurantData() {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference restaurantRef = db.collection("Restaurant").document(currentUser.getUid());
+            return restaurantRef.get();
+        } else {
+            return null;
+        }
+    }
+
+    public Task<Void> updateRestaurantData(String name, String description) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference restaurantRef = db.collection("Restaurant").document(currentUser.getUid());
+            return restaurantRef.update("name", name, "description", description);
+        } else {
+            return null;
+        }
+    }
+
+    public Task<Void> updateLocalizationData(Localization localization) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference localizationRef = db.collection("Restaurant").document(currentUser.getUid());
+            return localizationRef.update("localization", localization.toMap());
+        } else {
+            return null;
+        }
+    }
 
 }

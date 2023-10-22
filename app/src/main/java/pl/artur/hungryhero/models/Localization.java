@@ -8,6 +8,9 @@ import com.google.firebase.firestore.GeoPoint;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Localization implements Parcelable {
     @PropertyName("city")
     private String city;
@@ -19,11 +22,13 @@ public class Localization implements Parcelable {
     private String houseNumber;
     @PropertyName("coordinates")
     private GeoPoint coordinates;
+
     public Localization(String city, String postalCode, String street, String houseNumber, GeoPoint coordinates) {
         this.city = city;
         this.postalCode = postalCode;
         this.street = street;
         this.houseNumber = houseNumber;
+        this.coordinates = coordinates;
     }
 
     public Localization() {}
@@ -91,5 +96,15 @@ public class Localization implements Parcelable {
             return new Localization[size];
         }
     };
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("city", city);
+        map.put("postalCode", postalCode);
+        map.put("street", street);
+        map.put("houseNumber", houseNumber);
+        map.put("coordinates", coordinates);
+        return map;
+    }
 
 }

@@ -132,7 +132,6 @@ public class FirebaseLoginActivity extends AppCompatActivity {
         firebaseHelper.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        String userId = firebaseHelper.getCurrentUid();
                         String selectedAccountType = accountTypeSpinner.getSelectedItem().toString();
 
                         String displayName = generateUsername();
@@ -144,10 +143,10 @@ public class FirebaseLoginActivity extends AppCompatActivity {
 
                         User putUser = new User(selectedAccountType, displayName, email, "");
 
-                        firebaseHelper.setUserDocument(userId, putUser)
+                        firebaseHelper.setUserDocument(putUser)
                                 .addOnSuccessListener(unused -> {
                                     if ("Restauracja".equals(selectedAccountType)) {
-                                        firebaseHelper.createEmptyRestaurantDocument(userId);
+                                        firebaseHelper.createEmptyRestaurantDocument();
                                     }
 
                                     startActivity(new Intent(FirebaseLoginActivity.this, SplashActivity.class));
