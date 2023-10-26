@@ -1,5 +1,11 @@
 package pl.artur.hungryhero.utils;
 
+import android.util.Patterns;
+
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +33,17 @@ public class ValidationUtils {
 
     public static boolean arePasswordsMatching(String password, String repeatPassword) {
         return password.equals(repeatPassword);
+    }
+
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            Phonenumber.PhoneNumber numberProto = phoneUtil.parse(phoneNumber, "PL");
+            return phoneUtil.isValidNumber(numberProto);
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+        }
+        return false;
     }
 
 }

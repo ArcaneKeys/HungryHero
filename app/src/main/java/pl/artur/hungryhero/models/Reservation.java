@@ -8,19 +8,16 @@ import com.google.firebase.database.PropertyName;
 
 import java.time.LocalDateTime;
 
+// TODO: ZMIENIONA KLASA -> ZMIENIĆ W USER WYŚWIETLANIE!!!
 public class Reservation implements Parcelable {
     @PropertyName("userId")
     private String userId;
-    @PropertyName("tableId")
-    private String tableId;
     @PropertyName("startTime")
     private String startTime;
     @PropertyName("endTime")
     private String endTime;
-    @PropertyName("isActive")
-    private boolean isActive;
     @PropertyName("date")
-    private String date;
+    private int date;
     @PropertyName("createdAt")
     private String createdAt;
 
@@ -35,12 +32,10 @@ public class Reservation implements Parcelable {
         this.reservationId = reservationId;
     }
 
-    public Reservation(String userId, String tableId, String startTime, String endTime, boolean isActive, String date, String createdAt) {
+    public Reservation(String userId, String startTime, String endTime, int date, String createdAt) {
         this.userId = userId;
-        this.tableId = tableId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.isActive = isActive;
         this.date = date;
         this.createdAt = createdAt;
     }
@@ -50,11 +45,6 @@ public class Reservation implements Parcelable {
     @PropertyName("userId")
     public String getUserId() {
         return userId;
-    }
-
-    @PropertyName("tableId")
-    public String getTableId() {
-        return tableId;
     }
 
     @PropertyName("startTime")
@@ -67,13 +57,8 @@ public class Reservation implements Parcelable {
         return endTime;
     }
 
-    @PropertyName("isActive")
-    public boolean isActive() {
-        return isActive;
-    }
-
     @PropertyName("date")
-    public String getDate() { return date;}
+    public int getDate() { return date;}
 
     @PropertyName("createdAt")
     public String getCreatedAt() {
@@ -83,22 +68,18 @@ public class Reservation implements Parcelable {
     // Parcelable constructor
     protected Reservation(Parcel in) {
         userId = in.readString();
-        tableId = in.readString();
         startTime = in.readString();
         endTime = in.readString();
-        isActive = in.readByte() != 0;
-        date = in.readString();
+        date = in.readInt();
         createdAt = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(userId);
-        parcel.writeString(tableId);
         parcel.writeString(startTime);
         parcel.writeString(endTime);
-        parcel.writeByte((byte) (isActive ? 1 : 0));
-        parcel.writeString(date);
+        parcel.writeInt(date);
         parcel.writeString(createdAt);
     }
 

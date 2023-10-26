@@ -24,8 +24,6 @@ public class Restaurant implements Parcelable {
     private List<Menu> menu;
     @PropertyName("tables")
     private List<Table> tables;
-    @PropertyName("reservation")
-    private List<Reservation> reservations;
     @PropertyName("reviews")
     private List<Reviews> reviews;
     private String restaurantId;
@@ -39,7 +37,7 @@ public class Restaurant implements Parcelable {
         this.restaurantId = restaurantId;
     }
 
-    public Restaurant(String name, String description, Localization localization, OpeningHours openingHours, Contact contact, List<Menu> menu, List<Table> tables, List<Reservation> reservations, List<Reviews> reviews) {
+    public Restaurant(String name, String description, Localization localization, OpeningHours openingHours, Contact contact, List<Menu> menu, List<Table> tables, List<Reviews> reviews) {
         this.name = name;
         this.description = description;
         this.localization = localization;
@@ -47,7 +45,6 @@ public class Restaurant implements Parcelable {
         this.contact = contact;
         this.menu = menu;
         this.tables = tables;
-        this.reservations = reservations;
         this.reviews = reviews;
     }
 
@@ -88,11 +85,6 @@ public class Restaurant implements Parcelable {
         return tables;
     }
 
-    @PropertyName("reservation")
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
     @PropertyName("reviews")
     public List<Reviews> getReviews() {
         return reviews;
@@ -111,7 +103,6 @@ public class Restaurant implements Parcelable {
         contact = in.readParcelable(Contact.class.getClassLoader());
         menu = in.createTypedArrayList(Menu.CREATOR);
         tables = in.createTypedArrayList(Table.CREATOR);
-        reservations = in.createTypedArrayList(Reservation.CREATOR);
         reviews = in.createTypedArrayList(Reviews.CREATOR);
         restaurantId = in.readString();
     }
@@ -130,7 +121,6 @@ public class Restaurant implements Parcelable {
         parcel.writeParcelable(contact, i);
         parcel.writeTypedList(menu);
         parcel.writeTypedList(tables);
-        parcel.writeTypedList(reservations);
         parcel.writeTypedList(reviews);
         parcel.writeString(restaurantId);
     }

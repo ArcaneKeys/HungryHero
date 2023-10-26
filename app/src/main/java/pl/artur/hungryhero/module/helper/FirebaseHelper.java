@@ -5,16 +5,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import pl.artur.hungryhero.models.Contact;
 import pl.artur.hungryhero.models.Localization;
 import pl.artur.hungryhero.models.OpeningHours;
+import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.models.User;
 
 public class FirebaseHelper {
@@ -141,6 +145,62 @@ public class FirebaseHelper {
             return localizationRef.update("openingHours", openingHours.toMap());
         } else {
             return null;
+        }
+    }
+
+    public Task<Void> updateContactData(Contact contact) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference localizationRef = db.collection("Restaurant").document(currentUser.getUid());
+            return localizationRef.update("contact", contact.toMap());
+        } else {
+            return null;
+        }
+    }
+
+    public CollectionReference getTablesCollectionRef() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            return db.collection("Restaurant").document(currentUser.getUid()).collection("tables");
+        }
+        return null;
+    }
+
+    public Task<DocumentReference> addTable(Table table) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference restaurantRef = db.collection("Restaurant").document(currentUser.getUid());
+            return restaurantRef.collection("tables").add(table);
+        }
+        return null;
+    }
+
+    public Task<Void> deleteTable(String tableId) {
+        return getTablesCollectionRef().document(tableId).delete();
+    }
+
+    public Task<DocumentSnapshot> getTableDocument(String tableId) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference tableRef = db.collection("Restaurant")
+                    .document(currentUser.getUid())
+                    .collection("tables")
+                    .document(tableId);
+            return tableRef.get();
+        } else {
+            return null;
+        }
+    }
+
+    public void updateTable(String tableId, Table table) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference tableRef = db.collection("Restaurant").document(currentUser.getUid())
+                    .collection("tables").document(tableId);
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("number", table.getNumber());
+            updates.put("capacity", table.getCapacity());
+            tableRef.update(updates);
         }
     }
 

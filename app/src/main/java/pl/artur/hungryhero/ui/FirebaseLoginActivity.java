@@ -105,6 +105,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         startActivity(new Intent(FirebaseLoginActivity.this, SplashActivity.class));
+                        finish();
                     } else {
                         Toast.makeText(this, "Logowanie nieudane.", Toast.LENGTH_SHORT).show();
                     }
@@ -148,8 +149,8 @@ public class FirebaseLoginActivity extends AppCompatActivity {
                                     if ("Restauracja".equals(selectedAccountType)) {
                                         firebaseHelper.createEmptyRestaurantDocument();
                                     }
-
                                     startActivity(new Intent(FirebaseLoginActivity.this, SplashActivity.class));
+                                    finish();
                                 })
                                 .addOnFailureListener(e -> {
                                     Toast.makeText(this, "Błąd rejestracji.", Toast.LENGTH_SHORT).show();

@@ -6,14 +6,15 @@ import android.os.Parcelable;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
+import java.util.List;
+
 public class Table implements Parcelable {
     @PropertyName("number")
     private int number;
     @PropertyName("capacity")
     private int capacity;
-    @PropertyName("isOccupied")
-    private boolean isOccupied;
-
+    @PropertyName("reservation")
+    private List<Reservation> reservations;
     private String tableId;
 
     @Exclude
@@ -25,10 +26,15 @@ public class Table implements Parcelable {
         this.tableId = tableId;
     }
 
-    public Table(int number, int capacity, boolean isOccupied) {
+    public Table(int number, int capacity, List<Reservation> reservations) {
         this.number = number;
         this.capacity = capacity;
-        this.isOccupied = isOccupied;
+        this.reservations = reservations;
+    }
+
+    public Table(int number, int capacity) {
+        this.number = number;
+        this.capacity = capacity;
     }
 
     public Table() {}
@@ -43,23 +49,23 @@ public class Table implements Parcelable {
         return capacity;
     }
 
-    @PropertyName("isOccupied")
-    public boolean isOccupied() {
-        return isOccupied;
+    @PropertyName("reservation")
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
     // Parcelable constructor
     protected Table(Parcel in) {
         number = in.readInt();
         capacity = in.readInt();
-        isOccupied = in.readByte() != 0;
+        reservations = in.createTypedArrayList(Reservation.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(number);
         parcel.writeInt(capacity);
-        parcel.writeByte((byte) (isOccupied ? 1 : 0));
+        parcel.writeTypedList(reservations);
     }
 
     @Override

@@ -10,7 +10,7 @@ public class Utils {
 
     public static String getOpeningHoursForDayOfWeek(OpeningHours openingHours, int dayOfWeek) {
         if (openingHours == null) {
-            return "N/A"; // Jeśli brak danych o godzinach otwarcia, zwróć "N/A" (Not Available)
+            return "N/A";
         }
 
         switch (dayOfWeek) {
@@ -29,7 +29,7 @@ public class Utils {
             case Calendar.SUNDAY:
                 return openingHours.getSunday();
             default:
-                return "Zamknięte"; // Domyślna wartość w przypadku braku danych dla danego dnia tygodnia
+                return "Zamknięte";
         }
     }
 

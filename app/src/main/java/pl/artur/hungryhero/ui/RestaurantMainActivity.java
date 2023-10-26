@@ -24,9 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.AddOrEditContactActivity;
 import pl.artur.hungryhero.AddOrEditInfoActivity;
 import pl.artur.hungryhero.AddOrEditLocalizationActivity;
 import pl.artur.hungryhero.AddOrEditOpeningHoursActivity;
+import pl.artur.hungryhero.AddOrEditTablesActivity;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
@@ -105,7 +107,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         drawerManager = new RestaurantDrawerManager(navButton, drawerLayout, navigationView, mAuth, this);
 
         btnAddOrEditContact.setOnClickListener(v -> {
-            // intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, AddOrEditContactActivity.class);
+            startActivity(intent);
         });
 
         btnAddOrEditLocalization.setOnClickListener(v -> {
@@ -124,7 +127,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         });
 
         btnAddOrEditTables.setOnClickListener(v -> {
-            // intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, AddOrEditTablesActivity.class);
+            startActivity(intent);
         });
 
         btnAddOrEditMenu.setOnClickListener(v -> {
