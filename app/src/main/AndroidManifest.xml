@@ -20,6 +20,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AddDishActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DishesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuCategoriesActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditTableActivity"
             android:exported="false" />
         <activity

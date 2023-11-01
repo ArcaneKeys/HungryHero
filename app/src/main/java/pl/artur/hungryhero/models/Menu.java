@@ -12,16 +12,8 @@ import java.util.List;
 public class Menu implements Parcelable {
     @PropertyName("menuName")
     private String menuName;
-    @PropertyName("dishName")
-    private String dishName;
-    @PropertyName("description")
-    private String description;
-    @PropertyName("photoUrl")
-    private String photoUrl;
-    @PropertyName("price")
-    private double price;
-    @PropertyName("ingredients")
-    private List<String> ingredients;
+    @PropertyName("menuItem")
+    private List<MenuItem> menuItems;
     private String menuId;
 
     @Exclude
@@ -33,13 +25,13 @@ public class Menu implements Parcelable {
         this.menuId = menuId;
     }
 
-    public Menu(String menuName, String dishName, String description, String photoUrl, double price, List<String> ingredients) {
+    public Menu(String menuName, List<MenuItem> menuItem) {
         this.menuName = menuName;
-        this.dishName = dishName;
-        this.description = description;
-        this.photoUrl = photoUrl;
-        this.price = price;
-        this.ingredients = ingredients;
+        this.menuItems = menuItem;
+    }
+
+    public Menu(String menuName) {
+        this.menuName = menuName;
     }
 
     public Menu() {}
@@ -48,46 +40,30 @@ public class Menu implements Parcelable {
     public String getMenuName() {
         return menuName;
     }
-    @PropertyName("dishName")
-    public String getDishName() {
-        return dishName;
+
+    @PropertyName("menuItem")
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
     }
-    @PropertyName("description")
-    public String getDescription() {
-        return description;
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
-    @PropertyName("photoUrl")
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-    @PropertyName("price")
-    public double getPrice() {
-        return price;
-    }
-    @PropertyName("price")
-    public List<String> getIngredients() {
-        return ingredients;
+
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
     }
 
     // Parcelable constructor
     protected Menu(Parcel in) {
         menuName = in.readString();
-        dishName = in.readString();
-        description = in.readString();
-        photoUrl = in.readString();
-        price = in.readDouble();
-        ingredients = new ArrayList<>();
-        in.readList(ingredients, String.class.getClassLoader());
+        menuItems = in.readParcelable(MenuItem.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(menuName);
-        parcel.writeString(dishName);
-        parcel.writeString(description);
-        parcel.writeString(photoUrl);
-        parcel.writeDouble(price);
-        parcel.writeList(ingredients);
+        parcel.writeList(menuItems);
     }
 
     @Override

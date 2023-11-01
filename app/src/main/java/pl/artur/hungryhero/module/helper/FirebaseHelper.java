@@ -10,6 +10,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ import javax.inject.Inject;
 
 import pl.artur.hungryhero.models.Contact;
 import pl.artur.hungryhero.models.Localization;
+import pl.artur.hungryhero.models.Menu;
+import pl.artur.hungryhero.models.MenuItem;
 import pl.artur.hungryhero.models.OpeningHours;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.models.User;
@@ -201,6 +204,58 @@ public class FirebaseHelper {
             updates.put("number", table.getNumber());
             updates.put("capacity", table.getCapacity());
             tableRef.update(updates);
+        }
+    }
+
+    public Task<DocumentReference> addMenuCategory(String menuName) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference restaurantRef = db.collection("Restaurant").document(currentUser.getUid());
+            Menu menuCategory = new Menu(menuName);
+            return restaurantRef.collection("menu").add(menuCategory);
+        }
+        return null;
+    }
+
+    public CollectionReference getMenuCategoriesCollectionRef() {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            return db.collection("Restaurant").document(currentUser.getUid()).collection("menu");
+        }
+        return null;
+    }
+
+    public CollectionReference getDishesCollectionRef(String menuId) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            return db.collection("Restaurant").document(currentUser.getUid()).collection("menu").document(menuId).collection("menuItem");
+        }
+        return null;
+    }
+
+    public Task<Void> updateMenuName(String menuId, String newMenuName) {
+        CollectionReference menuCategoryRef = getMenuCategoriesCollectionRef();
+        DocumentReference menuRef = menuCategoryRef.document(menuId);
+        return menuRef.update("menuName", newMenuName);
+    }
+
+    public Task<DocumentReference> addMenuItem(String menuId, MenuItem menuItem) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference menuRef = db.collection("Restaurant").document(currentUser.getUid())
+                    .collection("menu").document(menuId);
+            return menuRef.collection("menuItem").add(menuItem);
+        }
+        return null;
+    }
+
+    public void updateMenuItem(String menuId, String menuItemId, MenuItem menuItem) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference menuItemRef = db.collection("Restaurant").document(currentUser.getUid())
+                    .collection("menu").document(menuId)
+                    .collection("menuItem").document(menuItemId);
+            menuItemRef.update(menuItem.toMap());
         }
     }
 

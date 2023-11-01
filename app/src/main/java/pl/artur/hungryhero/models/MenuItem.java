@@ -6,11 +6,13 @@ import android.os.Parcelable;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MenuItem implements Parcelable {
-    @PropertyName("name")
-    private String name;
+    @PropertyName("dishName")
+    private String dishName;
     @PropertyName("description")
     private String description;
     @PropertyName("ingredients")
@@ -31,8 +33,8 @@ public class MenuItem implements Parcelable {
         this.itemId = itemId;
     }
 
-    public MenuItem(String name, String description, List<String> ingredients, double price, String photoUrl) {
-        this.name = name;
+    public MenuItem(String dishName, String description, List<String> ingredients, double price, String photoUrl) {
+        this.dishName = dishName;
         this.description = description;
         this.ingredients = ingredients;
         this.price = price;
@@ -41,9 +43,9 @@ public class MenuItem implements Parcelable {
 
     public MenuItem() {}
 
-    @PropertyName("name")
-    public String getName() {
-        return name;
+    @PropertyName("dishName")
+    public String getDishName() {
+        return dishName;
     }
 
     @PropertyName("description")
@@ -68,7 +70,7 @@ public class MenuItem implements Parcelable {
 
     // Parcelable constructor
     protected MenuItem(Parcel in) {
-        name = in.readString();
+        dishName = in.readString();
         description = in.readString();
         ingredients = in.createStringArrayList();
         price = in.readDouble();
@@ -77,7 +79,7 @@ public class MenuItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
+        parcel.writeString(dishName);
         parcel.writeString(description);
         parcel.writeStringList(ingredients);
         parcel.writeDouble(price);
@@ -101,4 +103,14 @@ public class MenuItem implements Parcelable {
             return new MenuItem[size];
         }
     };
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("dishName", dishName);
+        map.put("description", description);
+        map.put("ingredients", ingredients);
+        map.put("price", price);
+        map.put("photoUrl", photoUrl);
+        return map;
+    }
 }

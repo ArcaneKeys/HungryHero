@@ -20,11 +20,11 @@ import pl.artur.hungryhero.ui.MenusActivity;
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
 
     private Context context;
-    private List<Menu> menuItems;
+    private List<Menu> menus;
 
-    public MenuAdapter(Context context, List<Menu> menuItems) {
+    public MenuAdapter(Context context, List<Menu> menus) {
         this.context = context;
-        this.menuItems = menuItems;
+        this.menus = menus;
     }
 
     @NonNull
@@ -36,29 +36,22 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
-        Menu menu = menuItems.get(position);
+        Menu menu = menus.get(position);
 
-        // Uzupełnij dane pojedynczego elementu dania w sekcji
-        holder.textDishName.setText(menu.getDishName());
-        holder.textDescription.setText(menu.getDescription());
-        // ... Dodaj wyświetlanie innych pól, np. cena, składniki, itp.
+        holder.textMenuName.setText(menu.getMenuName());
     }
 
     @Override
     public int getItemCount() {
-        return menuItems.size();
+        return menus.size();
     }
 
     public static class MenuViewHolder extends RecyclerView.ViewHolder {
-        TextView textDishName;
-        TextView textDescription;
-        // ... Dodaj referencje do innych pól widoku, jeśli to konieczne
+        TextView textMenuName;
 
         public MenuViewHolder(@NonNull View itemView) {
             super(itemView);
-            textDishName = itemView.findViewById(R.id.textDishName);
-            textDescription = itemView.findViewById(R.id.textDescription);
-            // ... Zainicjuj pozostałe pola widoku, jeśli to konieczne
+            textMenuName = itemView.findViewById(R.id.textMenuName);
         }
     }
 }
