@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,6 +28,7 @@ public class MenuCategoriesActivity extends AppCompatActivity {
     private RecyclerView recyclerViewMenuCategories;
     private MenuCategoryAdapter menuCategoryAdapter;
     private List<Menu> menuCategoriesList = new ArrayList<>();
+    private FloatingActionButton fabAddMenuCategory;
 
     @Inject
     FirebaseHelper firebaseHelper;
@@ -36,19 +38,28 @@ public class MenuCategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_categories);
 
+        fabAddMenuCategory = findViewById(R.id.fabAddMenuCategory);
+
         recyclerViewMenuCategories = findViewById(R.id.recyclerViewMenuCategories);
         recyclerViewMenuCategories.setLayoutManager(new LinearLayoutManager(this));
 
         menuCategoryAdapter = new MenuCategoryAdapter(this, menuCategoriesList);
         recyclerViewMenuCategories.setAdapter(menuCategoryAdapter);
 
-        FloatingActionButton fabAddMenuCategory = findViewById(R.id.fabAddMenuCategory);
+        firebaseHelper.isRestaurant(isRestaurant -> {
+            if (!isRestaurant) {
+                String restaurantId = getIntent().getStringExtra("restaurantId");
+                fabAddMenuCategory.setVisibility(View.GONE);
+                fetchMenuCategories(restaurantId);
+            } else {
+                fetchMenuCategories();
+            }
+        });
+
         fabAddMenuCategory.setOnClickListener(v -> {
             Intent intent = new Intent(MenuCategoriesActivity.this, AddCategoryActivity.class);
             startActivity(intent);
         });
-
-        fetchMenuCategories();
 
         menuCategoryAdapter.setOnMenuCategoryClickListener((menuId, menuName) -> {
             Intent intent = new Intent(MenuCategoriesActivity.this, DishesActivity.class);
@@ -60,6 +71,24 @@ public class MenuCategoriesActivity extends AppCompatActivity {
 
     private void fetchMenuCategories() {
         firebaseHelper.getMenuCategoriesCollectionRef()
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    if (e != null) {
+                        return;
+                    }
+                    menuCategoriesList.clear();
+                    for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                        Menu menuCategory = snapshot.toObject(Menu.class);
+                        if (menuCategory != null) {
+                            menuCategory.setMenuId(snapshot.getId());
+                        }
+                        menuCategoriesList.add(menuCategory);
+                    }
+                    menuCategoryAdapter.notifyDataSetChanged();
+                });
+    }
+
+    private void fetchMenuCategories(String restaurantId) {
+        firebaseHelper.getMenuCategoriesCollectionRef(restaurantId)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
                         return;

@@ -9,6 +9,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import pl.artur.hungryhero.models.Localization;
 import pl.artur.hungryhero.models.Menu;
 import pl.artur.hungryhero.models.MenuItem;
 import pl.artur.hungryhero.models.OpeningHours;
+import pl.artur.hungryhero.models.Reviews;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.models.User;
 
@@ -92,6 +94,31 @@ public class FirebaseHelper {
 
     public boolean isRestaurant(DocumentSnapshot document) {
         return "Restauracja".equals(document.getString("accountType"));
+    }
+
+    public void isRestaurant(Callback<Boolean> callback) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            db.collection("Users").document(currentUser.getUid()).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        String accountType = document.getString("accountType");
+                        callback.onResult("Restauracja".equals(accountType));
+                    } else {
+                        callback.onResult(false);
+                    }
+                } else {
+                    callback.onResult(false);
+                }
+            });
+        } else {
+            callback.onResult(false);
+        }
+    }
+
+    public interface Callback<T> {
+        void onResult(T result);
     }
 
     public boolean isUser(DocumentSnapshot document) {
@@ -195,6 +222,14 @@ public class FirebaseHelper {
         }
     }
 
+    public Task<QuerySnapshot> getTablesForRestaurant(String restaurantId) {
+        return db.collection("Restaurant")
+                .document(restaurantId)
+                .collection("tables")
+                .get();
+    }
+
+
     public void updateTable(String tableId, Table table) {
         FirebaseUser currentUser = getCurrentUser();
         if (currentUser != null) {
@@ -225,10 +260,18 @@ public class FirebaseHelper {
         return null;
     }
 
+    public CollectionReference getMenuCategoriesCollectionRef(String restaurantId) {
+        return db.collection("Restaurant").document(restaurantId).collection("menu");
+    }
+
     public CollectionReference getDishesCollectionRef(String menuId) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            return db.collection("Restaurant").document(currentUser.getUid()).collection("menu").document(menuId).collection("menuItem");
+            return db.collection("Restaurant")
+                    .document(currentUser.getUid())
+                    .collection("menu")
+                    .document(menuId)
+                    .collection("menuItem");
         }
         return null;
     }
@@ -259,4 +302,24 @@ public class FirebaseHelper {
         }
     }
 
+    public void deleteMenuItem(String menuId, String menuItemId) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            DocumentReference menuItemRef = db.collection("Restaurant").document(currentUser.getUid())
+                    .collection("menu").document(menuId)
+                    .collection("menuItem").document(menuItemId);
+            menuItemRef.delete();
+        }
+    }
+
+    public CollectionReference getReviewsCollectionRef(String restaurantId) {
+        return db.collection("Restaurant")
+                .document(restaurantId)
+                .collection("reviews");
+    }
+
+    public Task<DocumentReference> addReview(String restaurantId, Reviews reviews) {
+        return db.collection("Restaurant").document(restaurantId)
+                .collection("reviews").add(reviews);
+    }
 }

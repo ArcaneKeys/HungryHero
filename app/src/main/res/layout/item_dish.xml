@@ -56,21 +56,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageButton
-            android:id="@+id/buttonExpand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_expand_more_24"
-            app:layout_constraintTop_toBottomOf="@+id/textDishDescription"
-            app:layout_constraintEnd_toEndOf="parent" />
-
         <TextView
             android:id="@+id/textDishIngredients"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Ingredients: "
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/buttonExpand"
+            app:layout_constraintTop_toBottomOf="@+id/textDishDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usuń"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/textDishIngredients"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

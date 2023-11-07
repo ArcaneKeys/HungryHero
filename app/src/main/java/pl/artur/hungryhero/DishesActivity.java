@@ -54,7 +54,7 @@ public class DishesActivity extends AppCompatActivity {
 
         menuItems = new ArrayList<>();
 
-        dishesAdapter = new DishesAdapter(menuItems, menuId);
+        dishesAdapter = new DishesAdapter(menuItems, menuId, firebaseHelper);
         recyclerView.setAdapter(dishesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

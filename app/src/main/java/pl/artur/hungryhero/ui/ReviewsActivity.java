@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,21 +25,26 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.adapters.ReviewsAdapter;
+import pl.artur.hungryhero.models.MenuItem;
 import pl.artur.hungryhero.models.Reviews;
+import pl.artur.hungryhero.module.helper.FirebaseHelper;
 import pl.artur.hungryhero.utils.FirebaseManager;
 
+@AndroidEntryPoint
 public class ReviewsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewReviews;
     private ReviewsAdapter reviewsAdapter;
     private List<Reviews> reviewsList = new ArrayList<>();;
     private Button buttonAddReview;
-    private FirebaseUser currentUser;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference restaurantRef = db.collection("Restaurant");
-
+    private String restaurantId;
+    @Inject
+    FirebaseHelper firebaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,28 +53,29 @@ public class ReviewsActivity extends AppCompatActivity {
 
         buttonAddReview = findViewById(R.id.buttonAddReview);
 
-        // Inicjalizuj RecyclerView
         recyclerViewReviews = findViewById(R.id.recyclerViewReviews);
         recyclerViewReviews.setLayoutManager(new LinearLayoutManager(this));
 
-        // Odczytaj dane recenzji z intentu
-        Intent intent = getIntent();
-        if (intent != null) {
-            String restaurantId = intent.getStringExtra("restaurantId");
-            if (restaurantId != null) {
-                fetchAllReviews(restaurantId);
+        restaurantId = getIntent().getStringExtra("restaurantId");
 
-                buttonAddReview.setOnClickListener(v -> {
-                    showAddReviewDialog(restaurantId);
-                });
+        firebaseHelper.isRestaurant(isRestaurant -> {
+            if (isRestaurant) {
+                buttonAddReview.setVisibility(View.GONE);
             }
+        });
+
+        if (restaurantId == null || restaurantId.isEmpty()) {
+            restaurantId = firebaseHelper.getCurrentUid();
+            buttonAddReview.setVisibility(View.GONE);
+        } else {
+            buttonAddReview.setOnClickListener(v -> showAddReviewDialog(restaurantId));
         }
 
-        // Stwórz adapter i przypisz go do RecyclerView
+        fetchAllReviews(restaurantId);
+
         reviewsAdapter = new ReviewsAdapter(this, reviewsList);
         recyclerViewReviews.setAdapter(reviewsAdapter);
 
-        // Ustaw tytuł na pasku narzędziowym
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,43 +100,44 @@ public class ReviewsActivity extends AppCompatActivity {
         AlertDialog alertDialog = dialogBuilder.create();
 
         buttonSave.setOnClickListener(v -> {
-            // Odczytaj rating i recenzję z widoku i zapisz je w bazie danych
             float rating = ratingBar.getRating();
             String comment = editTextReviewText.getText().toString();
-            currentUser = FirebaseManager.getCurrentUser();
+            FirebaseUser currentUser = firebaseHelper.getCurrentUser();
             String author = currentUser.getDisplayName();
             String userId = currentUser.getUid();
 
             Reviews addReview = new Reviews(userId, rating, comment, author);
 
-            restaurantRef.document(restaurantId).collection("reviews").add(addReview)
+            firebaseHelper.addReview(restaurantId, addReview)
                     .addOnSuccessListener(documentReference -> {
                         addReview.setReviewId(documentReference.getId());
                         reviewsList.add(addReview);
                         reviewsAdapter.notifyDataSetChanged();
                         alertDialog.dismiss();
                     })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Wystąpił błąd podczas dodawania recenzji.", Toast.LENGTH_SHORT).show();
-                    });
+                    .addOnFailureListener(e -> Toast.makeText(this, "Wystąpił błąd podczas dodawania recenzji.", Toast.LENGTH_SHORT).show()
+                    );
         });
 
         alertDialog.show();
     }
 
     private void fetchAllReviews(String restaurantId) {
-        // Pobierz referencję do podkolekcji "reviews" dla konkretnego restaurantId
-        CollectionReference reviewsRef = restaurantRef.document(restaurantId).collection("reviews");
-
-        // Zdefiniuj zapytanie, które pobierze wszystkie dokumenty z podkolekcji "reviews"
-        Task<QuerySnapshot> query = reviewsRef.get();
-
-        query.addOnSuccessListener(queryDocumentSnapshots -> {
-            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                Reviews review = documentSnapshot.toObject(Reviews.class);
-                reviewsList.add(review);
-            }
-            reviewsAdapter.notifyDataSetChanged();
-        });
+        firebaseHelper.getReviewsCollectionRef(restaurantId)
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    if (e != null) {
+                        return;
+                    }
+                    reviewsList.clear();
+                    if (queryDocumentSnapshots != null) {
+                        for (DocumentSnapshot snapshot: queryDocumentSnapshots) {
+                            Reviews review = snapshot.toObject(Reviews.class);
+                            if (review != null) {
+                                reviewsList.add(review);
+                            }
+                            reviewsAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 }

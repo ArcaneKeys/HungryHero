@@ -1,9 +1,11 @@
 package pl.artur.hungryhero.adapters;
 
 import android.content.Intent;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,17 +18,24 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.AddDishActivity;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.MenuItem;
+import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
 public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHolder> {
     private List<MenuItem> menuItems;
     private String menuId;
 
-    public DishesAdapter(List<MenuItem> menuItems, String menuId) {
+    FirebaseHelper firebaseHelper;
+
+    public DishesAdapter(List<MenuItem> menuItems, String menuId, FirebaseHelper firebaseHelper) {
         this.menuItems = menuItems;
         this.menuId = menuId;
+        this.firebaseHelper = firebaseHelper;
     }
 
     @NonNull
@@ -49,7 +58,8 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
 
     class DishViewHolder extends RecyclerView.ViewHolder {
         TextView dishName, dishPrice, dishDescription, dishIngredients;
-        ImageView dishImage, expandIcon;
+        ImageView dishImage;
+        Button buttonDelete;
         CardView cardView;
         boolean isExpanded;
 
@@ -60,9 +70,9 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
             dishDescription = itemView.findViewById(R.id.textDishDescription);
             dishIngredients = itemView.findViewById(R.id.textDishIngredients);
             dishImage = itemView.findViewById(R.id.dishImage);
-            expandIcon = itemView.findViewById(R.id.buttonExpand);
             cardView = itemView.findViewById(R.id.cardViewDish);
             ImageButton buttonEdit = itemView.findViewById(R.id.buttonEdit);
+            buttonDelete = itemView.findViewById(R.id.buttonDelete);
 
             buttonEdit.setOnClickListener(v -> {
                 int position = getAdapterPosition();
@@ -77,6 +87,7 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
             });
 
             cardView.setOnClickListener(v -> toggleExpansion());
+            buttonDelete.setOnClickListener(v -> dishDelete());
         }
 
         public void bind(MenuItem menuItem) {
@@ -87,13 +98,23 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
             Glide.with(dishImage.getContext())
                     .load(menuItem.getPhotoUrl())
                     .into(dishImage);
-            dishIngredients.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-            expandIcon.setImageResource(isExpanded ? R.drawable.baseline_expand_less_24 : R.drawable.baseline_expand_more_24);
         }
 
         private void toggleExpansion() {
             isExpanded = !isExpanded;
-            notifyItemChanged(getAdapterPosition());
+            dishIngredients.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+            buttonDelete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+            TransitionManager.beginDelayedTransition(cardView);
+        }
+
+        private void dishDelete(){
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                MenuItem menuItem = menuItems.get(position);
+                firebaseHelper.deleteMenuItem(menuId, menuItem.getItemId());
+                menuItems.remove(position);
+                notifyItemRemoved(position);
+            }
         }
     }
 }

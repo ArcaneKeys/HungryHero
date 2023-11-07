@@ -85,7 +85,7 @@ public class AddDishActivity extends AppCompatActivity {
                             .into(imageViewPhoto);
                 }
 
-                if (!imageUrl.equals("")) {
+                if (selectedImageUri != null) {
                     buttonSubmit.setOnClickListener(v -> {
                         uploadImage(selectedImageUri, () -> {
                             String dishName = editTextDishName.getText().toString();

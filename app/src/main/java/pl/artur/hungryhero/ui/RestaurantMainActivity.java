@@ -139,7 +139,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         });
 
         btnShowReview.setOnClickListener(v -> {
-//            intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, ReviewsActivity.class);
+            startActivity(intent);
         });
 
         btnShowReservation.setOnClickListener(v -> {
@@ -147,7 +148,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         });
 
         btnShowRestaurant.setOnClickListener(v -> {
-//            intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, RestaurantDetailsActivity.class);
+            startActivity(intent);
         });
 
     }
