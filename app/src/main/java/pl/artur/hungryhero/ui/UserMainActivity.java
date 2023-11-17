@@ -113,24 +113,28 @@ public class UserMainActivity extends AppCompatActivity {
                 Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
                 restaurant.setRestaurantId(documentSnapshot.getId());
 
-                fetchTablesForRestaurant(restaurant.getRestaurantId(), restaurant);
-
-                allRestaurants.add(restaurant);
+                if (isValidRestaurant(restaurant)) {
+                    fetchTablesForRestaurant(restaurant.getRestaurantId(), restaurant);
+                    allRestaurants.add(restaurant);
+                }
             }
         });
     }
 
     private void fetchAllRestaurants() {
-        restaurantRef.get()
+        restaurantRef
+                .get()
                 .addOnSuccessListener(querySnapshot -> {
                     allRestaurants.clear();
                     for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
                         Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
                         restaurant.setRestaurantId(documentSnapshot.getId());
 
-                        fetchTablesForRestaurant(restaurant.getRestaurantId(), restaurant);
+                        if (isValidRestaurant(restaurant)) {
+                            fetchTablesForRestaurant(restaurant.getRestaurantId(), restaurant);
+                            allRestaurants.add(restaurant);
+                        }
 
-                        allRestaurants.add(restaurant);
                     }
                     restaurantAdapter.setRestaurantList(allRestaurants);
                     restaurantAdapter.notifyDataSetChanged();
@@ -138,6 +142,13 @@ public class UserMainActivity extends AppCompatActivity {
                     Log.d("RESTAURANT FETCH ERROR", e.toString());
                     Toast.makeText(this, "Błąd pobierania danych restauracji", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private boolean isValidRestaurant(Restaurant restaurant) {
+        return restaurant.getName() != null &&
+                restaurant.getContact() != null && restaurant.getContact().getEmail() != null &&
+                restaurant.getLocalization() != null && restaurant.getLocalization().getCity() != null &&
+                restaurant.getLocalization().getCoordinates() != null && restaurant.getLocalization().getHouseNumber() != null;
     }
 
     private void fetchTablesForRestaurant(String resId, Restaurant restaurant) {

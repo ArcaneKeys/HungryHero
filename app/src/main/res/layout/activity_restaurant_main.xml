@@ -10,7 +10,7 @@
         android:id="@+id/restaurant_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
+        android:elevation="@dimen/elevation_extra_small"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,11 +25,10 @@
                 android:id="@+id/restaurant_app_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="24dp"
-                android:text="HungryHero"
-                android:textSize="36sp"
+                android:layout_marginStart="@dimen/margin_24"
+                android:text="@string/app_name"
+                android:textColor="?attr/colorOnPrimary"
+                style="@style/TextAppearance.Material3.HeadlineMedium"
                 app:layout_constraintBottom_toBottomOf="@+id/restaurant_nav_button"
                 app:layout_constraintStart_toEndOf="@+id/restaurant_nav_button"
                 app:layout_constraintTop_toTopOf="@+id/restaurant_nav_button" />
@@ -39,12 +38,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|top"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="@dimen/margin_24"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/restaurant_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,7 +63,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="@dimen/padding_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="@dimen/margin_16"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -80,23 +80,23 @@
                     android:id="@+id/btnAddOrEditContact"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Add or edit contact" />
+                    android:text="@string/add_edit_contact" />
 
                 <Button
                     android:id="@+id/btnAddOrEditLocalization"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Add or edit localization" />
+                    android:text="@string/add_edit_localization" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="@dimen/margin_16"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -104,23 +104,23 @@
                     android:id="@+id/btnAddOrEditInfo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Add or edit info" />
+                    android:text="@string/add_edit_info" />
 
                 <Button
                     android:id="@+id/btnAddOrEditOpeningHours"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Add or edit Opening Hours" />
+                    android:text="@string/add_edit_opening_hours" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="@dimen/margin_16"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -128,24 +128,24 @@
                     android:id="@+id/btnAddOrEditTables"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Add or edit tables" />
+                    android:text="@string/add_edit_tables" />
 
                 <Button
                     android:id="@+id/btnAddOrEditMenu"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Add or edit menu" />
+                    android:text="@string/add_edit_menu" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="@dimen/margin_16"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -153,24 +153,24 @@
                     android:id="@+id/btnShowReview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Show reviews" />
+                    android:text="@string/show_reviews" />
 
                 <Button
                     android:id="@+id/btnShowReservation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:layout_weight="1"
-                    android:text="Show reservation" />
+                    android:text="@string/show_reservations" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btnShowRestaurant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Show restaurant" />
+                android:text="@string/show_restaurant" />
 
         </LinearLayout>
 

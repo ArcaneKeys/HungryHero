@@ -32,4 +32,110 @@
         <item>Kawałek ciasta czekoladowego zawsze jest dobrym pomysłem. Smacznego!|default_background.jfif</item>
     </string-array>
 
+    <string name="email_address">Adres e-mail</string>
+    <string name="password">Hasło</string>
+    <string name="login">Zaloguj się</string>
+    <string name="register_prompt">Nie masz konta? Zarejestruj się</string>
+    <string name="password_requirements">Wymagania hasła: minimum 6 znaków, co najmniej jedna duża litera i cyfra</string>
+    <string name="confirm_password">Potwierdź hasło</string>
+    <string name="register">Zarejestruj się</string>
+    <string name="login_prompt">Masz już konto? Zaloguj się</string>
+
+    <string name="category_name_hint">Nazwa Kategorii</string>
+    <string name="add_category">Dodaj Kategorię</string>
+
+    <string name="table_number">Stolik nr: 1</string>
+    <string name="table_capacity">Pojemność: 4</string>
+    <string name="table_image">Ikona Stolika</string>
+
+    <string name="restaurant_name">Nazwa Restauracji</string>
+    <string name="restaurant_email">email@przyklad.com</string>
+
+    <string name="author">Autor</string>
+    <string name="review">Recenzja</string>
+
+    <string name="opening_hours">Godziny otwarcia: 11:00 – 19:00</string>
+    <string name="capacity">Pojemność: 50</string>
+
+    <string name="section_name">Nazwa Sekcji</string>
+    <string name="ingredient">Składnik</string>
+    <string name="x">X</string>
+
+    <string name="dish_image_desc">Obraz dania</string>
+    <string name="dish_name">Nazwa dania</string>
+    <string name="dish_price">12,34 zł</string>
+    <string name="dish_description">Opis</string>
+    <string name="dish_ingredients">Składniki</string>
+    <string name="delete">Usuń</string>
+
+    <string name="label_start_time">Godzina otwarcia</string>
+    <string name="label_end_time">Godzina zamknięcia</string>
+    <string name="closed">Zamknięte</string>
+    <string name="confirm">Potwierdź</string>
+
+    <string name="reviews_title">Recenzje</string>
+    <string name="add_review">Dodaj recenzję</string>
+
+    <string name="add_edit_contact">Dodaj lub edytuj kontakt</string>
+    <string name="add_edit_localization">Dodaj lub edytuj lokalizację</string>
+    <string name="add_edit_info">Dodaj lub edytuj informacje</string>
+    <string name="add_edit_opening_hours">Dodaj lub edytuj godziny otwarcia</string>
+    <string name="add_edit_tables">Dodaj lub edytuj stoły</string>
+    <string name="add_edit_menu">Dodaj lub edytuj menu</string>
+    <string name="show_reviews">Pokaż recenzje</string>
+    <string name="show_reservations">Pokaż rezerwacje</string>
+    <string name="show_restaurant">Pokaż restaurację</string>
+
+    <string name="table_number_hint">Numer Stolika</string>
+    <string name="table_capacity_hint">Pojemność</string>
+    <string name="update_table">Zaktualizuj stolik</string>
+    <string name="delete_table">Usuń stolik</string>
+
+    <string name="category_name">Nazwa Kategorii</string>
+    <string name="add">Dodaj</string>
+
+    <string name="username">Nazwa użytkownika</string>
+    <string name="new_username_hint">Wprowadź nową nazwę użytkownika</string>
+    <string name="email">Adres e-mail</string>
+    <string name="new_email_hint">Wprowadź nowy adres e-mail</string>
+    <string name="phone">Telefon</string>
+    <string name="new_phone_hint">Wprowadź nowy numer telefonu</string>
+    <string name="save">Zapisz</string>
+
+    <string name="restaurant_name_label">Nazwa restauracji</string>
+    <string name="new_restaurant_name_hint">Wprowadź nową nazwę restauracji</string>
+    <string name="email_label">Adres e-mail</string>
+
+    <string name="add_table_button">Dodaj Stolik</string>
+
+    <string name="review_hint">Napisz swoją recenzję tutaj…</string>
+    <string name="save_review">Zapisz Recenzję</string>
+
+    <string name="add_table">Dodaj stolik</string>
+
+    <string name="monday">Poniedziałek</string>
+    <string name="tuesday">Wtorek</string>
+    <string name="wednesday">Środa</string>
+    <string name="thursday">Czwartek</string>
+    <string name="friday">Piątek</string>
+    <string name="saturday">Sobota</string>
+    <string name="sunday">Niedziela</string>
+
+    <string name="name">Nazwa</string>
+    <string name="description">Opis</string>
+
+    <string name="phone_hint">Telefon</string>
+    <string name="email_hint">Email</string>
+    <string name="facebook_hint">Facebook</string>
+    <string name="instagram_hint">Instagram</string>
+    <string name="website_hint">Strona internetowa</string>
+    <string name="web_menu_hint">Menu na stronie</string>
+
+    <string name="dish_name_hint">Nazwa dania</string>
+    <string name="dish_description_hint">Opis dania</string>
+    <string name="add_ingredient">Dodaj składnik</string>
+    <string name="dish_price_hint">Cena</string>
+    <string name="add_photo">Dodaj zdjęcie</string>
+    <string name="submit">Dodaj</string>
+
 </resources>

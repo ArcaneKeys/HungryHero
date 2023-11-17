@@ -1,68 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:layout_margin="8dp"
-    android:padding="8dp">
+    android:layout_margin="@dimen/margin_8"
+    android:padding="@dimen/padding_normal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Zdjęcie restauracji -->
         <ImageView
             android:id="@+id/image_restaurant"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginBottom="64dp"
+            android:layout_height="@dimen/image_height_large"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_salad_foreground"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- Nazwa restauracji -->
-        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/restaurant_name" />
+>
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_restaurant_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Restaurant Name"
-            android:textSize="20sp"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:text="@string/restaurant_name"
+            android:textSize="@dimen/text_view_large"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_restaurant" />
 
-        <!-- Godziny otwarcia -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_opening_hours"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Opening Hours: 11:00 - 19:00"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_restaurant_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_restaurant_name"
-            app:layout_constraintTop_toTopOf="@+id/text_restaurant_name" />
-
-        <!-- Ilość osób -->
-        <TextView
-            android:id="@+id/text_capacity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Capacity: 50"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/opening_hours"
+            android:textSize="@dimen/text_view_medium"
             app:layout_constraintEnd_toEndOf="@+id/text_restaurant_name"
             app:layout_constraintStart_toStartOf="@+id/text_restaurant_name"
             app:layout_constraintTop_toBottomOf="@+id/text_restaurant_name" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_capacity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:text="@string/capacity"
+            android:textSize="@dimen/text_view_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_opening_hours"
+            app:layout_constraintStart_toStartOf="@+id/text_opening_hours"
+            app:layout_constraintTop_toBottomOf="@+id/text_opening_hours" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

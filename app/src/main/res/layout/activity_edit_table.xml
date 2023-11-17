@@ -6,50 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".EditTableActivity">
 
-    <EditText
-        android:id="@+id/editTextTableNumber"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutEditTextTableNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Numer Stolika"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editTextTableCapacity"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTableNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/table_number_hint" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutEditTextTableCapacity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Pojemność"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTableNumber" />
+        app:layout_constraintTop_toBottomOf="@id/layoutEditTextTableNumber">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTableCapacity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/table_capacity_hint" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonUpdateTable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Aktualizuj Stolik"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:text="@string/update_table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextTableCapacity" />
+        app:layout_constraintTop_toBottomOf="@id/layoutEditTextTableCapacity" />
 
     <Button
         android:id="@+id/buttonDeleteTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Usuń stolik"
+        android:layout_marginTop="@dimen/margin_24"
+        android:text="@string/delete_table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateTable" />
+        app:layout_constraintTop_toBottomOf="@id/buttonUpdateTable" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

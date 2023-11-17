@@ -148,11 +148,11 @@ public class FirebaseHelper {
         }
     }
 
-    public Task<Void> updateRestaurantData(String name, String description) {
+    public Task<Void> updateRestaurantData(String name, String description, String photoUrl) {
         FirebaseUser currentUser = getCurrentUser();
         if (currentUser != null) {
             DocumentReference restaurantRef = db.collection("Restaurant").document(currentUser.getUid());
-            return restaurantRef.update("name", name, "description", description);
+            return restaurantRef.update("name", name, "description", description, "photoUrl", photoUrl);
         } else {
             return null;
         }

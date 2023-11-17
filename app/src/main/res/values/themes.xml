@@ -1,8 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.HungryHero" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/my_light_primary</item>
+    <style name="Base.Theme.HungryHero" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <!-- Error colors -->
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <!-- Status bar and navigation bar colors -->
+        <item name="android:statusBarColor">@color/md_theme_light_primaryContainer</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+        <!-- Other overrides for Material You -->
+        <item name="android:windowBackground">@color/md_theme_light_background</item>
+        <item name="android:colorBackgroundFloating">@color/md_theme_light_surface</item>
+        <!-- ... other overrides -->
     </style>
 
     <style name="circleImageView" parent="">

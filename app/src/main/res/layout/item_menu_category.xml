@@ -3,5 +3,5 @@
     android:id="@+id/textMenuCategoryName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="16sp"
-    android:padding="8dp" />
+    android:textSize="@dimen/text_view_medium"
+    android:padding="@dimen/padding_small" />

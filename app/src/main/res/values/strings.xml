@@ -31,4 +31,110 @@
         <item>A piece of chocolate cake is always a good idea. Enjoy!|default_background.jfif</item>
     </string-array>
 
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register_prompt">Don\'t have an account? Register</string>
+    <string name="password_requirements">Password requirements: At least 6 characters, one uppercase letter and one number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="login_prompt">Already have an account? Log in</string>
+
+    <string name="category_name_hint">Category Name</string>
+    <string name="add_category">Add Category</string>
+
+    <string name="table_number">Table No: 1</string>
+    <string name="table_capacity">Capacity: 4</string>
+    <string name="table_image">Table Icon</string>
+
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="restaurant_email">email@example.com</string>
+
+    <string name="author">Author</string>
+    <string name="review">Review</string>
+
+    <string name="opening_hours">Opening Hours: 11:00 – 19:00</string>
+    <string name="capacity">Capacity: 50</string>
+
+    <string name="section_name">Section name</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="x">X</string>
+
+    <string name="dish_image_desc">Image of Dish</string>
+    <string name="dish_name">Dish Name</string>
+    <string name="dish_price">$12.34</string>
+    <string name="dish_description">Description</string>
+    <string name="dish_ingredients">Ingredients</string>
+    <string name="delete">Delete</string>
+
+    <string name="label_start_time">Start Time</string>
+    <string name="label_end_time">End Time</string>
+    <string name="closed">Closed</string>
+    <string name="confirm">Confirm</string>
+
+    <string name="reviews_title">Reviews</string>
+    <string name="add_review">Add Review</string>
+
+    <string name="add_edit_contact">Add or edit contact</string>
+    <string name="add_edit_localization">Add or edit localization</string>
+    <string name="add_edit_info">Add or edit info</string>
+    <string name="add_edit_opening_hours">Add or edit Opening Hours</string>
+    <string name="add_edit_tables">Add or edit tables</string>
+    <string name="add_edit_menu">Add or edit menu</string>
+    <string name="show_reviews">Show reviews</string>
+    <string name="show_reservations">Show reservation</string>
+    <string name="show_restaurant">Show restaurant</string>
+
+    <string name="table_number_hint">Table Number</string>
+    <string name="table_capacity_hint">Capacity</string>
+    <string name="update_table">Update Table</string>
+    <string name="delete_table">Delete Table</string>
+
+    <string name="category_name">Category Name</string>
+    <string name="add">Add</string>
+
+    <string name="username">Username</string>
+    <string name="new_username_hint">Enter new username</string>
+    <string name="email">Email Address</string>
+    <string name="new_email_hint">Enter new email address</string>
+    <string name="phone">Phone</string>
+    <string name="new_phone_hint">Enter new phone number</string>
+    <string name="save">Save</string>
+
+    <string name="restaurant_name_label">Restaurant Name</string>
+    <string name="new_restaurant_name_hint">Enter new restaurant name</string>
+    <string name="email_label">Email Address</string>
+
+    <string name="add_table_button">Add table</string>
+
+    <string name="review_hint">Write your review here…</string>
+    <string name="save_review">Save Review</string>
+
+    <string name="add_table">Add table</string>
+
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+
+    <string name="phone_hint">Phone</string>
+    <string name="email_hint">Email</string>
+    <string name="facebook_hint">Facebook</string>
+    <string name="instagram_hint">Instagram</string>
+    <string name="website_hint">Website</string>
+    <string name="web_menu_hint">Web Menu</string>
+
+    <string name="dish_name_hint">Dish Name</string>
+    <string name="dish_description_hint">Dish Description</string>
+    <string name="add_ingredient">Add Ingredient</string>
+    <string name="dish_price_hint">Price</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="submit">Submit</string>
+
 </resources>

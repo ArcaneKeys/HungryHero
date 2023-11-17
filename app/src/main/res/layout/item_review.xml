@@ -1,17 +1,20 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:aandroid="http://schemas.android.com/tools"
+    android:padding="@dimen/padding_normal">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="Author"
-        android:textStyle="bold"/>
+        android:textSize="@dimen/text_view_medium"
+        android:text="@string/author"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <RatingBar
         android:id="@+id/textRating"
@@ -21,13 +24,18 @@
         android:numStars="5"
         android:rating="4"
         style="?android:attr/ratingBarStyleSmall"
-        />
+        app:layout_constraintStart_toStartOf="@id/textAuthor"
+        app:layout_constraintTop_toBottomOf="@id/textAuthor"
+        aandroid:layout_marginTop="@dimen/margin_8"/>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Review"
-        android:textSize="16sp"/>
+        android:text="@string/review"
+        android:textSize="@dimen/text_view_large"
+        app:layout_constraintStart_toStartOf="@id/textRating"
+        app:layout_constraintTop_toBottomOf="@id/textRating"
+        android:layout_marginTop="@dimen/margin_8"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
