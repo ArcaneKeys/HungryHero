@@ -138,4 +138,14 @@
     <string name="add_photo">Dodaj zdjęcie</string>
     <string name="submit">Dodaj</string>
 
+    <string name="address_hint">Adres</string>
+    <string name="city_hint">Miasto</string>
+    <string name="postal_code_hint">Kod pocztowy</string>
+    <string name="street_hint">Ulica</string>
+    <string name="house_number_hint">Numer domu</string>
+    <string name="latitude_hint">Szerokość geograficzna</string>
+    <string name="longitude_hint">Długość geograficzna</string>
+    <string name="save_localization">Zapisz lokalizację</string>
+    <string name="update_localization">Aktualizuj lokalizację</string>
+
 </resources>

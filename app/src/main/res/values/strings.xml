@@ -137,4 +137,14 @@
     <string name="add_photo">Add Photo</string>
     <string name="submit">Submit</string>
 
+    <string name="address_hint">Address</string>
+    <string name="city_hint">City</string>
+    <string name="postal_code_hint">Postal Code</string>
+    <string name="street_hint">Street</string>
+    <string name="house_number_hint">House Number</string>
+    <string name="latitude_hint">Latitude</string>
+    <string name="longitude_hint">Longitude</string>
+    <string name="save_localization">Save Localization</string>
+    <string name="update_localization">Update Localization</string>
+
 </resources>
