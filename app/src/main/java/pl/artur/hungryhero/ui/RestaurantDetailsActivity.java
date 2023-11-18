@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import pl.artur.hungryhero.MenuCategoriesActivity;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Contact;
 import pl.artur.hungryhero.models.Restaurant;
@@ -159,6 +159,14 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 buttonWebMenu.setVisibility(View.GONE);
             }
 
+        }
+
+        if (restaurant.getPhotoUrl() != null && !restaurant.getPhotoUrl().isEmpty()) {
+            Glide.with(this)
+                    .load(restaurant.getPhotoUrl())
+                    .into(imageRestaurant);
+        } else {
+            imageRestaurant.setImageResource(R.mipmap.ic_salad_foreground);
         }
 
         buttonReviews.setOnClickListener(v -> {

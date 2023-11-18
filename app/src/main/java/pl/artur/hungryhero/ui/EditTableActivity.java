@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
 

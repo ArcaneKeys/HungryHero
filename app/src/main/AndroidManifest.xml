@@ -20,37 +20,37 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AddDishActivity"
+            android:name=".ui.AddDishActivity"
             android:exported="false" />
         <activity
-            android:name=".DishesActivity"
+            android:name=".ui.DishesActivity"
             android:exported="false" />
         <activity
-            android:name=".AddCategoryActivity"
+            android:name=".ui.AddCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuCategoriesActivity"
+            android:name=".ui.MenuCategoriesActivity"
             android:exported="false" />
         <activity
-            android:name=".EditTableActivity"
+            android:name=".ui.EditTableActivity"
             android:exported="false" />
         <activity
-            android:name=".AddTableActivity"
+            android:name=".ui.AddTableActivity"
             android:exported="false" />
         <activity
-            android:name=".AddOrEditTablesActivity"
+            android:name=".ui.AddOrEditTablesActivity"
             android:exported="false" />
         <activity
-            android:name=".AddOrEditContactActivity"
+            android:name=".ui.AddOrEditContactActivity"
             android:exported="false" />
         <activity
-            android:name=".AddOrEditOpeningHoursActivity"
+            android:name=".ui.AddOrEditOpeningHoursActivity"
             android:exported="false" />
         <activity
-            android:name=".AddOrEditLocalizationActivity"
+            android:name=".ui.AddOrEditLocalizationActivity"
             android:exported="false" />
         <activity
-            android:name=".AddOrEditInfoActivity"
+            android:name=".ui.AddOrEditInfoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.RestaurantMainActivity"

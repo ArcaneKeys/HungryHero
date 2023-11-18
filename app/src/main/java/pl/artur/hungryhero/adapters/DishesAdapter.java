@@ -18,10 +18,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
-import pl.artur.hungryhero.AddDishActivity;
+import pl.artur.hungryhero.ui.AddDishActivity;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.MenuItem;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;

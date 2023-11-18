@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,14 +10,12 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.GeoPoint;
-
 import java.util.Locale;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import pl.artur.hungryhero.models.Localization;
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.OpeningHours;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;

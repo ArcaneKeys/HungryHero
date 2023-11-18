@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import pl.artur.hungryhero.EditTableActivity;
+import pl.artur.hungryhero.ui.EditTableActivity;
 import pl.artur.hungryhero.R;
-import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHolder> {

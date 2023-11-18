@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import static android.content.ContentValues.TAG;
 
@@ -33,11 +33,11 @@ import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Localization;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;

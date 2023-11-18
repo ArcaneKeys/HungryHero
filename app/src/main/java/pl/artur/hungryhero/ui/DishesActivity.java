@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,10 +21,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.adapters.DishesAdapter;
 import pl.artur.hungryhero.models.MenuItem;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
-import pl.artur.hungryhero.ui.RestaurantMainActivity;
 
 @AndroidEntryPoint
 public class DishesActivity extends AppCompatActivity {

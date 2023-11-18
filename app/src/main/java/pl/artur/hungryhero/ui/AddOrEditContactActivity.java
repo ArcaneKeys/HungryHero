@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import static pl.artur.hungryhero.utils.ValidationUtils.isValidEmail;
 import static pl.artur.hungryhero.utils.ValidationUtils.isValidPhoneNumber;
@@ -6,8 +6,6 @@ import static pl.artur.hungryhero.utils.ValidationUtils.isValidPhoneNumber;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +15,7 @@ import org.apache.commons.validator.routines.UrlValidator;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Contact;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
