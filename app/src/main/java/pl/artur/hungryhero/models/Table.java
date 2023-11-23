@@ -26,6 +26,10 @@ public class Table implements Parcelable {
         this.tableId = tableId;
     }
 
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
     public Table(int number, int capacity, List<Reservation> reservations) {
         this.number = number;
         this.capacity = capacity;
@@ -59,6 +63,7 @@ public class Table implements Parcelable {
         number = in.readInt();
         capacity = in.readInt();
         reservations = in.createTypedArrayList(Reservation.CREATOR);
+        tableId = in.readString();
     }
 
     @Override
@@ -66,6 +71,7 @@ public class Table implements Parcelable {
         parcel.writeInt(number);
         parcel.writeInt(capacity);
         parcel.writeTypedList(reservations);
+        parcel.writeString(tableId);
     }
 
     @Override

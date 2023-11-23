@@ -229,6 +229,9 @@ public class FirebaseHelper {
                 .get();
     }
 
+    public Task<QuerySnapshot> getReservationForTables(DocumentSnapshot tableDoc, long todayTimestamp) {
+        return tableDoc.getReference().collection("reservation").whereGreaterThanOrEqualTo("date", todayTimestamp).get();
+    }
 
     public void updateTable(String tableId, Table table) {
         FirebaseUser currentUser = getCurrentUser();

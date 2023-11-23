@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -25,7 +28,9 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.R;
+import pl.artur.hungryhero.ReservationActivity;
 import pl.artur.hungryhero.models.Contact;
+import pl.artur.hungryhero.models.Reservation;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
@@ -48,6 +53,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     private Button buttonReviews;
     private Restaurant restaurant;
     private List<Table> tables = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
     @Inject
     FirebaseHelper firebaseHelper;
 
@@ -58,8 +64,9 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         init();
 
-        Intent intent = getIntent();
-        if (intent != null && (restaurant = intent.getParcelableExtra("restaurant")) != null) {
+        restaurant = getIntent().getParcelableExtra("restaurant");
+
+        if (restaurant != null) {
             updateUIWithRestaurantAndTables(restaurant);
         } else {
             firebaseHelper.getRestaurantData().addOnCompleteListener(task -> {
@@ -69,7 +76,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                         restaurant = document.toObject(Restaurant.class);
                         if (restaurant != null) {
                             restaurant.setRestaurantId(document.getId());
-
                             firebaseHelper.getTablesForRestaurant(restaurant.getRestaurantId()).addOnCompleteListener(tablesTask -> {
                                 if (tablesTask.isSuccessful()) {
                                     tables.clear();
@@ -77,6 +83,20 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                                         Table table = tableDoc.toObject(Table.class);
                                         if (table != null) {
                                             table.setTableId(tableDoc.getId());
+                                            long todayTimestamp = Utils.getTodayTimestamp();
+                                            firebaseHelper.getReservationForTables(tableDoc, todayTimestamp).addOnCompleteListener(reservationTask -> {
+                                                if (reservationTask.isSuccessful()) {
+                                                    reservations.clear();
+                                                    for (DocumentSnapshot reservationDoc: reservationTask.getResult()) {
+                                                        Reservation reservation = reservationDoc.toObject(Reservation.class);
+                                                        if (reservation != null) {
+                                                            reservation.setReservationId(reservationDoc.getId());
+                                                            reservations.add(reservation);
+                                                        }
+                                                    }
+                                                    table.setReservations(reservations);
+                                                }
+                                            });
                                         }
                                         tables.add(table);
                                     }
@@ -179,6 +199,12 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
             Intent intentMenus = new Intent(RestaurantDetailsActivity.this, MenuCategoriesActivity.class);
             intentMenus.putExtra("restaurantId", restaurant.getRestaurantId());
             startActivity(intentMenus);
+        });
+
+        buttonReserve.setOnClickListener(v -> {
+            Intent intentReservation = new Intent(RestaurantDetailsActivity.this, ReservationActivity.class);
+            intentReservation.putExtra("restaurant", restaurant);
+            startActivity(intentReservation);
         });
 
         textRestaurantName.setText(textRestaurantNameOpeningHour);

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "pl.artur.hungryhero"
-        minSdk 24
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -33,7 +33,7 @@ android {
 dependencies {
     // Google Firebase
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
-    implementation 'com.google.firebase:firebase-auth:22.2.0'
+    implementation 'com.google.firebase:firebase-auth:22.3.0'
     implementation 'com.google.firebase:firebase-database:20.3.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-analytics'
@@ -51,7 +51,7 @@ dependencies {
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
     // Google Places
-    implementation 'com.google.android.libraries.places:places:3.2.0'
+    implementation 'com.google.android.libraries.places:places:3.3.0'
 
     // Phone validation
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.30'

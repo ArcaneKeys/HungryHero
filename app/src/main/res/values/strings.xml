@@ -147,4 +147,6 @@
     <string name="save_localization">Save Localization</string>
     <string name="update_localization">Update Localization</string>
 
+    <string name="reservation">Reservation</string>
+
 </resources>

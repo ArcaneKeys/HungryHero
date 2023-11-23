@@ -8,7 +8,6 @@ import com.google.firebase.database.PropertyName;
 
 import java.time.LocalDateTime;
 
-// TODO: ZMIENIONA KLASA -> ZMIENIĆ W USER WYŚWIETLANIE!!!
 public class Reservation implements Parcelable {
     @PropertyName("userId")
     private String userId;

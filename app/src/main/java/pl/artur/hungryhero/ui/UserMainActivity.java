@@ -29,6 +29,7 @@ import java.util.List;
 
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.adapters.RestaurantAdapter;
+import pl.artur.hungryhero.models.Reservation;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.utils.FirebaseManager;
@@ -160,12 +161,29 @@ public class UserMainActivity extends AppCompatActivity {
                         Table table = documentSnapshot.toObject(Table.class);
                         table.setTableId(documentSnapshot.getId());
                         tables.add(table);
+                        fetchReservationsForTable(table);
                     }
                     restaurant.setTables(tables);
                     restaurantAdapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     Log.d("TABLES FETCH ERROR", e.toString());
+                });
+    }
+
+    private void fetchReservationsForTable(Table table) {
+        restaurantRef.document(table.getTableId()).collection("reservations")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<Reservation> reservations = new ArrayList<>();
+                    for (QueryDocumentSnapshot reservationSnapshot : querySnapshot) {
+                        Reservation reservation = reservationSnapshot.toObject(Reservation.class);
+                        reservations.add(reservation);
+                    }
+                    table.setReservations(reservations);
+                })
+                .addOnFailureListener(e -> {
+                    Log.d("RESERVATIONS FETCH ERROR", e.toString());
                 });
     }
 

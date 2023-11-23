@@ -148,4 +148,6 @@
     <string name="save_localization">Zapisz lokalizację</string>
     <string name="update_localization">Aktualizuj lokalizację</string>
 
+    <string name="reservation">Rezerwacja</string>
+
 </resources>

@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class DishesActivity extends AppCompatActivity {
     List<MenuItem> menuItems;
     TextView categoryNameTextView;
     ImageButton editCategoryButton;
+    FloatingActionButton addDishButton;
 
     @Inject
     FirebaseHelper firebaseHelper;
@@ -46,6 +48,7 @@ public class DishesActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewDishes);
         categoryNameTextView = findViewById(R.id.categoryNameTextView);
         editCategoryButton = findViewById(R.id.editCategoryButton);
+        addDishButton = findViewById(R.id.fabAddDish);
 
         String menuName = getIntent().getStringExtra("menuName");
         String menuId = getIntent().getStringExtra("menuId");
@@ -59,34 +62,40 @@ public class DishesActivity extends AppCompatActivity {
 
         fetchDishes(menuId);
 
-        editCategoryButton.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(DishesActivity.this);
-            builder.setTitle("Edit Menu Name");
+        firebaseHelper.isRestaurant(isRestaurant -> {
+            if (isRestaurant) {
+                editCategoryButton.setOnClickListener(v -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DishesActivity.this);
+                    builder.setTitle("Edit Menu Name");
 
-            final EditText input = new EditText(DishesActivity.this);
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-            builder.setView(input);
+                    final EditText input = new EditText(DishesActivity.this);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
 
-            builder.setPositiveButton("OK", (dialog, which) -> {
-                String newMenuName = input.getText().toString();
-                firebaseHelper.updateMenuName(menuId, newMenuName)
-                        .addOnSuccessListener(aVoid -> {
-                            categoryNameTextView.setText(newMenuName);
-                        })
-                        .addOnFailureListener(e -> {
+                    builder.setPositiveButton("OK", (dialog, which) -> {
+                        String newMenuName = input.getText().toString();
+                        firebaseHelper.updateMenuName(menuId, newMenuName)
+                                .addOnSuccessListener(aVoid -> {
+                                    categoryNameTextView.setText(newMenuName);
+                                })
+                                .addOnFailureListener(e -> {
 
-                        });
-            });
-            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+                                });
+                    });
+                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
-            builder.show();
-        });
+                    builder.show();
+                });
 
-        FloatingActionButton addDishButton = findViewById(R.id.fabAddDish);
-        addDishButton.setOnClickListener(v -> {
-            Intent intent = new Intent(DishesActivity.this, AddDishActivity.class);
-            intent.putExtra("menuId", menuId);
-            startActivity(intent);
+                addDishButton.setOnClickListener(v -> {
+                    Intent intent = new Intent(DishesActivity.this, AddDishActivity.class);
+                    intent.putExtra("menuId", menuId);
+                    startActivity(intent);
+                });
+            } else {
+                editCategoryButton.setVisibility(View.GONE);
+                addDishButton.setVisibility(View.GONE);
+            }
         });
     }
 
