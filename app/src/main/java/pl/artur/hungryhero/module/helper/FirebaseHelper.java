@@ -22,6 +22,7 @@ import pl.artur.hungryhero.models.Localization;
 import pl.artur.hungryhero.models.Menu;
 import pl.artur.hungryhero.models.MenuItem;
 import pl.artur.hungryhero.models.OpeningHours;
+import pl.artur.hungryhero.models.Reservation;
 import pl.artur.hungryhero.models.Reviews;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.models.User;
@@ -253,6 +254,11 @@ public class FirebaseHelper {
             return restaurantRef.collection("menu").add(menuCategory);
         }
         return null;
+    }
+
+    public Task<DocumentReference> addReservation(Reservation reservation, String restaurantId, String tableId) {
+        CollectionReference reservationRef = db.collection("Restaurant").document(restaurantId).collection("tables").document(tableId).collection("reservation");
+        return reservationRef.add(reservation.toMap());
     }
 
     public CollectionReference getMenuCategoriesCollectionRef() {

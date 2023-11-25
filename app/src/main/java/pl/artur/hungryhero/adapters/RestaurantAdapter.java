@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,7 +73,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, RestaurantDetailsActivity.class);
-            intent.putExtra("restaurant", restaurant);
+            String restaurantJson = new Gson().toJson(restaurant);
+            intent.putExtra("restaurantJson", restaurantJson);
             context.startActivity(intent);
         });
     }

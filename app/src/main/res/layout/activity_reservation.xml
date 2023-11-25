@@ -65,6 +65,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <Button
+                android:id="@+id/btnReserve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rezerwuj"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tablesRecyclerView"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

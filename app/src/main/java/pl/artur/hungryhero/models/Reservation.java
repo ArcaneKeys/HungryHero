@@ -7,6 +7,8 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Reservation implements Parcelable {
     @PropertyName("userId")
@@ -15,10 +17,14 @@ public class Reservation implements Parcelable {
     private String startTime;
     @PropertyName("endTime")
     private String endTime;
+    @PropertyName("numberOfPeople")
+    private int numberOfPeople;
     @PropertyName("date")
-    private int date;
+    private long date;
     @PropertyName("createdAt")
     private String createdAt;
+    @PropertyName("note")
+    private String note;
 
     private String reservationId;
 
@@ -31,15 +37,44 @@ public class Reservation implements Parcelable {
         this.reservationId = reservationId;
     }
 
-    public Reservation(String userId, String startTime, String endTime, int date, String createdAt) {
+    public Reservation(String userId, String startTime, String endTime, long date, String createdAt, int numberOfPeople) {
         this.userId = userId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;
         this.createdAt = createdAt;
+        this.numberOfPeople = numberOfPeople;
+    }
+
+    public Reservation(String userId, String startTime, String endTime, long date, String createdAt, int numberOfPeople, String note) {
+        this.userId = userId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.createdAt = createdAt;
+        this.numberOfPeople = numberOfPeople;
+        this.note = note;
     }
 
     public Reservation() {}
+
+    @PropertyName("numberOfPeople")
+    public int getNumberOfPeople() {
+        return numberOfPeople;
+    }
+
+    public void setNumberOfPeople(int numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
+
+    @PropertyName("note")
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     @PropertyName("userId")
     public String getUserId() {
@@ -57,7 +92,7 @@ public class Reservation implements Parcelable {
     }
 
     @PropertyName("date")
-    public int getDate() { return date;}
+    public long getDate() { return date;}
 
     @PropertyName("createdAt")
     public String getCreatedAt() {
@@ -71,6 +106,8 @@ public class Reservation implements Parcelable {
         endTime = in.readString();
         date = in.readInt();
         createdAt = in.readString();
+        numberOfPeople = in.readInt();
+        note = in.readString();
     }
 
     @Override
@@ -78,8 +115,10 @@ public class Reservation implements Parcelable {
         parcel.writeString(userId);
         parcel.writeString(startTime);
         parcel.writeString(endTime);
-        parcel.writeInt(date);
+        parcel.writeLong(date);
         parcel.writeString(createdAt);
+        parcel.writeInt(numberOfPeople);
+        parcel.writeString(note);
     }
 
     @Override
@@ -99,4 +138,17 @@ public class Reservation implements Parcelable {
             return new Reservation[size];
         }
     };
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+        map.put("numberOfPeople", numberOfPeople);
+        map.put("date", date);
+        map.put("createdAt", createdAt);
+        map.put("note", note);
+        return map;
+    }
+
 }

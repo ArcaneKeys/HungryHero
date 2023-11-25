@@ -33,6 +33,7 @@ import pl.artur.hungryhero.models.Reservation;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.utils.FirebaseManager;
+import pl.artur.hungryhero.utils.Utils;
 
 
 public class UserMainActivity extends AppCompatActivity {
@@ -97,9 +98,34 @@ public class UserMainActivity extends AppCompatActivity {
         drawerManager = new DrawerManager(navButton, drawerLayout, navigationView, mAuth, this);
     }
 
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        setupFirestoreListener(mUser.getUid());
+//
+//        restaurantRef.addSnapshotListener(this, (value, error) -> {
+//            if (error != null)
+//                return;
+//
+//            if (value == null)
+//                return;
+//            allRestaurants.clear();
+//            for (QueryDocumentSnapshot documentSnapshot : value){
+//                Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+//                restaurant.setRestaurantId(documentSnapshot.getId());
+//
+//                if (isValidRestaurant(restaurant)) {
+//                    fetchTablesForRestaurant(restaurant.getRestaurantId(), restaurant);
+//                    allRestaurants.add(restaurant);
+//                }
+//            }
+//        });
+//    }
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onRestart() {
+        super.onRestart();
 
         setupFirestoreListener(mUser.getUid());
 
@@ -161,7 +187,7 @@ public class UserMainActivity extends AppCompatActivity {
                         Table table = documentSnapshot.toObject(Table.class);
                         table.setTableId(documentSnapshot.getId());
                         tables.add(table);
-                        fetchReservationsForTable(table);
+                        fetchReservationsForTable(resId, table);
                     }
                     restaurant.setTables(tables);
                     restaurantAdapter.notifyDataSetChanged();
@@ -171,16 +197,20 @@ public class UserMainActivity extends AppCompatActivity {
                 });
     }
 
-    private void fetchReservationsForTable(Table table) {
-        restaurantRef.document(table.getTableId()).collection("reservations")
+    private void fetchReservationsForTable(String resId, Table table) {
+        long todayTimestamp = Utils.getTodayTimestamp();
+        restaurantRef.document(resId).collection("tables").document(table.getTableId()).collection("reservation")
+                .whereGreaterThanOrEqualTo("date", todayTimestamp)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     List<Reservation> reservations = new ArrayList<>();
                     for (QueryDocumentSnapshot reservationSnapshot : querySnapshot) {
                         Reservation reservation = reservationSnapshot.toObject(Reservation.class);
+                        reservation.setReservationId(reservationSnapshot.getId());
                         reservations.add(reservation);
                     }
                     table.setReservations(reservations);
+                    restaurantAdapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     Log.d("RESERVATIONS FETCH ERROR", e.toString());

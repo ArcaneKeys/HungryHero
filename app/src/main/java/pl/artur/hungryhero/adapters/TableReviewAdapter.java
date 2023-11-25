@@ -10,11 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,11 +31,14 @@ public class TableReviewAdapter extends RecyclerView.Adapter<TableReviewAdapter.
 
     private final List<Table> tables;
     private final Map<String, List<Reservation>> tableReservationsMap;
+    private final String userId;
+    private String selectedDate;
     private String openHours;
 
-    public TableReviewAdapter(List<Table> tables, Map<String, List<Reservation>> tableReservationsMap) {
+    public TableReviewAdapter(List<Table> tables, Map<String, List<Reservation>> tableReservationsMap, String userId) {
         this.tables = tables;
         this.tableReservationsMap = tableReservationsMap;
+        this.userId = userId;
     }
 
     @Override
@@ -54,10 +62,11 @@ public class TableReviewAdapter extends RecyclerView.Adapter<TableReviewAdapter.
                 Chip chip = new Chip(holder.hoursChipGroup.getContext());
                 chip.setText(hour);
                 chip.setCheckable(true);
+                chip.setChecked(table.getSelectedHours().contains(hour));
 
                 chip.setOnClickListener(v -> {
                     boolean isChecked = chip.isChecked();
-                    handleChipClick(holder.hoursChipGroup, availableHours, hour, isChecked);
+                    handleChipClick(holder.hoursChipGroup, availableHours, hour, isChecked, table);
                 });
 
                 holder.hoursChipGroup.addView(chip);
@@ -65,18 +74,63 @@ public class TableReviewAdapter extends RecyclerView.Adapter<TableReviewAdapter.
         }
     }
 
-    private void handleChipClick(ChipGroup chipGroup, List<String> availableHours, String selectedHour, boolean isChecked) {
+    public void setSelectedDate(String selectedDate) {
+        this.selectedDate = selectedDate;
+    }
+
+    public Map<String, Reservation> getSelectedReservations() {
+        Map<String, Reservation> reservations = new HashMap<>();
+        for (Table table : tables) {
+            List<String> selectedHours = getSelectedHoursForTable(table);
+            if (!selectedHours.isEmpty()) {
+                String startTime = Collections.min(selectedHours);
+                String endTime = Collections.max(selectedHours);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                long dateTimeStamp;
+
+                try {
+                    Date date = sdf.parse(selectedDate);
+                    dateTimeStamp = date.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    dateTimeStamp = 0;
+                }
+
+                String createdNow = sdf.format(new Date());
+
+                Reservation reservation = new Reservation(userId, startTime, endTime, dateTimeStamp, createdNow, table.getCapacity());
+
+                reservations.put(table.getTableId(), reservation);
+            }
+        }
+        return reservations;
+    }
+
+    private List<String> getSelectedHoursForTable(Table table) {
+        return new ArrayList<>(table.getSelectedHours());
+    }
+
+    private void handleChipClick(ChipGroup chipGroup, List<String> availableHours, String selectedHour, boolean isChecked, Table table) {
         int clickedIndex = availableHours.indexOf(selectedHour);
         int closestSelectedIndexBefore = findClosestSelectedIndexBefore(clickedIndex, chipGroup);
 
         if (isChecked) {
             if (isContinuousSelection(clickedIndex, closestSelectedIndexBefore, availableHours)) {
                 selectChipsInRange(chipGroup, closestSelectedIndexBefore, clickedIndex);
+                for (int i = closestSelectedIndexBefore + 1; i <= clickedIndex; i++) {
+                    table.getSelectedHours().add(availableHours.get(i));
+                }
             } else {
                 deselectAllChipsExcept(chipGroup, clickedIndex);
+                table.getSelectedHours().clear();
+                table.getSelectedHours().add(selectedHour);
             }
         } else {
             deselectChipsStartingFrom(chipGroup, clickedIndex);
+            for (int i = clickedIndex; i < chipGroup.getChildCount(); i++) {
+                table.getSelectedHours().remove(availableHours.get(i));
+            }
         }
     }
 
@@ -150,10 +204,16 @@ public class TableReviewAdapter extends RecyclerView.Adapter<TableReviewAdapter.
 
                 while (start.before(end)) {
                     String hourString = String.format("%02d:%02d", start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE));
+
+                    start.add(Calendar.HOUR, 1);
+                    if (start.equals(end) || start.after(end)) {
+                        break;
+                    }
+
                     if (!reservedHours.contains(hourString)) {
                         hoursList.add(hourString);
                     }
-                    start.add(Calendar.HOUR, 1);
+
                 }
 
             } catch (Exception e) {

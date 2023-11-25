@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,7 +66,9 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         init();
 
-        restaurant = getIntent().getParcelableExtra("restaurant");
+//        restaurant = getIntent().getParcelableExtra("restaurant");
+        String restaurantJson = getIntent().getStringExtra("restaurantJson");
+        restaurant = new Gson().fromJson(restaurantJson, Restaurant.class);
 
         if (restaurant != null) {
             updateUIWithRestaurantAndTables(restaurant);
@@ -203,7 +207,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         buttonReserve.setOnClickListener(v -> {
             Intent intentReservation = new Intent(RestaurantDetailsActivity.this, ReservationActivity.class);
-            intentReservation.putExtra("restaurant", restaurant);
+            String restaurantJson = new Gson().toJson(restaurant);
+            intentReservation.putExtra("restaurant", restaurantJson);
             startActivity(intentReservation);
         });
 

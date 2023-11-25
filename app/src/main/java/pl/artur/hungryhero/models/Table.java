@@ -6,7 +6,9 @@ import android.os.Parcelable;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Table implements Parcelable {
     @PropertyName("number")
@@ -16,8 +18,17 @@ public class Table implements Parcelable {
     @PropertyName("reservation")
     private List<Reservation> reservations;
     private String tableId;
+    private Set<String> selectedHours = new HashSet<>();
 
-    @Exclude
+    // getter i setter dla selectedHours
+    public Set<String> getSelectedHours() {
+        return selectedHours;
+    }
+
+    public void setSelectedHours(Set<String> selectedHours) {
+        this.selectedHours = selectedHours;
+    }
+
     public String getTableId() {
         return tableId;
     }
