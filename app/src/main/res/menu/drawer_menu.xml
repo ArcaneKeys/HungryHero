@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nav_item_logout"
-        android:title="Wyloguj się" />
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group_top">
+        <item
+            android:id="@+id/nav_item_my_reservations"
+            android:title="Moje rezerwacje"
+            app:showAsAction="never" />
+    </group>
+
+    <group android:id="@+id/group_bottom">
+        <item
+            android:id="@+id/nav_item_logout"
+            android:title="Wyloguj się"
+            app:showAsAction="never" />
+    </group>
 </menu>

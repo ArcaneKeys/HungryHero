@@ -65,6 +65,8 @@ public class MenuCategoriesActivity extends AppCompatActivity {
             Intent intent = new Intent(MenuCategoriesActivity.this, DishesActivity.class);
             intent.putExtra("menuId", menuId);
             intent.putExtra("menuName", menuName);
+            String restaurantId = getIntent().getStringExtra("restaurantId");
+            intent.putExtra("restaurantId", restaurantId);
             startActivity(intent);
         });
     }

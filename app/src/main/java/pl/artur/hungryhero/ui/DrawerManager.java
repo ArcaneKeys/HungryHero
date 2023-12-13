@@ -12,6 +12,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import pl.artur.hungryhero.R;
+import pl.artur.hungryhero.UserReservationsActivity;
 
 public class DrawerManager {
     private ImageButton navButton;
@@ -41,7 +42,9 @@ public class DrawerManager {
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_item_logout) {
+            if (id == R.id.nav_item_my_reservations) {
+                showUserReservations();
+            } else if (id == R.id.nav_item_logout) {
                 logout();
             }
 
@@ -50,14 +53,17 @@ public class DrawerManager {
         });
     }
 
+    private void showUserReservations() {
+        Intent intent = new Intent(activity, UserReservationsActivity.class);
+        activity.startActivity(intent);
+    }
+
     private void logout() {
-        // Wywołaj funkcję wylogowania z Firebase Authentication
         mAuth.signOut();
 
-        // Przejdź do FirebaseLoginActivity lub innej aktywności logowania
         Intent intent = new Intent(activity, FirebaseLoginActivity.class);
         activity.startActivity(intent);
-        activity.finish(); // Zamknij bieżącą aktywność, aby nie można było cofnąć do ekranu głównego po wylogowaniu
+        activity.finish();
     }
 }
 

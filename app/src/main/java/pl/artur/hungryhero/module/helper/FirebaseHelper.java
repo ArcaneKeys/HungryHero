@@ -9,10 +9,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -273,16 +275,12 @@ public class FirebaseHelper {
         return db.collection("Restaurant").document(restaurantId).collection("menu");
     }
 
-    public CollectionReference getDishesCollectionRef(String menuId) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            return db.collection("Restaurant")
-                    .document(currentUser.getUid())
-                    .collection("menu")
-                    .document(menuId)
-                    .collection("menuItem");
-        }
-        return null;
+    public CollectionReference getDishesCollectionRef(String menuId, String restaurantId) {
+        return db.collection("Restaurant")
+                .document(restaurantId)
+                .collection("menu")
+                .document(menuId)
+                .collection("menuItem");
     }
 
     public Task<Void> updateMenuName(String menuId, String newMenuName) {
@@ -331,4 +329,24 @@ public class FirebaseHelper {
         return db.collection("Restaurant").document(restaurantId)
                 .collection("reviews").add(reviews);
     }
+
+    public void fetchUserReservations(String userId, OnReservationsFetchedListener listener) {
+        db.collectionGroup("reservation")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Reservation> reservations = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        reservations.add(document.toObject(Reservation.class));
+                    }
+                    listener.onReservationsFetched(reservations);
+                })
+                .addOnFailureListener(listener::onError);
+    }
+
+    public interface OnReservationsFetchedListener {
+        void onReservationsFetched(List<Reservation> reservations);
+        void onError(Exception e);
+    }
+
 }

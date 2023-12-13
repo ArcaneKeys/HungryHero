@@ -36,7 +36,7 @@ public class DishesActivity extends AppCompatActivity {
     TextView categoryNameTextView;
     ImageButton editCategoryButton;
     FloatingActionButton addDishButton;
-
+    String restaurantId;
     @Inject
     FirebaseHelper firebaseHelper;
 
@@ -60,7 +60,15 @@ public class DishesActivity extends AppCompatActivity {
         recyclerView.setAdapter(dishesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        fetchDishes(menuId);
+        firebaseHelper.isRestaurant(isRestaurant -> {
+            if (!isRestaurant) {
+                restaurantId = getIntent().getStringExtra("restaurantId");
+                fetchDishes(menuId, restaurantId);
+            } else {
+                restaurantId = firebaseHelper.getCurrentUid();
+                fetchDishes(menuId, restaurantId);
+            }
+        });
 
         firebaseHelper.isRestaurant(isRestaurant -> {
             if (isRestaurant) {
@@ -86,7 +94,6 @@ public class DishesActivity extends AppCompatActivity {
 
                     builder.show();
                 });
-
                 addDishButton.setOnClickListener(v -> {
                     Intent intent = new Intent(DishesActivity.this, AddDishActivity.class);
                     intent.putExtra("menuId", menuId);
@@ -99,8 +106,8 @@ public class DishesActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchDishes(String menuId) {
-        firebaseHelper.getDishesCollectionRef(menuId)
+    private void fetchDishes(String menuId, String restaurantId) {
+        firebaseHelper.getDishesCollectionRef(menuId, restaurantId)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
                         return;

@@ -204,9 +204,10 @@ public class TableReviewAdapter extends RecyclerView.Adapter<TableReviewAdapter.
 
                 while (start.before(end)) {
                     String hourString = String.format("%02d:%02d", start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE));
-
                     start.add(Calendar.HOUR, 1);
-                    if (start.equals(end) || start.after(end)) {
+
+                    if (start.get(Calendar.HOUR_OF_DAY) == end.get(Calendar.HOUR_OF_DAY) &&
+                            start.get(Calendar.MINUTE) == end.get(Calendar.MINUTE)) {
                         break;
                     }
 

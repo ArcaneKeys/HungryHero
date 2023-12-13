@@ -66,7 +66,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         init();
 
-//        restaurant = getIntent().getParcelableExtra("restaurant");
         String restaurantJson = getIntent().getStringExtra("restaurantJson");
         restaurant = new Gson().fromJson(restaurantJson, Restaurant.class);
 
