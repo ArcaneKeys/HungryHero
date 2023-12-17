@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/textViewReservationDate"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Data: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textViewReservationTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Godziny: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView
+            android:id="@+id/textViewReservationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data: "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <TextView
-        android:id="@+id/textViewNumberOfPeople"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ilość osób: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView
+            android:id="@+id/textViewReservationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Godziny: "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textViewNumberOfPeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ilość osób: "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+

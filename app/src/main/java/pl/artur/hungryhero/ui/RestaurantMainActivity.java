@@ -19,7 +19,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.AllReservationsActivity;
 import pl.artur.hungryhero.R;
+import pl.artur.hungryhero.ReservationActivity;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
 @AndroidEntryPoint
@@ -132,7 +134,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         });
 
         btnShowReservation.setOnClickListener(v -> {
-//            intent = new Intent(RestaurantMainActivity.this, UserMainActivity.class);
+            Intent intent = new Intent(RestaurantMainActivity.this, AllReservationsActivity.class);
+            startActivity(intent);
         });
 
         btnShowRestaurant.setOnClickListener(v -> {

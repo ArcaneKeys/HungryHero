@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AllReservationsActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_all_reservations"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/reservation_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wszystkie Rezerwacje"
+            android:layout_marginStart="@dimen/margin_16"
+            android:textColor="?attr/colorOnPrimary"
+            style="@style/TextAppearance.Material3.HeadlineMedium"
+            app:layout_constraintBottom_toBottomOf="@+id/nav_button"
+            app:layout_constraintStart_toEndOf="@+id/nav_button"
+            app:layout_constraintTop_toTopOf="@+id/nav_button" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_all_reservations"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

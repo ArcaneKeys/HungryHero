@@ -344,6 +344,29 @@ public class FirebaseHelper {
                 .addOnFailureListener(listener::onError);
     }
 
+    public void fetchAllReservations(OnReservationsFetchedListener listener) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            db.collection("Restaurant").document(currentUser.getUid()).collection("tables")
+                    .get()
+                    .addOnSuccessListener(tableQueryDocumentSnapshots -> {
+                        List<Reservation> allReservations = new ArrayList<>();
+                        for (QueryDocumentSnapshot tableDocument : tableQueryDocumentSnapshots) {
+                            tableDocument.getReference().collection("reservation")
+                                    .get()
+                                    .addOnSuccessListener(reservationQueryDocumentSnapshots -> {
+                                        for (QueryDocumentSnapshot reservationDocument : reservationQueryDocumentSnapshots) {
+                                            allReservations.add(reservationDocument.toObject(Reservation.class));
+                                        }
+                                        listener.onReservationsFetched(allReservations);
+                                    })
+                                    .addOnFailureListener(listener::onError);
+                        }
+                    })
+                    .addOnFailureListener(listener::onError);
+        }
+    }
+
     public interface OnReservationsFetchedListener {
         void onReservationsFetched(List<Reservation> reservations);
         void onError(Exception e);
