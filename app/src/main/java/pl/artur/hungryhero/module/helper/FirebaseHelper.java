@@ -13,9 +13,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -25,6 +27,8 @@ import pl.artur.hungryhero.models.Menu;
 import pl.artur.hungryhero.models.MenuItem;
 import pl.artur.hungryhero.models.OpeningHours;
 import pl.artur.hungryhero.models.Reservation;
+import pl.artur.hungryhero.models.ReservationData;
+import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Reviews;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.models.User;
@@ -335,41 +339,148 @@ public class FirebaseHelper {
                 .whereEqualTo("userId", userId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    List<Reservation> reservations = new ArrayList<>();
+                    List<ReservationData> reservationDataList = new ArrayList<>();
+                    AtomicInteger counter = new AtomicInteger(queryDocumentSnapshots.size());
+
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        reservations.add(document.toObject(Reservation.class));
+                        Reservation reservation = document.toObject(Reservation.class);
+
+                        // Przetwarzaj tylko jeśli userId i restaurantId nie są null
+                        if (reservation.getUserId() != null && reservation.getRestaurantId() != null) {
+                            fetchUserData(reservation.getUserId(), user -> {
+                                fetchRestaurantData(reservation.getRestaurantId(), restaurant -> {
+                                    ReservationData reservationData = new ReservationData(reservation, user, restaurant);
+                                    reservationDataList.add(reservationData);
+                                    if (counter.decrementAndGet() == 0) {
+                                        listener.onReservationsFetched(reservationDataList);
+                                    }
+                                });
+                            });
+                        } else {
+                            // Jeśli userId lub restaurantId są null, zmniejsz licznik i kontynuuj
+                            if (counter.decrementAndGet() == 0) {
+                                listener.onReservationsFetched(reservationDataList);
+                            }
+                        }
                     }
-                    listener.onReservationsFetched(reservations);
                 })
                 .addOnFailureListener(listener::onError);
     }
 
+
     public void fetchAllReservations(OnReservationsFetchedListener listener) {
         FirebaseUser currentUser = getCurrentUser();
-        if (currentUser != null) {
-            db.collection("Restaurant").document(currentUser.getUid()).collection("tables")
-                    .get()
-                    .addOnSuccessListener(tableQueryDocumentSnapshots -> {
-                        List<Reservation> allReservations = new ArrayList<>();
-                        for (QueryDocumentSnapshot tableDocument : tableQueryDocumentSnapshots) {
-                            tableDocument.getReference().collection("reservation")
-                                    .get()
-                                    .addOnSuccessListener(reservationQueryDocumentSnapshots -> {
-                                        for (QueryDocumentSnapshot reservationDocument : reservationQueryDocumentSnapshots) {
-                                            allReservations.add(reservationDocument.toObject(Reservation.class));
-                                        }
-                                        listener.onReservationsFetched(allReservations);
-                                    })
-                                    .addOnFailureListener(listener::onError);
-                        }
-                    })
-                    .addOnFailureListener(listener::onError);
+        if (currentUser == null || currentUser.getUid() == null) {
+            listener.onReservationsFetched(new ArrayList<>());
+            return;
         }
+
+        db.collection("Restaurant").document(currentUser.getUid()).collection("tables")
+                .get()
+                .addOnSuccessListener(tableQueryDocumentSnapshots -> {
+                    List<ReservationData> allReservationData = new ArrayList<>();
+                    AtomicInteger counter = new AtomicInteger();
+
+                    for (QueryDocumentSnapshot tableDocument : tableQueryDocumentSnapshots) {
+                        tableDocument.getReference().collection("reservation")
+                                .get()
+                                .addOnSuccessListener(reservationQueryDocumentSnapshots -> {
+                                    reservationQueryDocumentSnapshots.forEach(reservationDocument -> counter.incrementAndGet());
+                                    for (QueryDocumentSnapshot reservationDocument : reservationQueryDocumentSnapshots) {
+                                        Reservation reservation = reservationDocument.toObject(Reservation.class);
+                                        if (reservation.getUserId() != null) {
+                                            fetchUserData(reservation.getUserId(), user -> {
+                                                if (reservation.getRestaurantId() != null) {
+                                                    fetchRestaurantData(reservation.getRestaurantId(), restaurant -> {
+                                                        ReservationData reservationData = new ReservationData(reservation, user, restaurant);
+                                                        allReservationData.add(reservationData);
+                                                        if (counter.decrementAndGet() == 0) {
+                                                            listener.onReservationsFetched(allReservationData);
+                                                        }
+                                                    });
+                                                } else {
+                                                    counter.decrementAndGet(); // Dekrementuj licznik, jeśli restaurantId jest null
+                                                }
+                                            });
+                                        } else {
+                                            counter.decrementAndGet(); // Dekrementuj licznik, jeśli userId jest null
+                                            if (reservation.getRestaurantId() != null) {
+                                                counter.decrementAndGet(); // Dekrementuj drugi raz, jeśli restaurantId nie jest null
+                                            }
+                                        }
+                                    }
+                                })
+                                .addOnFailureListener(listener::onError);
+                    }
+                })
+                .addOnFailureListener(listener::onError);
+    }
+
+
+    private void fetchUserData(String userId, OnUserDataFetchedListener userDataListener) {
+        db.collection("Users").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    User user = documentSnapshot.toObject(User.class);
+                    userDataListener.onUserDataFetched(user);
+                })
+                .addOnFailureListener(e -> {});
+    }
+
+    private void fetchRestaurantData(String restaurantId, OnRestaurantDataFetchedListener restaurantDataListener) {
+        db.collection("Restaurant").document(restaurantId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+                    restaurantDataListener.onRestaurantDataFetched(restaurant);
+                })
+                .addOnFailureListener(e -> {});
+    }
+
+    public void fetchReservationsForMonth(int year, int month, OnReservationsFetchedListener listener) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser == null)
+            return;
+
+        Calendar startOfMonth = Calendar.getInstance();
+        startOfMonth.set(year, month, 1, 0, 0, 0);
+        long startTime = startOfMonth.getTimeInMillis();
+
+        Calendar endOfMonth = Calendar.getInstance();
+        endOfMonth.set(year, month, startOfMonth.getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        long endTime = endOfMonth.getTimeInMillis();
+
+        db.collectionGroup("reservation")
+                .whereEqualTo("restaurantId", currentUser.getUid())
+                .whereGreaterThanOrEqualTo("date", startTime)
+                .whereLessThanOrEqualTo("date", endTime)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Reservation> reservations = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        reservations.add(document.toObject(Reservation.class));
+                    }
+                    listener.onReservationsFetched2(reservations);
+                })
+                .addOnFailureListener(e -> {
+                    // Obsługa błędu
+                });
+    }
+
+
+    public interface OnUserDataFetchedListener {
+        void onUserDataFetched(User user);
+    }
+
+    public interface OnRestaurantDataFetchedListener {
+        void onRestaurantDataFetched(Restaurant restaurant);
     }
 
     public interface OnReservationsFetchedListener {
-        void onReservationsFetched(List<Reservation> reservations);
+        void onReservationsFetched(List<ReservationData> reservationDataList);
+        void onReservationsFetched2(List<Reservation> reservations);
         void onError(Exception e);
     }
+
 
 }

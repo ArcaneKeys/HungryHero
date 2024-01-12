@@ -1,9 +1,11 @@
 package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +26,7 @@ import pl.artur.hungryhero.module.helper.FirebaseHelper;
 public class AddOrEditOpeningHoursActivity extends AppCompatActivity {
 
     private EditText mondayEditText, tuesdayEditText, wednesdayEditText, thursdayEditText, fridayEditText, saturdayEditText, sundayEditText;
-
+    private Toolbar toolbar;
     @Inject
     FirebaseHelper firebaseHelper;
 
@@ -83,6 +85,13 @@ public class AddOrEditOpeningHoursActivity extends AppCompatActivity {
         fridayEditText = findViewById(R.id.fridayEditText);
         saturdayEditText = findViewById(R.id.saturdayEditText);
         sundayEditText = findViewById(R.id.sundayEditText);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Button saveButton = findViewById(R.id.saveButton);
 
@@ -155,6 +164,15 @@ public class AddOrEditOpeningHoursActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -108,7 +108,7 @@ public class TableReviewAdapter extends RecyclerView.Adapter<TableReviewAdapter.
     }
 
     private List<String> getSelectedHoursForTable(Table table) {
-        return new ArrayList<>(table.getSelectedHours());
+        return table.getSelectedHours();
     }
 
     private void handleChipClick(ChipGroup chipGroup, List<String> availableHours, String selectedHour, boolean isChecked, Table table) {

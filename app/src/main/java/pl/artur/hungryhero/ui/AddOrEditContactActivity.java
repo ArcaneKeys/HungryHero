@@ -4,8 +4,10 @@ import static pl.artur.hungryhero.utils.ValidationUtils.isValidEmail;
 import static pl.artur.hungryhero.utils.ValidationUtils.isValidPhoneNumber;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import pl.artur.hungryhero.module.helper.FirebaseHelper;
 public class AddOrEditContactActivity extends AppCompatActivity {
 
     private EditText phoneEditText, emailEditText, facebookEditText, websiteEditText, instagramEditText, webMenuEditText;
+    private Toolbar toolbar;
 
     @Inject
     FirebaseHelper firebaseHelper;
@@ -69,6 +72,13 @@ public class AddOrEditContactActivity extends AppCompatActivity {
         websiteEditText = findViewById(R.id.websiteEditText);
         instagramEditText = findViewById(R.id.instagramEditText);
         webMenuEditText = findViewById(R.id.webMenuEditText);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Button saveButton = findViewById(R.id.saveButton);
 
@@ -141,5 +151,14 @@ public class AddOrEditContactActivity extends AppCompatActivity {
         String webMenu = String.valueOf(webMenuEditText.getText());
 
         return new Contact(phone, email, facebook, website, instagram, webMenu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

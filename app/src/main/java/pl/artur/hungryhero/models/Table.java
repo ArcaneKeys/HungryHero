@@ -6,26 +6,27 @@ import android.os.Parcelable;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.PropertyName;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Table implements Parcelable {
     @PropertyName("number")
-    private int number;
+    private String number;
     @PropertyName("capacity")
     private int capacity;
     @PropertyName("reservation")
     private List<Reservation> reservations;
     private String tableId;
-    private Set<String> selectedHours = new HashSet<>();
+    @Exclude
+    private List<String> selectedHours = new ArrayList<>();
 
-    // getter i setter dla selectedHours
-    public Set<String> getSelectedHours() {
+    public List<String> getSelectedHours() {
         return selectedHours;
     }
 
-    public void setSelectedHours(Set<String> selectedHours) {
+    public void setSelectedHours(List<String> selectedHours) {
         this.selectedHours = selectedHours;
     }
 
@@ -41,13 +42,13 @@ public class Table implements Parcelable {
         this.reservations = reservations;
     }
 
-    public Table(int number, int capacity, List<Reservation> reservations) {
+    public Table(String number, int capacity, List<Reservation> reservations) {
         this.number = number;
         this.capacity = capacity;
         this.reservations = reservations;
     }
 
-    public Table(int number, int capacity) {
+    public Table(String number, int capacity) {
         this.number = number;
         this.capacity = capacity;
     }
@@ -55,7 +56,7 @@ public class Table implements Parcelable {
     public Table() {}
 
     @PropertyName("number")
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
@@ -71,7 +72,7 @@ public class Table implements Parcelable {
 
     // Parcelable constructor
     protected Table(Parcel in) {
-        number = in.readInt();
+        number = in.readString();
         capacity = in.readInt();
         reservations = in.createTypedArrayList(Reservation.CREATOR);
         tableId = in.readString();
@@ -79,7 +80,7 @@ public class Table implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(number);
+        parcel.writeString(number);
         parcel.writeInt(capacity);
         parcel.writeTypedList(reservations);
         parcel.writeString(tableId);

@@ -1,12 +1,14 @@
 package pl.artur.hungryhero;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.adapters.ReservationPagerAdapter;
 import pl.artur.hungryhero.models.Reservation;
+import pl.artur.hungryhero.models.ReservationData;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
 @AndroidEntryPoint
@@ -32,8 +35,9 @@ public class AllReservationsActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private ReservationPagerAdapter pagerAdapter;
-    private TreeMap<Long, List<Reservation>> groupedReservations = new TreeMap<>();
+    private TreeMap<Long, List<ReservationData>> groupedReservations = new TreeMap<>();
     private TextView currentDateTextView;
+    private Toolbar toolbar;
 
     @Inject
     FirebaseHelper firebaseHelper;
@@ -44,6 +48,14 @@ public class AllReservationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_reservations);
 
         viewPager = findViewById(R.id.viewPager);
+
+        toolbar = findViewById(R.id.toolbar_all_reservations);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         fetchAllReservations();
 
         currentDateTextView = findViewById(R.id.currentDateTextView);
@@ -64,11 +76,16 @@ public class AllReservationsActivity extends AppCompatActivity {
     private void fetchAllReservations() {
         firebaseHelper.fetchAllReservations(new FirebaseHelper.OnReservationsFetchedListener() {
             @Override
-            public void onReservationsFetched(List<Reservation> reservations) {
+            public void onReservationsFetched(List<ReservationData> reservations) {
                 groupReservationsByDate(reservations);
                 pagerAdapter = new ReservationPagerAdapter(AllReservationsActivity.this, groupedReservations);
                 viewPager.setAdapter(pagerAdapter);
                 setCurrentPageToNearestDate();
+            }
+
+            @Override
+            public void onReservationsFetched2(List<Reservation> reservations) {
+
             }
 
             @Override
@@ -77,19 +94,17 @@ public class AllReservationsActivity extends AppCompatActivity {
         });
     }
 
-    private void groupReservationsByDate(List<Reservation> reservations) {
+    private void groupReservationsByDate(List<ReservationData> reservationDataList) {
         groupedReservations.clear();
 
-        for (Reservation reservation : reservations) {
+        for (ReservationData reservationData : reservationDataList) {
+            Reservation reservation = reservationData.getReservation();
             long date = reservation.getDate();
-            if (!groupedReservations.containsKey(date)) {
-                groupedReservations.put(date, new ArrayList<>());
-            }
-            groupedReservations.get(date).add(reservation);
+            groupedReservations.computeIfAbsent(date, k -> new ArrayList<>()).add(reservationData);
         }
 
-        for (List<Reservation> dailyReservations : groupedReservations.values()) {
-            Collections.sort(dailyReservations, Comparator.comparing(Reservation::getStartTime));
+        for (List<ReservationData> dailyReservations : groupedReservations.values()) {
+            Collections.sort(dailyReservations, Comparator.comparing(rd -> rd.getReservation().getStartTime()));
         }
     }
 
@@ -145,4 +160,12 @@ public class AllReservationsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

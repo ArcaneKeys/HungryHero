@@ -1,11 +1,13 @@
 package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,6 +31,7 @@ public class MenuCategoriesActivity extends AppCompatActivity {
     private MenuCategoryAdapter menuCategoryAdapter;
     private List<Menu> menuCategoriesList = new ArrayList<>();
     private FloatingActionButton fabAddMenuCategory;
+    private Toolbar toolbar;
 
     @Inject
     FirebaseHelper firebaseHelper;
@@ -39,6 +42,13 @@ public class MenuCategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_categories);
 
         fabAddMenuCategory = findViewById(R.id.fabAddMenuCategory);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         recyclerViewMenuCategories = findViewById(R.id.recyclerViewMenuCategories);
         recyclerViewMenuCategories.setLayoutManager(new LinearLayoutManager(this));
@@ -105,6 +115,15 @@ public class MenuCategoriesActivity extends AppCompatActivity {
                     }
                     menuCategoryAdapter.notifyDataSetChanged();
                 });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

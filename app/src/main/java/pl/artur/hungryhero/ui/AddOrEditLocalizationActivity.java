@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,6 +49,7 @@ public class AddOrEditLocalizationActivity extends AppCompatActivity implements 
 
     private EditText cityEditText, postalCodeEditText, streetEditText, houseNumberEditText, latitudeEditText, longitudeEditText;
     private EditText addressEditText;
+    private Toolbar toolbar;
 
     private GoogleMap mMap;
 
@@ -58,13 +61,10 @@ public class AddOrEditLocalizationActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_or_edit_localization);
 
-        // Initialize Places API
         Places.initialize(getApplicationContext(), "AIzaSyD-sbzuEtODpf7WeDERDoU7liSb4NnxA3s");
 
-        // Initialize UI elements
         initializeUI();
 
-        // Get Map Fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFullScreen);
         mapFragment.getMapAsync(this);
 
@@ -124,6 +124,13 @@ public class AddOrEditLocalizationActivity extends AppCompatActivity implements 
         longitudeEditText = findViewById(R.id.longitudeEditText);
         addressEditText = findViewById(R.id.addressEditText);
 
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         Button saveLocalizationButton = findViewById(R.id.saveLocalizationButton);
         Button getLocalizationButton = findViewById(R.id.getLocalizationButton);
 
@@ -137,7 +144,6 @@ public class AddOrEditLocalizationActivity extends AppCompatActivity implements 
                 updateMapLocation(latitude, longitude);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                // Handle exception
             }
         });
 
@@ -257,4 +263,12 @@ public class AddOrEditLocalizationActivity extends AppCompatActivity implements 
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

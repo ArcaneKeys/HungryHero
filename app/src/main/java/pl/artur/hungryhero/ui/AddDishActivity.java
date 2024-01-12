@@ -3,6 +3,7 @@ package pl.artur.hungryhero.ui;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,7 @@ public class AddDishActivity extends AppCompatActivity {
     private Uri selectedImageUri;
     private String imageUrl;
     private ImageView imageViewPhoto;
+    private Toolbar toolbar;
 
     @Inject
     StorageReference storageReference;
@@ -62,6 +64,13 @@ public class AddDishActivity extends AppCompatActivity {
         Button buttonAddPhoto = findViewById(R.id.buttonAddPhoto);
         Button buttonSubmit = findViewById(R.id.buttonSubmit);
         imageViewPhoto = findViewById(R.id.imageViewPhoto);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         String menuId = getIntent().getStringExtra("menuId");
         String menuItemId = getIntent().getStringExtra("menuItemId");
@@ -86,23 +95,8 @@ public class AddDishActivity extends AppCompatActivity {
                             .into(imageViewPhoto);
                 }
 
-                if (selectedImageUri != null) {
-                    buttonSubmit.setOnClickListener(v -> {
-                        uploadImage(selectedImageUri, () -> {
-                            String dishName = editTextDishName.getText().toString();
-                            String dishDescription = editTextDescription.getText().toString();
-                            String priceString = editTextPrice.getText().toString();
-                            double price = 0;
-                            if (!priceString.isEmpty()) {
-                                price = Double.parseDouble(priceString);
-                            }
-                            MenuItem menuItem = new MenuItem(dishName, dishDescription, ingredients, price, imageUrl);
-                            firebaseHelper.updateMenuItem(menuId, menuItemId, menuItem);
-                            finish();
-                        });
-                    });
-                } else {
-                    buttonSubmit.setOnClickListener(v -> {
+                buttonSubmit.setOnClickListener(v -> {
+                    uploadImage(selectedImageUri, () -> {
                         String dishName = editTextDishName.getText().toString();
                         String dishDescription = editTextDescription.getText().toString();
                         String priceString = editTextPrice.getText().toString();
@@ -110,11 +104,14 @@ public class AddDishActivity extends AppCompatActivity {
                         if (!priceString.isEmpty()) {
                             price = Double.parseDouble(priceString);
                         }
+                        if (!areDishDetailsValid(dishName, priceString)) {
+                            return;
+                        }
                         MenuItem menuItem = new MenuItem(dishName, dishDescription, ingredients, price, imageUrl);
                         firebaseHelper.updateMenuItem(menuId, menuItemId, menuItem);
                         finish();
+                    });
                 });
-                }
             }
         } else {
             ingredients = new ArrayList<>();
@@ -131,6 +128,9 @@ public class AddDishActivity extends AppCompatActivity {
                     double price = 0;
                     if (!priceString.isEmpty()) {
                         price = Double.parseDouble(priceString);
+                    }
+                    if (!areDishDetailsValid(dishName, priceString)) {
+                        return;
                     }
                     MenuItem menuItem = new MenuItem(dishName, dishDescription, ingredients, price, imageUrl);
                     firebaseHelper.addMenuItem(menuId, menuItem);
@@ -190,9 +190,21 @@ public class AddDishActivity extends AppCompatActivity {
     }
 
     public void uploadImage(Uri imageUri, Runnable onSuccess) {
+        if (imageUri == null) {
+            onSuccess.run();
+            return;
+        }
+
         String uriName = firebaseHelper.getCurrentUid();
         StorageReference userMenuRef = storageReference.child(uriName).child("menu");
+
         String fileName = getFileName(imageUri);
+
+        if (fileName == null || fileName.isEmpty()) {
+            onSuccess.run();
+            return;
+        }
+
         StorageReference fileRef = userMenuRef.child(fileName);
 
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
@@ -200,11 +212,24 @@ public class AddDishActivity extends AppCompatActivity {
                 imageUrl = uri.toString();
                 onSuccess.run();
             }).addOnFailureListener(e -> {
-
+                onSuccess.run();
             });
         }).addOnFailureListener(e -> {
-
+            onSuccess.run();
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean areDishDetailsValid(String dishName, String priceString) {
+        return dishName != null && !dishName.isEmpty() && priceString != null && !priceString.isEmpty();
     }
 
 }

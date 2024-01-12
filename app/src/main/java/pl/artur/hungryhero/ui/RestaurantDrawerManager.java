@@ -10,7 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import pl.artur.hungryhero.AllReservationsActivity;
 import pl.artur.hungryhero.R;
+import pl.artur.hungryhero.ReportActivity;
 
 public class RestaurantDrawerManager {
     private ImageButton navButton;
@@ -40,7 +42,28 @@ public class RestaurantDrawerManager {
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_item_logout_restaurant) {
+
+            if (id == R.id.nav_add_edit_contact) {
+                startNewActivity(AddOrEditContactActivity.class);
+            } else if (id == R.id.nav_add_edit_localization) {
+                startNewActivity(AddOrEditLocalizationActivity.class);
+            } else if (id == R.id.nav_add_edit_info) {
+                startNewActivity(AddOrEditInfoActivity.class);
+            } else if (id == R.id.nav_add_edit_opening_hours) {
+                startNewActivity(AddOrEditOpeningHoursActivity.class);
+            } else if (id == R.id.nav_add_edit_tables) {
+                startNewActivity(AddOrEditTablesActivity.class);
+            } else if (id == R.id.nav_add_edit_menu) {
+                startNewActivity(MenuCategoriesActivity.class);
+            } else if (id == R.id.nav_show_review) {
+                startNewActivity(ReviewsActivity.class);
+            } else if (id == R.id.nav_show_reservation) {
+                startNewActivity(AllReservationsActivity.class);
+            } else if (id == R.id.nav_show_restaurant) {
+                startNewActivity(RestaurantDetailsActivity.class);
+            } else if (id == R.id.nav_generate_report) {
+                startNewActivity(ReportActivity.class);
+            } else if (id == R.id.nav_item_logout_restaurant) {
                 logout();
             }
 
@@ -50,13 +73,15 @@ public class RestaurantDrawerManager {
     }
 
     private void logout() {
-        // Wywołaj funkcję wylogowania z Firebase Authentication
         mAuth.signOut();
 
-        // Przejdź do FirebaseLoginActivity lub innej aktywności logowania
         Intent intent = new Intent(activity, FirebaseLoginActivity.class);
         activity.startActivity(intent);
-        activity.finish(); // Zamknij bieżącą aktywność, aby nie można było cofnąć do ekranu głównego po wylogowaniu
+    }
+
+    private void startNewActivity(Class<?> activityClass) {
+        Intent intent = new Intent(activity, activityClass);
+        activity.startActivity(intent);
     }
 }
 

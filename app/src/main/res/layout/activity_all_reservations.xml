@@ -14,18 +14,6 @@
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/reservation_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wszystkie Rezerwacje"
-            android:layout_marginStart="@dimen/margin_16"
-            android:textColor="?attr/colorOnPrimary"
-            style="@style/TextAppearance.Material3.HeadlineMedium"
-            app:layout_constraintBottom_toBottomOf="@+id/nav_button"
-            app:layout_constraintStart_toEndOf="@+id/nav_button"
-            app:layout_constraintTop_toTopOf="@+id/nav_button" />
-
     </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView

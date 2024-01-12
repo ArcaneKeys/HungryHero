@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nav_item_logout_restaurant"
-        android:title="Wyloguj się" />
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group_top">
+        <item
+            android:id="@+id/nav_add_edit_contact"
+            android:title="Dodaj/Edytuj Kontakt"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/nav_add_edit_localization"
+            android:title="Dodaj/Edytuj Lokalizację"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/nav_add_edit_info"
+            android:title="Dodaj/Edytuj Informacje"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/nav_add_edit_opening_hours"
+            android:title="Dodaj/Edytuj Godziny Otwarcia"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/nav_add_edit_tables"
+            android:title="Dodaj/Edytuj Stoły"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/nav_add_edit_menu"
+            android:title="Dodaj/Edytuj Menu"
+            app:showAsAction="never"/>
+    </group>
+
+
+    <group android:id="@+id/group_mid">
+        <item
+            android:id="@+id/nav_show_review"
+            android:title="Pokaż Recenzje"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/nav_show_reservation"
+            android:title="Pokaż Rezerwacje"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/nav_show_restaurant"
+            android:title="Pokaż Szczegóły Restauracji"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/nav_generate_report"
+            android:title="Generuj Raport"
+            app:showAsAction="never"/>
+    </group>
+
+    <group android:id="@+id/group_bottom">
+        <item
+            android:id="@+id/nav_item_logout_restaurant"
+            android:title="Wyloguj się"
+            app:showAsAction="never"/>
+    </group>
+
 </menu>
+
+

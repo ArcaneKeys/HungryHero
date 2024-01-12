@@ -1,5 +1,6 @@
 package pl.artur.hungryhero.adapters;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -89,9 +91,9 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
 
         public void bind(MenuItem menuItem) {
             dishName.setText(menuItem.getDishName());
-            dishPrice.setText(String.valueOf(menuItem.getPrice()));
+            dishPrice.setText(String.valueOf(menuItem.getPrice()) + " zł");
             dishDescription.setText(menuItem.getDescription());
-            dishIngredients.setText("Ingredients: " + String.join(", ", menuItem.getIngredients()));
+            dishIngredients.setText("Składniki: " + String.join(", ", menuItem.getIngredients()));
             Glide.with(dishImage.getContext())
                     .load(menuItem.getPhotoUrl())
                     .into(dishImage);
@@ -107,10 +109,22 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
         private void dishDelete(){
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                MenuItem menuItem = menuItems.get(position);
-                firebaseHelper.deleteMenuItem(menuId, menuItem.getItemId());
-                menuItems.remove(position);
-                notifyItemRemoved(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+                builder.setTitle("Potwierdzenie");
+                builder.setMessage("Czy na pewno chcesz usunąć?");
+
+                builder.setPositiveButton("Tak", (dialog, which) -> {
+                    MenuItem menuItem = menuItems.get(position);
+                    firebaseHelper.deleteMenuItem(menuId, menuItem.getItemId());
+                    menuItems.remove(position);
+                    notifyItemRemoved(position);
+                });
+                builder.setNegativeButton("Nie", (dialog, which) -> {
+                    dialog.dismiss();
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }
     }

@@ -3,6 +3,7 @@ package pl.artur.hungryhero.ui;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +33,7 @@ public class AddOrEditInfoActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextDescription;
     private Button buttonSave, buttonAddPhoto;
+    private Toolbar toolbar;
     private Uri selectedImageUri;
     private String imageUrl;
     private ImageView imageViewPhoto;
@@ -50,6 +53,13 @@ public class AddOrEditInfoActivity extends AppCompatActivity {
         buttonSave = findViewById(R.id.buttonSave);
         buttonAddPhoto = findViewById(R.id.buttonAddPhoto);
         imageViewPhoto = findViewById(R.id.imageViewPhoto);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         firebaseHelper.getRestaurantData().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
@@ -143,9 +153,20 @@ public class AddOrEditInfoActivity extends AppCompatActivity {
     }
 
     public void uploadImage(Uri imageUri, Runnable onSuccess, Runnable onFailure) {
+        if (imageUri == null) {
+            onFailure.run();
+            return;
+        }
+
         String uriName = firebaseHelper.getCurrentUid();
         StorageReference userMenuRef = storageReference.child(uriName).child("restaurantPhotos");
         String fileName = getFileName(imageUri);
+
+        if (fileName == null || fileName.isEmpty()) {
+            onFailure.run();
+            return;
+        }
+
         StorageReference fileRef = userMenuRef.child(fileName);
 
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
@@ -158,5 +179,14 @@ public class AddOrEditInfoActivity extends AppCompatActivity {
         }).addOnFailureListener(e -> {
             onFailure.run();
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

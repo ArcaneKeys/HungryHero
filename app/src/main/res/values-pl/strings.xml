@@ -149,5 +149,6 @@
     <string name="update_localization">Aktualizuj lokalizację</string>
 
     <string name="reservation">Rezerwacja</string>
+    <string name="generate_report">Wygeneruj Raport</string>
 
 </resources>

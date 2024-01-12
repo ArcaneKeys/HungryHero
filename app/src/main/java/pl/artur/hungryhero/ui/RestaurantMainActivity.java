@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.AllReservationsActivity;
 import pl.artur.hungryhero.R;
+import pl.artur.hungryhero.ReportActivity;
 import pl.artur.hungryhero.ReservationActivity;
 import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
@@ -29,7 +31,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
 
     private Button btnAddOrEditContact, btnAddOrEditLocalization, btnAddOrEditInfo,
             btnAddOrEditOpeningHours, btnAddOrEditTables, btnAddOrEditMenu;
-    private Button btnShowReview, btnShowReservation, btnShowRestaurant;
+    private Button btnShowReview, btnShowReservation, btnShowRestaurant, btnGenerateReport;
 
     private TextView restaurant_name;
     private TextView restaurant_email;
@@ -51,6 +53,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_main);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         init();
 
         setSupportActionBar(toolbar);
@@ -61,7 +65,6 @@ public class RestaurantMainActivity extends AppCompatActivity {
 
         ShapeableImageView restaurantIcon = headerView.findViewById(R.id.restaurant_icon);
         restaurantIcon.setOnClickListener(v -> {
-            // Przekierowanie do Layoutu zmiany danych użytkownika
             Intent intent = new Intent(RestaurantMainActivity.this, ChangeRestaurantDataActivity.class);
             startActivity(intent);
         });
@@ -76,15 +79,12 @@ public class RestaurantMainActivity extends AppCompatActivity {
                     restaurant_email.setText(useremail);
                     restaurant_name.setText(username);
 
-                    // Ustaw nasłuchiwanie zmian w dokumencie Firestore
                     firebaseHelper.getUserDocumentRef().addSnapshotListener((snapshot, e) -> {
                         if (e != null) {
-                            // Obsłuż błąd nasłuchiwania zmian
                             return;
                         }
 
                         if (snapshot != null && snapshot.exists()) {
-                            // Pobierz zaktualizowane dane z dokumentu Firestore i zaktualizuj widok
                             String email = snapshot.getString("email");
                             String name = snapshot.getString("userName");
 
@@ -143,6 +143,11 @@ public class RestaurantMainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        btnGenerateReport.setOnClickListener(v -> {
+            Intent intent = new Intent(RestaurantMainActivity.this, ReportActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     private void init(){
@@ -161,6 +166,8 @@ public class RestaurantMainActivity extends AppCompatActivity {
         btnShowReview = findViewById(R.id.btnShowReview);
         btnShowReservation = findViewById(R.id.btnShowReservation);
         btnShowRestaurant = findViewById(R.id.btnShowRestaurant);
+
+        btnGenerateReport = findViewById(R.id.btnGenerateReport);
     }
 
 }

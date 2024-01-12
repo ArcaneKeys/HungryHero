@@ -172,6 +172,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/show_restaurant" />
 
+            <Button
+                android:id="@+id/btnGenerateReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/generate_report"
+                android:layout_marginTop="@dimen/margin_16"/>
+
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView

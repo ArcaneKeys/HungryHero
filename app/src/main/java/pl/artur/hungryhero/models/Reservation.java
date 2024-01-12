@@ -26,6 +26,9 @@ public class Reservation implements Parcelable {
     @PropertyName("note")
     private String note;
 
+    @PropertyName("restaurantId")
+    private String restaurantId;
+
     private String reservationId;
 
     @Exclude
@@ -56,7 +59,28 @@ public class Reservation implements Parcelable {
         this.note = note;
     }
 
+    public Reservation(String userId, String startTime, String endTime, long date, String createdAt, int numberOfPeople, String note, String restaurantId) {
+        this.userId = userId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.createdAt = createdAt;
+        this.numberOfPeople = numberOfPeople;
+        this.note = note;
+        this.restaurantId = restaurantId;
+    }
+
     public Reservation() {}
+
+    @PropertyName("restaurantId")
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    @PropertyName("restaurantId")
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 
     @PropertyName("numberOfPeople")
     public int getNumberOfPeople() {
@@ -108,6 +132,7 @@ public class Reservation implements Parcelable {
         createdAt = in.readString();
         numberOfPeople = in.readInt();
         note = in.readString();
+        restaurantId = in.readString();
     }
 
     @Override
@@ -119,6 +144,7 @@ public class Reservation implements Parcelable {
         parcel.writeString(createdAt);
         parcel.writeInt(numberOfPeople);
         parcel.writeString(note);
+        parcel.writeString(restaurantId);
     }
 
     @Override
@@ -148,6 +174,7 @@ public class Reservation implements Parcelable {
         map.put("date", date);
         map.put("createdAt", createdAt);
         map.put("note", note);
+        map.put("restaurantId", restaurantId);
         return map;
     }
 

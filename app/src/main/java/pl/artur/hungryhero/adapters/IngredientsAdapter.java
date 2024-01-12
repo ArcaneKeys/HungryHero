@@ -45,16 +45,18 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
                 if(updatedPosition != RecyclerView.NO_POSITION) {
                     ingredients.set(updatedPosition, s.toString());
                 }
-                holder.buttonRemove.setOnClickListener(v -> {
-                    if(updatedPosition != RecyclerView.NO_POSITION) {
-                        ingredients.remove(updatedPosition);
-                        notifyItemRemoved(updatedPosition);
-                    }
-                });
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+
+        holder.buttonRemove.setOnClickListener(v -> {
+            int updatedPosition = holder.getAdapterPosition();
+            if(updatedPosition != RecyclerView.NO_POSITION) {
+                ingredients.remove(updatedPosition);
+                notifyItemRemoved(updatedPosition);
             }
         });
     }

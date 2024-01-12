@@ -14,17 +14,18 @@ import java.util.List;
 
 import pl.artur.hungryhero.adapters.ReservationsAdapter;
 import pl.artur.hungryhero.models.Reservation;
+import pl.artur.hungryhero.models.ReservationData;
 
 public class ReservationsFragment extends Fragment {
     private static final String ARG_RESERVATIONS = "reservations";
-    private List<Reservation> reservations;
+    private List<ReservationData> reservationDataList;
 
     public ReservationsFragment() {}
 
-    public static ReservationsFragment newInstance(List<Reservation> reservations) {
+    public static ReservationsFragment newInstance(List<ReservationData> reservationDataList) {
         ReservationsFragment fragment = new ReservationsFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_RESERVATIONS, new ArrayList<>(reservations));
+        args.putParcelableArrayList(ARG_RESERVATIONS, new ArrayList<>(reservationDataList));
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,7 +34,7 @@ public class ReservationsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            reservations = getArguments().getParcelableArrayList(ARG_RESERVATIONS);
+            reservationDataList = getArguments().getParcelableArrayList(ARG_RESERVATIONS);
         }
     }
 
@@ -42,7 +43,7 @@ public class ReservationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_reservations, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new ReservationsAdapter(reservations));
+        recyclerView.setAdapter(new ReservationsAdapter(reservationDataList));
         return view;
     }
 }

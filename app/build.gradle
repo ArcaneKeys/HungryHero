@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.3.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-firestore:24.9.1'
+    implementation 'com.google.firebase:firebase-firestore:24.10.0'
     implementation 'com.google.firebase:firebase-storage:20.3.0'
 
     // Hilt
@@ -58,8 +58,11 @@ dependencies {
     // URL Validator
     implementation 'commons-validator:commons-validator:1.7'
 
+    // MPAndroidChar
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

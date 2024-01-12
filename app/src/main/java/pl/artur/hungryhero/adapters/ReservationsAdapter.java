@@ -17,13 +17,14 @@ import java.util.Locale;
 
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.models.Reservation;
+import pl.artur.hungryhero.models.ReservationData;
 
 public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapter.ReservationViewHolder> {
 
-    private List<Reservation> reservations;
+    private List<ReservationData> reservationDataList;
 
-    public ReservationsAdapter(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public ReservationsAdapter(List<ReservationData> reservationDataList) {
+        this.reservationDataList = reservationDataList;
     }
 
     @Override
@@ -34,17 +35,18 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
 
     @Override
     public void onBindViewHolder(ReservationViewHolder holder, int position) {
-        Reservation reservation = reservations.get(position);
-        holder.bind(reservation);
+        ReservationData reservationData = reservationDataList.get(position);
+        holder.bind(reservationData);
     }
 
     @Override
     public int getItemCount() {
-        return reservations.size();
+        return reservationDataList.size();
     }
 
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public void setReservations(List<ReservationData> reservationDataList) {
+        this.reservationDataList = reservationDataList;
+        notifyDataSetChanged();
     }
 
     static class ReservationViewHolder extends RecyclerView.ViewHolder {
@@ -59,7 +61,9 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
             textViewNumberOfPeople = itemView.findViewById(R.id.textViewNumberOfPeople);
         }
 
-        public void bind(Reservation reservation) {
+        public void bind(ReservationData reservationData) {
+            Reservation reservation = reservationData.getReservation();
+
             String endTIme = adjustEndTime(reservation.getEndTime());
 
             textViewReservationDate.setText("Data: " + convertDateToString(reservation.getDate()));

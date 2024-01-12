@@ -1,6 +1,7 @@
 package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,8 @@ public class DishesActivity extends AppCompatActivity {
     @Inject
     FirebaseHelper firebaseHelper;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +53,16 @@ public class DishesActivity extends AppCompatActivity {
         editCategoryButton = findViewById(R.id.editCategoryButton);
         addDishButton = findViewById(R.id.fabAddDish);
 
+        toolbar = findViewById(R.id.toolbar_restaurant);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         String menuName = getIntent().getStringExtra("menuName");
         String menuId = getIntent().getStringExtra("menuId");
-        categoryNameTextView.setText(menuName);
+        categoryNameTextView.setText(" - " + menuName);
 
         menuItems = new ArrayList<>();
 
@@ -74,7 +84,7 @@ public class DishesActivity extends AppCompatActivity {
             if (isRestaurant) {
                 editCategoryButton.setOnClickListener(v -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(DishesActivity.this);
-                    builder.setTitle("Edit Menu Name");
+                    builder.setTitle("Edytuj nazwę menu");
 
                     final EditText input = new EditText(DishesActivity.this);
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -84,13 +94,13 @@ public class DishesActivity extends AppCompatActivity {
                         String newMenuName = input.getText().toString();
                         firebaseHelper.updateMenuName(menuId, newMenuName)
                                 .addOnSuccessListener(aVoid -> {
-                                    categoryNameTextView.setText(newMenuName);
+                                    categoryNameTextView.setText(" - " + newMenuName);
                                 })
                                 .addOnFailureListener(e -> {
 
                                 });
                     });
-                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+                    builder.setNegativeButton("Anuluj", (dialog, which) -> dialog.cancel());
 
                     builder.show();
                 });
@@ -122,5 +132,14 @@ public class DishesActivity extends AppCompatActivity {
                     }
                     dishesAdapter.notifyDataSetChanged();
                 });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

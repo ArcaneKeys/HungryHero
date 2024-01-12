@@ -47,7 +47,6 @@ public class EditTableActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Handle error
                 });
 
         buttonUpdateTable.setOnClickListener(v -> {
@@ -55,7 +54,7 @@ public class EditTableActivity extends AppCompatActivity {
             String tableCapacity = editTextTableCapacity.getText().toString().trim();
 
             if (!TextUtils.isEmpty(tableNumber) && !TextUtils.isEmpty(tableCapacity)) {
-                int number = Integer.parseInt(tableNumber);
+                String number = tableNumber;
                 int capacity = Integer.parseInt(tableCapacity);
 
                 Table updatedTable = new Table(number, capacity);

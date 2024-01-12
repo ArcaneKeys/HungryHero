@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/textMenuCategoryName"
-    android:layout_width="wrap_content"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="@dimen/text_view_medium"
-    android:padding="@dimen/padding_small" />
+    android:layout_margin="@dimen/margin_8"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/radius_corner_small"
+    app:cardElevation="@dimen/elevation_small"
+    app:cardBackgroundColor="@color/cardview_dark_background">
+
+    <TextView
+        android:id="@+id/textMenuCategoryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_view_medium"
+        android:padding="@dimen/padding_small"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="Nazwa Kategorii" />
+
+</androidx.cardview.widget.CardView>

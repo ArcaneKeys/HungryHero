@@ -10,19 +10,20 @@ import java.util.TreeMap;
 
 import pl.artur.hungryhero.ReservationsFragment;
 import pl.artur.hungryhero.models.Reservation;
+import pl.artur.hungryhero.models.ReservationData;
 
 public class ReservationPagerAdapter extends FragmentStateAdapter {
 
-    private TreeMap<Long, List<Reservation>> groupedReservations;
+    private TreeMap<Long, List<ReservationData>> groupedReservations;
 
-    public ReservationPagerAdapter(FragmentActivity fa, TreeMap<Long, List<Reservation>> groupedReservations) {
+    public ReservationPagerAdapter(FragmentActivity fa, TreeMap<Long, List<ReservationData>> groupedReservations) {
         super(fa);
         this.groupedReservations = groupedReservations;
     }
 
     @Override
     public Fragment createFragment(int position) {
-        List<Reservation> reservationsForDate = new ArrayList<>(groupedReservations.values()).get(position);
+        List<ReservationData> reservationsForDate = new ArrayList<>(groupedReservations.values()).get(position);
         return ReservationsFragment.newInstance(reservationsForDate);
     }
 

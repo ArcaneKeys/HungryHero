@@ -10,6 +10,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -151,6 +152,7 @@ public class ReservationActivity extends AppCompatActivity {
             for (Map.Entry<String, Reservation> entry : selectedReservations.entrySet()) {
                 Reservation reservation = entry.getValue();
                 reservation.setNote(notes);
+                reservation.setRestaurantId(restaurant.getRestaurantId());
                 // Zapisz rezerwację w Firebase
                 firebaseHelper.addReservation(reservation, restaurant.getRestaurantId(), entry.getKey())
                         .addOnSuccessListener(collectionReference -> {
@@ -309,5 +311,14 @@ public class ReservationActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, 0, 0, 0);
         return calendar.getTimeInMillis();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
