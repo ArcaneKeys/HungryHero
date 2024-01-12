@@ -57,6 +57,7 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
 
     class DishViewHolder extends RecyclerView.ViewHolder {
         TextView dishName, dishPrice, dishDescription, dishIngredients;
+        ImageButton buttonEdit;
         ImageView dishImage;
         Button buttonDelete;
         CardView cardView;
@@ -70,18 +71,24 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
             dishIngredients = itemView.findViewById(R.id.textDishIngredients);
             dishImage = itemView.findViewById(R.id.dishImage);
             cardView = itemView.findViewById(R.id.cardViewDish);
-            ImageButton buttonEdit = itemView.findViewById(R.id.buttonEdit);
+            buttonEdit = itemView.findViewById(R.id.buttonEdit);
             buttonDelete = itemView.findViewById(R.id.buttonDelete);
 
-            buttonEdit.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    MenuItem menuItem = menuItems.get(position);
-                    Intent intent = new Intent(itemView.getContext(), AddDishActivity.class);
-                    intent.putExtra("menuItemId", menuItem.getItemId());
-                    intent.putExtra("menuId", menuId);
-                    intent.putExtra("menuItem", menuItem);
-                    itemView.getContext().startActivity(intent);
+            firebaseHelper.isRestaurant(isRestaurant -> {
+                if (!isRestaurant) {
+                    buttonEdit.setVisibility(View.GONE);
+                } else {
+                    buttonEdit.setOnClickListener(v -> {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            MenuItem menuItem = menuItems.get(position);
+                            Intent intent = new Intent(itemView.getContext(), AddDishActivity.class);
+                            intent.putExtra("menuItemId", menuItem.getItemId());
+                            intent.putExtra("menuId", menuId);
+                            intent.putExtra("menuItem", menuItem);
+                            itemView.getContext().startActivity(intent);
+                        }
+                    });
                 }
             });
 

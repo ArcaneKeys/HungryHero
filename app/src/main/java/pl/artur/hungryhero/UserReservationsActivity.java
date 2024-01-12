@@ -1,12 +1,14 @@
 package pl.artur.hungryhero;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ public class UserReservationsActivity extends AppCompatActivity {
     private ReservationPagerAdapter pagerAdapter;
     private TreeMap<Long, List<ReservationData>> groupedReservations = new TreeMap<>();
     private TextView currentDateTextView;
+    Toolbar toolbar;
 
     @Inject
     FirebaseHelper firebaseHelper;
@@ -46,6 +49,11 @@ public class UserReservationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_reservations);
 
         viewPager = findViewById(R.id.viewPager);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         String userId = firebaseHelper.getCurrentUid();
 
@@ -147,5 +155,14 @@ public class UserReservationsActivity extends AppCompatActivity {
             viewPager.setCurrentItem(pageIndex, false);
             updateCurrentDateTextView(date, currentDateTextView);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

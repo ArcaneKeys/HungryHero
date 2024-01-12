@@ -78,7 +78,7 @@
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginEnd="@dimen/margin_16"
-                android:text="Reserve"
+                android:text="Rezerwuj"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textCapacity" />
@@ -161,7 +161,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:padding="8dp"
-                android:text="Reviews"
+                android:text="Opinie"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonMenus" />

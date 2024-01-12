@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -227,5 +228,14 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
     private void handleTaskFailure(@Nullable Exception e) {
         Toast.makeText(this, "Failed to load data: " + (e != null ? e.getMessage() : "Unknown error"), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

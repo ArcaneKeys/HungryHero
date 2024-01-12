@@ -108,6 +108,7 @@ public class ReservationActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_reservation);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     protected void init() {
@@ -158,7 +159,7 @@ public class ReservationActivity extends AppCompatActivity {
                         .addOnSuccessListener(collectionReference -> {
                             if (remainingReservations.decrementAndGet() == 0) {
                                 Toast.makeText(ReservationActivity.this, "Wszystkie rezerwacje zapisane.", Toast.LENGTH_SHORT).show();
-                                finish(); // Zakończ aktywność po pomyślnym zapisaniu wszystkich rezerwacji
+                                finish();
                             }
                         })
                         .addOnFailureListener(e -> {

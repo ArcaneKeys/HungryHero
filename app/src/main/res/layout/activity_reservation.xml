@@ -15,7 +15,6 @@
         android:elevation="@dimen/elevation_extra_small"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Reservation"
         app:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
