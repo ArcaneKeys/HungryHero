@@ -109,7 +109,14 @@ public class DishesAdapter extends RecyclerView.Adapter<DishesAdapter.DishViewHo
         private void toggleExpansion() {
             isExpanded = !isExpanded;
             dishIngredients.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-            buttonDelete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+            firebaseHelper.isRestaurant(isRestaurant -> {
+                if (!isRestaurant) {
+                    buttonDelete.setVisibility(View.GONE);
+                } else {
+                    buttonDelete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+                }
+            });
             TransitionManager.beginDelayedTransition(cardView);
         }
 
