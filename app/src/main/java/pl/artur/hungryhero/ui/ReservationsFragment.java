@@ -1,4 +1,4 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.adapters.ReservationsAdapter;
-import pl.artur.hungryhero.models.Reservation;
 import pl.artur.hungryhero.models.ReservationData;
 
 public class ReservationsFragment extends Fragment {

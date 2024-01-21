@@ -1,9 +1,7 @@
-package pl.artur.hungryhero;
+package pl.artur.hungryhero.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.DatePickerDialog;
@@ -25,6 +23,7 @@ import java.util.TreeMap;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.adapters.ReservationPagerAdapter;
 import pl.artur.hungryhero.models.Reservation;
 import pl.artur.hungryhero.models.ReservationData;

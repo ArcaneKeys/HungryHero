@@ -1,7 +1,6 @@
 package pl.artur.hungryhero.ui;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import pl.artur.hungryhero.R;
-import pl.artur.hungryhero.UserReservationsActivity;
 
 public class DrawerManager {
     private ImageButton navButton;

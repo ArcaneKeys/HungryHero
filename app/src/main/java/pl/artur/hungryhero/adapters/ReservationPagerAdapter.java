@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import pl.artur.hungryhero.ReservationsFragment;
-import pl.artur.hungryhero.models.Reservation;
+import pl.artur.hungryhero.ui.ReservationsFragment;
 import pl.artur.hungryhero.models.ReservationData;
 
 public class ReservationPagerAdapter extends FragmentStateAdapter {

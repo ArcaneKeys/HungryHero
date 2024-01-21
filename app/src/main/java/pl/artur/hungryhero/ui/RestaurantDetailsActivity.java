@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.gson.Gson;
 
@@ -31,8 +27,8 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.R;
-import pl.artur.hungryhero.ReservationActivity;
 import pl.artur.hungryhero.models.Contact;
+import pl.artur.hungryhero.models.Localization;
 import pl.artur.hungryhero.models.Reservation;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
@@ -47,10 +43,12 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     private TextView textCapacity;
     private Button buttonReserve;
     private Button buttonFacebook;
+    private Button btnNavigate;
     private Button buttonInstagram;
     private Button buttonWebsite;
     private Button buttonWebMenu;
     private TextView textDescription;
+    private TextView textRestaurantLocalization;
     private RecyclerView recyclerViewRestaurantDetails;
     private Button buttonMenus;
     private Button buttonReviews;
@@ -127,11 +125,13 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         textDescription = findViewById(R.id.textDescription);
         buttonMenus = findViewById(R.id.buttonMenus);
         buttonReviews = findViewById(R.id.buttonReviews);
+        textRestaurantLocalization = findViewById(R.id.textRestaurantLocalization);
 
         buttonFacebook = findViewById(R.id.buttonFacebook);
         buttonInstagram = findViewById(R.id.buttonInstagram);
         buttonWebsite = findViewById(R.id.buttonWebsite);
         buttonWebMenu = findViewById(R.id.buttonWebMenu);
+        btnNavigate = findViewById(R.id.btnNavigate);
     }
 
     private void openLink(String url) {
@@ -150,6 +150,53 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         int maxCapacity = Utils.getMaxCapacity(tables);
         String capacityText = "Liczba gości w przedziale od 1 do " + maxCapacity;
         String contactText = "";
+        String localizationText = "";
+        Uri gmmIntentUri;
+
+        if (restaurant.getLocalization() != null) {
+            Localization localization = restaurant.getLocalization();
+
+            if (localization.getStreet() != null) {
+                localizationText = restaurant.getLocalization().getCity() + ", " +
+                        restaurant.getLocalization().getStreet() + " " +
+                        restaurant.getLocalization().getHouseNumber();
+            } else {
+                localizationText = restaurant.getLocalization().getCity() + " " +
+                        restaurant.getLocalization().getHouseNumber();
+            }
+
+            textRestaurantLocalization.setText(localizationText);
+
+            if (localization.getCoordinates() != null) {
+                double latitude = localization.getCoordinates().getLatitude();
+                double longitude = localization.getCoordinates().getLongitude();
+
+                gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+            } else {
+                StringBuilder addressBuilder = new StringBuilder(localizationText);
+                if (localization.getPostalCode() != null && !localization.getPostalCode().isEmpty()) {
+                    addressBuilder.append(", ").append(localization.getPostalCode());
+                }
+
+                gmmIntentUri = Uri.parse("google.navigation:q=" + Uri.encode(addressBuilder.toString()));
+            }
+
+            btnNavigate.setOnClickListener(view -> {
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    view.getContext().startActivity(mapIntent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Google Maps nie jest zainstalowane", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        } else {
+            textRestaurantLocalization.setVisibility(View.GONE);
+            btnNavigate.setVisibility(View.GONE);
+        }
 
         if (restaurant.getContact() != null) {
             Contact contact = restaurant.getContact();

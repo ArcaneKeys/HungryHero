@@ -10,9 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import pl.artur.hungryhero.AllReservationsActivity;
 import pl.artur.hungryhero.R;
-import pl.artur.hungryhero.ReportActivity;
 
 public class RestaurantDrawerManager {
     private ImageButton navButton;

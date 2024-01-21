@@ -71,6 +71,25 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.textOpeningHours.setText("Opening Hours: " + openingHoursForCurrentDay);
         holder.textCapacity.setText("Capacity: " + maxCapacity);
 
+        if (restaurant.getLocalization() != null &&
+                restaurant.getLocalization().getCity() != null &&
+                restaurant.getLocalization().getHouseNumber() != null) {
+            holder.textAddress.setText(
+                    restaurant.getLocalization().getCity() + " " + restaurant.getLocalization().getHouseNumber()
+            );
+        } else if (restaurant.getLocalization() != null &&
+                restaurant.getLocalization().getCity() != null &&
+                restaurant.getLocalization().getStreet() != null &&
+                restaurant.getLocalization().getHouseNumber() != null) {
+            holder.textAddress.setText(
+                    restaurant.getLocalization().getCity() + ", " +
+                            restaurant.getLocalization().getStreet() + " " +
+                            restaurant.getLocalization().getHouseNumber()
+            );
+        } else {
+            holder.textAddress.setVisibility(View.GONE);
+        }
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, RestaurantDetailsActivity.class);
             String restaurantJson = new Gson().toJson(restaurant);
@@ -94,12 +113,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         TextView textRestaurantName;
         TextView textOpeningHours;
         TextView textCapacity;
+        TextView textAddress;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageRestaurant = itemView.findViewById(R.id.image_restaurant);
             textRestaurantName = itemView.findViewById(R.id.text_restaurant_name);
+            textAddress = itemView.findViewById(R.id.text_address);
             textOpeningHours = itemView.findViewById(R.id.text_opening_hours);
             textCapacity = itemView.findViewById(R.id.text_capacity);
         }

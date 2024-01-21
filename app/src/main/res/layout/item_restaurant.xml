@@ -39,15 +39,26 @@
             app:layout_constraintTop_toBottomOf="@+id/image_restaurant" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="Polska"
+            android:textSize="@dimen/text_view_medium"
+            app:layout_constraintEnd_toEndOf="@+id/text_restaurant_name"
+            app:layout_constraintStart_toStartOf="@+id/text_restaurant_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_restaurant_name" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_opening_hours"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8"
             android:text="@string/opening_hours"
             android:textSize="@dimen/text_view_medium"
-            app:layout_constraintEnd_toEndOf="@+id/text_restaurant_name"
-            app:layout_constraintStart_toStartOf="@+id/text_restaurant_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_restaurant_name" />
+            app:layout_constraintEnd_toEndOf="@+id/text_address"
+            app:layout_constraintStart_toStartOf="@+id/text_address"
+            app:layout_constraintTop_toBottomOf="@+id/text_address" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_capacity"
