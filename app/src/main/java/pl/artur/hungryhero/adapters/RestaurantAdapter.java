@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import pl.artur.hungryhero.R;
+import pl.artur.hungryhero.models.Localization;
 import pl.artur.hungryhero.models.Restaurant;
 import pl.artur.hungryhero.models.Table;
 import pl.artur.hungryhero.ui.RestaurantDetailsActivity;
@@ -71,21 +72,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.textOpeningHours.setText("Opening Hours: " + openingHoursForCurrentDay);
         holder.textCapacity.setText("Capacity: " + maxCapacity);
 
-        if (restaurant.getLocalization() != null &&
-                restaurant.getLocalization().getCity() != null &&
-                restaurant.getLocalization().getHouseNumber() != null) {
-            holder.textAddress.setText(
-                    restaurant.getLocalization().getCity() + " " + restaurant.getLocalization().getHouseNumber()
-            );
-        } else if (restaurant.getLocalization() != null &&
-                restaurant.getLocalization().getCity() != null &&
-                restaurant.getLocalization().getStreet() != null &&
-                restaurant.getLocalization().getHouseNumber() != null) {
-            holder.textAddress.setText(
-                    restaurant.getLocalization().getCity() + ", " +
-                            restaurant.getLocalization().getStreet() + " " +
-                            restaurant.getLocalization().getHouseNumber()
-            );
+        if (restaurant.getLocalization() != null) {
+            Localization localization = restaurant.getLocalization();
+
+            if (localization.getStreet() != null) {
+                holder.textAddress.setText(restaurant.getLocalization().getCity() + ", " +
+                        restaurant.getLocalization().getStreet() + " " +
+                        restaurant.getLocalization().getHouseNumber());
+            } else {
+                holder.textAddress.setText(restaurant.getLocalization().getCity() + " " +
+                        restaurant.getLocalization().getHouseNumber());
+            }
         } else {
             holder.textAddress.setVisibility(View.GONE);
         }
