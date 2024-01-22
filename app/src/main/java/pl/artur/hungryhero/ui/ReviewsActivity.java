@@ -79,7 +79,7 @@ public class ReviewsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Reviews");
+        getSupportActionBar().setTitle("Opinie");
     }
 
     @Override
