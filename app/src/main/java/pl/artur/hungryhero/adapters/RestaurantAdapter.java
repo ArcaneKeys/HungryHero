@@ -69,8 +69,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
 
         holder.textRestaurantName.setText(restaurant.getName());
-        holder.textOpeningHours.setText("Opening Hours: " + openingHoursForCurrentDay);
-        holder.textCapacity.setText("Capacity: " + maxCapacity);
+        holder.textOpeningHours.setText("Godziny otwarcia: " + openingHoursForCurrentDay);
+        holder.textCapacity.setText("Miejsca: " + maxCapacity);
 
         if (restaurant.getLocalization() != null) {
             Localization localization = restaurant.getLocalization();
