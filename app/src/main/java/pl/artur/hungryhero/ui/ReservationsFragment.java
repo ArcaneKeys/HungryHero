@@ -12,13 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import pl.artur.hungryhero.R;
 import pl.artur.hungryhero.adapters.ReservationsAdapter;
 import pl.artur.hungryhero.models.ReservationData;
+import pl.artur.hungryhero.module.helper.FirebaseHelper;
 
+@AndroidEntryPoint
 public class ReservationsFragment extends Fragment {
     private static final String ARG_RESERVATIONS = "reservations";
     private List<ReservationData> reservationDataList;
+
+    private boolean isRestaurant;
+
+    @Inject
+    FirebaseHelper firebaseHelper;
 
     public ReservationsFragment() {}
 
@@ -36,6 +46,10 @@ public class ReservationsFragment extends Fragment {
         if (getArguments() != null) {
             reservationDataList = getArguments().getParcelableArrayList(ARG_RESERVATIONS);
         }
+
+        firebaseHelper.isRestaurant(isRestaurant -> {
+            this.isRestaurant = isRestaurant;
+        });
     }
 
     @Override
@@ -43,7 +57,7 @@ public class ReservationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_reservations, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new ReservationsAdapter(reservationDataList));
+        recyclerView.setAdapter(new ReservationsAdapter(reservationDataList, this.isRestaurant));
         return view;
     }
 }
