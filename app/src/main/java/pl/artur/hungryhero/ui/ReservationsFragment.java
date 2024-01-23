@@ -25,6 +25,7 @@ public class ReservationsFragment extends Fragment {
     private static final String ARG_RESERVATIONS = "reservations";
     private List<ReservationData> reservationDataList;
 
+    private RecyclerView recyclerView;
     private boolean isRestaurant;
 
     @Inject
@@ -49,15 +50,22 @@ public class ReservationsFragment extends Fragment {
 
         firebaseHelper.isRestaurant(isRestaurant -> {
             this.isRestaurant = isRestaurant;
+            updateAdapter();
         });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reservations, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new ReservationsAdapter(reservationDataList, this.isRestaurant));
         return view;
+    }
+
+    private void updateAdapter() {
+        if (recyclerView != null && recyclerView.getAdapter() != null) {
+            ((ReservationsAdapter) recyclerView.getAdapter()).setIsRestaurant(this.isRestaurant);
+        }
     }
 }

@@ -60,6 +60,11 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         notifyDataSetChanged();
     }
 
+    public void setIsRestaurant(boolean isRestaurant) {
+        this.isRestaurant = isRestaurant;
+        notifyDataSetChanged();
+    }
+
     static class ReservationViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewReservationDate;
         private TextView textViewReservationTime;
